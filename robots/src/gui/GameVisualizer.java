@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -123,6 +124,7 @@ public class GameVisualizer extends JPanel
     
     private void moveRobot(double velocity, double angularVelocity, double duration)
     {
+        Dimension windowSize = this.getSize();
         velocity = applyLimits(velocity, 0, maxVelocity);
         angularVelocity = applyLimits(angularVelocity, -maxAngularVelocity, maxAngularVelocity);
         double newX = m_robotPositionX + velocity / angularVelocity * 
@@ -139,6 +141,12 @@ public class GameVisualizer extends JPanel
         {
             newY = m_robotPositionY + velocity * duration * Math.sin(m_robotDirection);
         }
+        if (newX > windowSize.width || newX < 0
+            || newY > windowSize.height || newY < 0)
+            {
+                m_robotDirection = asNormalizedRadians(m_robotDirection + Math.PI);
+                return;
+            }
         m_robotPositionX = newX;
         m_robotPositionY = newY;
         double newDirection = asNormalizedRadians(m_robotDirection + angularVelocity * duration); 
