@@ -25,6 +25,7 @@ import log.Logger;
 public class MainApplicationFrame extends JFrame
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
+    private final MenuBarFrame menuBarFrame = new MenuBarFrame();
     
     public MainApplicationFrame() {
         //Make the big window be indented 50 pixels from each edge
@@ -45,7 +46,7 @@ public class MainApplicationFrame extends JFrame
         gameWindow.setSize(400,  400);
         addWindow(gameWindow);
 
-        setJMenuBar(generateMenuBar());
+        setJMenuBar(menuBarFrame.getJMenuBar());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
@@ -65,6 +66,8 @@ public class MainApplicationFrame extends JFrame
         desktopPane.add(frame);
         frame.setVisible(true);
     }
+
+    
     
 //    protected JMenuBar createMenuBar() {
 //        JMenuBar menuBar = new JMenuBar();
@@ -95,62 +98,63 @@ public class MainApplicationFrame extends JFrame
 //        return menuBar;
 //    }
     
-    private JMenuBar generateMenuBar()
-    {
-        JMenuBar menuBar = new JMenuBar();
+    // private JMenuBar generateMenuBar()
+    // {
+    //     JMenuBar menuBar = new JMenuBar();
         
-        JMenu lookAndFeelMenu = new JMenu("Режим отображения");
-        lookAndFeelMenu.setMnemonic(KeyEvent.VK_V);
-        lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(
-                "Управление режимом отображения приложения");
+    //     JMenu lookAndFeelMenu = new JMenu("Режим отображения");
+    //     lookAndFeelMenu.setMnemonic(KeyEvent.VK_V);
+    //     lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(
+    //             "Управление режимом отображения приложения");
         
-        {
-            JMenuItem systemLookAndFeel = new JMenuItem("Системная схема", KeyEvent.VK_S);
-            systemLookAndFeel.addActionListener((event) -> {
-                setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                this.invalidate();
-            });
-            lookAndFeelMenu.add(systemLookAndFeel);
-        }
+    //     {
+    //         JMenuItem systemLookAndFeel = new JMenuItem("Системная схема", KeyEvent.VK_S);
+    //         systemLookAndFeel.addActionListener((event) -> {
+    //             setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    //             this.invalidate();
+    //         });
+    //         lookAndFeelMenu.add(systemLookAndFeel);
+    //     }
 
-        {
-            JMenuItem crossplatformLookAndFeel = new JMenuItem("Универсальная схема", KeyEvent.VK_S);
-            crossplatformLookAndFeel.addActionListener((event) -> {
-                setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-                this.invalidate();
-            });
-            lookAndFeelMenu.add(crossplatformLookAndFeel);
-        }
+    //     {
+    //         JMenuItem crossplatformLookAndFeel = new JMenuItem("Универсальная схема", KeyEvent.VK_S);
+    //         crossplatformLookAndFeel.addActionListener((event) -> {
+    //             setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+    //             this.invalidate();
+    //         });
+    //         lookAndFeelMenu.add(crossplatformLookAndFeel);
+    //     }
 
-        JMenu testMenu = new JMenu("Тесты");
-        testMenu.setMnemonic(KeyEvent.VK_T);
-        testMenu.getAccessibleContext().setAccessibleDescription(
-                "Тестовые команды");
+    //     JMenu testMenu = new JMenu("Тесты");
+    //     testMenu.setMnemonic(KeyEvent.VK_T);
+    //     testMenu.getAccessibleContext().setAccessibleDescription(
+    //             "Тестовые команды");
         
-        {
-            JMenuItem addLogMessageItem = new JMenuItem("Сообщение в лог", KeyEvent.VK_S);
-            addLogMessageItem.addActionListener((event) -> {
-                Logger.debug("Новая строка");
-            });
-            testMenu.add(addLogMessageItem);
-        }
+    //     {
+    //         JMenuItem addLogMessageItem = new JMenuItem("Сообщение в лог", KeyEvent.VK_S);
+    //         addLogMessageItem.addActionListener((event) -> {
+    //             Logger.debug("Новая строка");
+    //         });
+    //         testMenu.add(addLogMessageItem);
+    //     }
 
-        menuBar.add(lookAndFeelMenu);
-        menuBar.add(testMenu);
-        return menuBar;
-    }
+    //     menuBar.add(lookAndFeelMenu);
+    //     menuBar.add(testMenu);
+    //     return menuBar;
+    // }
     
-    private void setLookAndFeel(String className)
-    {
-        try
-        {
-            UIManager.setLookAndFeel(className);
-            SwingUtilities.updateComponentTreeUI(this);
-        }
-        catch (ClassNotFoundException | InstantiationException
-            | IllegalAccessException | UnsupportedLookAndFeelException e)
-        {
-            // just ignore
-        }
-    }
+    // private void setLookAndFeel(String className)
+    // {
+    //     try
+    //     {
+    //         UIManager.setLookAndFeel(className);
+    //         SwingUtilities.updateComponentTreeUI(this);
+    //     }
+    //     catch (ClassNotFoundException | InstantiationException
+    //         | IllegalAccessException | UnsupportedLookAndFeelException e)
+    //     {
+    //         // just ignore
+    //     }
+    // }
+    
 }
