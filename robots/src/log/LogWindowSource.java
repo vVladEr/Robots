@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Что починить:
@@ -20,13 +20,13 @@ public class LogWindowSource
 {
     private int m_iQueueLength;
     
-    private ConcurrentLinkedQueue<LogEntry> m_messages;
+    private volatile ArrayBlockingQueue<LogEntry> m_messages;
     private final ArrayList<WeakReference<LogChangeListener>> m_listeners;
     private volatile ArrayList<WeakReference<LogChangeListener>> m_activeListeners;
     
     public LogWindowSource(int iQueueLength) {
         m_iQueueLength = iQueueLength;
-        m_messages = new ConcurrentLinkedQueue<LogEntry>();
+        m_messages = new ArrayBlockingQueue<LogEntry>(m_iQueueLength);
         m_listeners = new ArrayList<WeakReference<LogChangeListener>>();
     }
     
