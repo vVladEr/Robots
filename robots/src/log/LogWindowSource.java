@@ -78,7 +78,8 @@ public class LogWindowSource
     }
 
     public Iterable<LogEntry> range(int startFrom, int count){
-        List<LogEntry> currentMessages = Arrays.asList(m_messages.toArray(null));
+        LogEntry[] logEntryArray = new LogEntry[m_messages.size()];
+        List<LogEntry> currentMessages = Arrays.asList(m_messages.toArray(logEntryArray));
         if (startFrom < 0 || startFrom >= currentMessages.size())
         {
             return Collections.emptyList();

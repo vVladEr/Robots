@@ -11,8 +11,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JPanel;
+import localization.LocalizationManager;
 
 public class GameVisualizer extends JPanel
 {
@@ -20,7 +20,7 @@ public class GameVisualizer extends JPanel
     
     private static Timer initTimer() 
     {
-        Timer timer = new Timer("events generator", true);
+        Timer timer = new Timer(LocalizationManager.getStringByName("game.timer"), true);
         return timer;
     }
     
