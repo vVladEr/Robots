@@ -10,7 +10,7 @@ import log.LogChangeListener;
 import log.LogEntry;
 import log.LogWindowSource;
 
-public class LogWindow extends JInternalFrame implements LogChangeListener
+public class LogWindow extends JInternalFrame implements LogChangeListener, ILocalizable
 {
     private final LogWindowSource m_logSource;
     private final TextArea m_logContent;
@@ -45,5 +45,11 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
     public void onLogChanged()
     {
         EventQueue.invokeLater(this::updateLogContent);
+    }
+
+    @Override
+    public void changeLanguage() {
+        this.setTitle(LocalizationManager.getStringByName("log.title"));
+        this.invalidate();
     }
 }

@@ -16,6 +16,10 @@ public class LocalizationManager {
         currentMessages = ResourceBundle.getBundle("localization.messages", locale);
     }
 
+    public static ResourceBundle getResourceBundle() {
+        return currentMessages;
+    }
+
     public static String getStringByName(String name) { 
         return currentMessages.getString(name);
     }

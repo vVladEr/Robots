@@ -14,12 +14,16 @@ import log.Logger;
  * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
  *
  */
-public final class MainApplicationFrame extends JFrame
+public final class MainApplicationFrame extends JFrame implements ILocalizable
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
-    private final MenuBarFrame menuBarFrame = new MenuBarFrame();
+    private final MenuBarFrame menuBarFrame;
+    private final LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
+    private final GameWindow gameWindow = new GameWindow();
     
     public MainApplicationFrame() {
+        menuBarFrame = new MenuBarFrame(this::changeLanguage);
+        
         //Make the big window be indented 50 pixels from each edge
         //of the screen.
         int inset = 50;        
@@ -30,11 +34,9 @@ public final class MainApplicationFrame extends JFrame
 
         setContentPane(desktopPane);
         
-        
-        LogWindow logWindow = createLogWindow();
+        fillLogWindow();
         addWindow(logWindow);
-
-        GameWindow gameWindow = new GameWindow();
+        
         gameWindow.setSize(400,  400);
         addWindow(gameWindow);
 
@@ -42,20 +44,26 @@ public final class MainApplicationFrame extends JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
     
-    protected LogWindow createLogWindow()
+    protected void fillLogWindow()
     {
-        LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
         logWindow.setLocation(10,10);
         logWindow.setSize(300, 800);
         setMinimumSize(logWindow.getSize());
         logWindow.pack();
         Logger.debug(LocalizationManager.getStringByName("log.debug.title"));
-        return logWindow;
     }
     
     protected void addWindow(JInternalFrame frame)
     {
         desktopPane.add(frame);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void changeLanguage() {
+        logWindow.changeLanguage();
+        gameWindow.changeLanguage();
+
+        this.invalidate();
     }
 }

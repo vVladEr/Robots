@@ -12,7 +12,8 @@ import localization.Languages;
 import localization.LocalizationManager;
 import log.Logger;
 
-public class MenuBarFrame extends JFrame {
+public class MenuBarFrame extends JFrame implements ILocalizable {
+    private final LanguageChangeListener languageChangeListener;
 
     private final JMenuBar menuBar = new JMenuBar();
 
@@ -28,7 +29,8 @@ public class MenuBarFrame extends JFrame {
     private final JMenuItem crossplatformLookAndFeel = new JMenuItem(LocalizationManager.getStringByName("menu.lookandfeel.crossplatform"), KeyEvent.VK_S);
 
 
-    public MenuBarFrame() {
+    public MenuBarFrame(LanguageChangeListener languageChangeListener) {
+        this.languageChangeListener = languageChangeListener;
         fillMenuBar();
     }
 
@@ -61,15 +63,15 @@ public class MenuBarFrame extends JFrame {
         russian.addActionListener((_) -> {
             LocalizationManager.setLocale(Languages.RU);
             System.out.println(LocalizationManager.getStringByName("menu.language.title"));
+            languageChangeListener.onLanguageChange();
             changeLanguage();
-            this.invalidate();
         });
 
         english.addActionListener((_) -> {
             LocalizationManager.setLocale(Languages.EN);
             System.out.println(LocalizationManager.getStringByName("menu.language.title"));
+            languageChangeListener.onLanguageChange();
             changeLanguage();
-            this.invalidate();
         });
 
         systemLookAndFeel.addActionListener((_) -> {
@@ -104,7 +106,8 @@ public class MenuBarFrame extends JFrame {
         return menuBar;
     }
 
-    private void changeLanguage() {
+    @Override
+    public void changeLanguage() {
         languageMenu.setText(LocalizationManager.getStringByName("menu.language.title"));
         russian.setText(LocalizationManager.getStringByName("menu.language.russian"));
         english.setText(LocalizationManager.getStringByName("menu.language.english"));
@@ -119,6 +122,7 @@ public class MenuBarFrame extends JFrame {
         lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.lookandfeel.description"));
         testMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.test.description"));
         languageMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.language.description"));
-
+        
+        this.invalidate();
     }
 }

@@ -5,7 +5,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import localization.LocalizationManager;
 
-public class GameWindow extends JInternalFrame
+public class GameWindow extends JInternalFrame implements ILocalizable
 {
     private final GameVisualizer m_visualizer;
     public GameWindow() 
@@ -16,5 +16,13 @@ public class GameWindow extends JInternalFrame
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
         pack();
+    }
+
+    @Override
+    public void changeLanguage() {
+        this.setTitle(LocalizationManager.getStringByName("game.title"));
+        m_visualizer.changeLanguage();
+
+        this.invalidate();
     }
 }
