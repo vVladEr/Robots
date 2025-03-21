@@ -8,6 +8,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import java.awt.event.WindowEvent;
+
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 
 import log.Logger;
@@ -19,9 +22,10 @@ public class MenuBarFrame extends JFrame {
     private final JMenu lookAndFeelMenu = new JMenu("Режим отображения");
     private final JMenuItem systemLookAndFeel = new JMenuItem("Системная схема", KeyEvent.VK_S);
     private final JMenuItem crossplatformLookAndFeel = new JMenuItem("Универсальная схема", KeyEvent.VK_S);
-    private JFrame mainApplicationFrame;
+    private final JMenuItem exitOption = new JMenuItem("Выйти");
+    private final Window mainApplicationFrame;
 
-    public MenuBarFrame(JFrame mainApplicationFrame) {
+    public MenuBarFrame(Window mainApplicationFrame) {
         fillMenuBar();
         this.mainApplicationFrame = mainApplicationFrame;
     }
@@ -41,6 +45,7 @@ public class MenuBarFrame extends JFrame {
 
         menuBar.add(lookAndFeelMenu);
         menuBar.add(testMenu);
+        menuBar.add(exitOption);
     }
 
     private void initMenuBarListeners() {
@@ -56,6 +61,11 @@ public class MenuBarFrame extends JFrame {
 
         addLogMessageItem.addActionListener((event) -> {
             Logger.debug("Новая строка");
+        });
+
+        exitOption.addActionListener((event) -> 
+        {
+            mainApplicationFrame.dispatchEvent(new WindowEvent(mainApplicationFrame, WindowEvent.WINDOW_CLOSING));
         });
     }
 
