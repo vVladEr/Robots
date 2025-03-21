@@ -6,6 +6,8 @@ import java.awt.TextArea;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 import log.LogChangeListener;
 import log.LogEntry;
@@ -15,6 +17,13 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
 {
     private LogWindowSource m_logSource;
     private TextArea m_logContent;
+    private final InternalFrameAdapter logRemoveFrameAdapter = new InternalFrameAdapter() {
+        @Override
+        public void internalFrameClosing(InternalFrameEvent e)
+        {
+            m_logSource.unregisterListener((LogChangeListener)e.getInternalFrame());
+        }
+    };
 
     public LogWindow(LogWindowSource logSource) 
     {
@@ -23,6 +32,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
         m_logContent.setSize(200, 500);
+        addInternalFrameListener(logRemoveFrameAdapter);
         
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_logContent, BorderLayout.CENTER);
