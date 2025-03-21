@@ -19,9 +19,11 @@ public class MenuBarFrame extends JFrame {
     private final JMenu lookAndFeelMenu = new JMenu("Режим отображения");
     private final JMenuItem systemLookAndFeel = new JMenuItem("Системная схема", KeyEvent.VK_S);
     private final JMenuItem crossplatformLookAndFeel = new JMenuItem("Универсальная схема", KeyEvent.VK_S);
+    private JFrame mainApplicationFrame;
 
-    public MenuBarFrame() {
+    public MenuBarFrame(JFrame mainApplicationFrame) {
         fillMenuBar();
+        this.mainApplicationFrame = mainApplicationFrame;
     }
 
     private void fillMenuBar() {
@@ -62,7 +64,7 @@ public class MenuBarFrame extends JFrame {
         try
         {
             UIManager.setLookAndFeel(className);
-            SwingUtilities.updateComponentTreeUI(this);
+            SwingUtilities.updateComponentTreeUI(this.mainApplicationFrame);
         }
         catch (ClassNotFoundException | InstantiationException
             | IllegalAccessException | UnsupportedLookAndFeelException e)

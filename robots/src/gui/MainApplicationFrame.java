@@ -16,7 +16,7 @@ import log.Logger;
 public class MainApplicationFrame extends JFrame
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
-    private final MenuBarFrame menuBarFrame = new MenuBarFrame();
+    private final MenuBarFrame menuBarFrame = new MenuBarFrame(this);
     
     public MainApplicationFrame() {
         //Make the big window be indented 50 pixels from each edge
@@ -38,7 +38,8 @@ public class MainApplicationFrame extends JFrame
         addWindow(gameWindow);
 
         setJMenuBar(menuBarFrame.getJMenuBar());
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        addWindowListener(Listeners.getFramewindowClosingAdapter());
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
     protected LogWindow createLogWindow()
