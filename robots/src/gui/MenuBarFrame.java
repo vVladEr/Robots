@@ -60,31 +60,31 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
     }
 
     private void initMenuBarListeners() {
-        russian.addActionListener((_) -> {
+        russian.addActionListener((event) -> {
             LocalizationManager.setLocale(Languages.RU);
             System.out.println(LocalizationManager.getStringByName("menu.language.title"));
             languageChangeListener.onLanguageChange();
             changeLanguage();
         });
 
-        english.addActionListener((_) -> {
+        english.addActionListener((event) -> {
             LocalizationManager.setLocale(Languages.EN);
             System.out.println(LocalizationManager.getStringByName("menu.language.title"));
             languageChangeListener.onLanguageChange();
             changeLanguage();
         });
 
-        systemLookAndFeel.addActionListener((_) -> {
+        systemLookAndFeel.addActionListener((event) -> {
             setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             this.invalidate();
         });
 
-        crossplatformLookAndFeel.addActionListener((_) -> {
+        crossplatformLookAndFeel.addActionListener((event) -> {
             setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             this.invalidate();
         });
 
-        addLogMessageItem.addActionListener((_) -> {
+        addLogMessageItem.addActionListener((event) -> {
             Logger.debug(LocalizationManager.getStringByName("log.debug.message"));
         });
     }

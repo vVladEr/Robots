@@ -1,5 +1,6 @@
 package localization;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -21,6 +22,10 @@ public class LocalizationManager {
     }
 
     public static String getStringByName(String name) { 
-        return currentMessages.getString(name);
+        try {
+            return new String(currentMessages.getString(name).getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "default";
+        }
     }
 }
