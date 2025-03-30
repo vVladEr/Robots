@@ -1,11 +1,11 @@
-package gui;
+package maven_robots.gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
-import log.Logger;
+import maven_robots.log.Logger;
 
 /**
  * Что требуется сделать:
@@ -34,7 +34,7 @@ public class MainApplicationFrame extends JFrame
         addWindow(logWindow);
 
         GameWindow gameWindow = new GameWindow();
-        gameWindow.setSize(400,  400);
+        gameWindow.setSize(400, 400);
         addWindow(gameWindow);
 
         setJMenuBar(menuBarFrame.getJMenuBar());

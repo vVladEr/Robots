@@ -1,4 +1,4 @@
-package gui;
+package maven_robots.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -9,9 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import log.LogChangeListener;
-import log.LogEntry;
-import log.LogWindowSource;
+import maven_robots.log.LogChangeListener;
+import maven_robots.log.LogEntry;
+import maven_robots.log.LogWindowSource;
 
 public class LogWindow extends JInternalFrame implements LogChangeListener
 {

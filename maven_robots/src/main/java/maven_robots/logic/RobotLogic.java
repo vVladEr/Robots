@@ -1,4 +1,4 @@
-package logic;
+package maven_robots.logic;
 
 import java.awt.Dimension;
 import java.awt.Point;

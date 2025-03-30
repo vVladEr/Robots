@@ -1,4 +1,4 @@
-package gui;
+package maven_robots.gui;
 
 import java.awt.Frame;
 

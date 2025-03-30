@@ -1,4 +1,4 @@
-package log;
+package maven_robots.log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -76,7 +76,7 @@ public class LogWindowSource
     }
 
     public Iterable<LogEntry> range(int startFrom, int count){
-        List<LogEntry> currentMessages = Arrays.asList(m_messages.toArray(null));
+        List<LogEntry> currentMessages = Arrays.asList(m_messages.toArray(new LogEntry [0]));
         if (startFrom < 0 || startFrom >= currentMessages.size())
         {
             return Collections.emptyList();

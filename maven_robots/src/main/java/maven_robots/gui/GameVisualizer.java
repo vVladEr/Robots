@@ -1,4 +1,4 @@
-package gui;
+package maven_robots.gui;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -13,8 +13,8 @@ import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
-import logic.RobotData;
-import logic.RobotLogic;
+import maven_robots.logic.RobotData;
+import maven_robots.logic.RobotLogic;
 
 public class GameVisualizer extends JPanel
 {

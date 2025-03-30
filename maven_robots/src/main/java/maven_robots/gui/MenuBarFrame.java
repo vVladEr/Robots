@@ -1,4 +1,4 @@
-package gui;
+package maven_robots.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -11,7 +11,7 @@ import java.awt.Window;
 
 import java.awt.event.KeyEvent;
 
-import log.Logger;
+import maven_robots.log.Logger;
 
 public class MenuBarFrame extends JFrame {
     private final JMenuBar menuBar = new JMenuBar();

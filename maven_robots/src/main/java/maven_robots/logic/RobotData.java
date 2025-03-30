@@ -1,4 +1,4 @@
-package logic;
+package maven_robots.logic;
 
 public final class RobotData {
     public final int x;
