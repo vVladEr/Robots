@@ -1,4 +1,4 @@
-package gui;
+package maven_robots.gui;
 
 import java.awt.BorderLayout;
 
@@ -15,6 +15,7 @@ public class GameWindow extends JInternalFrame
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
+        setSize(800, 600);
         pack();
     }
 }

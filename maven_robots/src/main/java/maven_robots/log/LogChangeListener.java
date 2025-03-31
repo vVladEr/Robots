@@ -1,4 +1,4 @@
-package log;
+package maven_robots.log;
 
 public interface LogChangeListener
 {
