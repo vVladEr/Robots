@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
 
 
 
-public class Listeners{
+public class ClosingListeners{
 
     private static String[] getYesNoOptions() {
         return new String[]{
@@ -58,7 +58,7 @@ public class Listeners{
         }
     };
 
-    private Listeners(){}
+    private ClosingListeners(){}
 
     public static InternalFrameListener getFrameClosingListener()
     {

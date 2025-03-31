@@ -16,7 +16,7 @@ public class GameWindow extends JInternalFrame implements ILocalizable
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addInternalFrameListener(Listeners.getFrameClosingListener());
+        addInternalFrameListener(ClosingListeners.getFrameClosingListener());
         pack();
     }
 

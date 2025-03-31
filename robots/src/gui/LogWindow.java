@@ -27,7 +27,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, ILoc
         panel.add(m_logContent, BorderLayout.CENTER);
         getContentPane().add(panel);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addInternalFrameListener(Listeners.getFrameClosingListener());
+        addInternalFrameListener(ClosingListeners.getFrameClosingListener());
         pack();
         updateLogContent();
     }

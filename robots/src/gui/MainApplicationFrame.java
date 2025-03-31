@@ -41,7 +41,7 @@ public final class MainApplicationFrame extends JFrame implements ILocalizable
         addWindow(gameWindow);
 
         setJMenuBar(menuBarFrame.getJMenuBar());
-        addWindowListener(Listeners.getFramewindowClosingAdapter());
+        addWindowListener(ClosingListeners.getFramewindowClosingAdapter());
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
