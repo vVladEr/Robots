@@ -17,13 +17,12 @@ import log.Logger;
 public final class MainApplicationFrame extends JFrame implements ILocalizable
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
-    private final MenuBarFrame menuBarFrame = new MenuBarFrame(this);
     private final MenuBarFrame menuBarFrame;
     private final LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
     private final GameWindow gameWindow = new GameWindow();
     
     public MainApplicationFrame() {
-        menuBarFrame = new MenuBarFrame(this::changeLanguage);
+        menuBarFrame = new MenuBarFrame(this::changeLanguage, this);
         
         //Make the big window be indented 50 pixels from each edge
         //of the screen.

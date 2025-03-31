@@ -31,10 +31,10 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
     private final JMenuItem systemLookAndFeel = new JMenuItem(LocalizationManager.getStringByName("menu.lookandfeel.system"), KeyEvent.VK_S);
     private final JMenuItem crossplatformLookAndFeel = new JMenuItem(LocalizationManager.getStringByName("menu.lookandfeel.crossplatform"), KeyEvent.VK_S);
 
-    private final JMenuItem exitOption = new JMenuItem("Выйти");
+    private final JMenuItem exitOption = new JMenuItem(LocalizationManager.getStringByName("menu.closing.title"));
     private final Window mainApplicationFrame;
 
-    public MenuBarFrame(LanguageChangeListener languageChangeListener) {
+    public MenuBarFrame(LanguageChangeListener languageChangeListener, Window mainApplicationFrame) {
         this.languageChangeListener = languageChangeListener;
         fillMenuBar();
         this.mainApplicationFrame = mainApplicationFrame;
@@ -130,6 +130,8 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
         lookAndFeelMenu.setText(LocalizationManager.getStringByName("menu.lookandfeel.title"));
         systemLookAndFeel.setText(LocalizationManager.getStringByName("menu.lookandfeel.system"));
         crossplatformLookAndFeel.setText(LocalizationManager.getStringByName("menu.lookandfeel.crossplatform"));
+
+        exitOption.setText(LocalizationManager.getStringByName("menu.closing.title"));
 
         lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.lookandfeel.description"));
         testMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.test.description"));
