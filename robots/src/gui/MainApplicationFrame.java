@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
+import localization.LocalizationManager;
 import log.Logger;
 
 /**
@@ -13,12 +14,17 @@ import log.Logger;
  * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
  *
  */
-public class MainApplicationFrame extends JFrame
+public final class MainApplicationFrame extends JFrame implements ILocalizable
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuBarFrame menuBarFrame = new MenuBarFrame(this);
+    private final MenuBarFrame menuBarFrame;
+    private final LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
+    private final GameWindow gameWindow = new GameWindow();
     
     public MainApplicationFrame() {
+        menuBarFrame = new MenuBarFrame(this::changeLanguage);
+        
         //Make the big window be indented 50 pixels from each edge
         //of the screen.
         int inset = 50;        
@@ -29,11 +35,9 @@ public class MainApplicationFrame extends JFrame
 
         setContentPane(desktopPane);
         
-        
-        LogWindow logWindow = createLogWindow();
+        fillLogWindow();
         addWindow(logWindow);
-
-        GameWindow gameWindow = new GameWindow();
+        
         gameWindow.setSize(400,  400);
         addWindow(gameWindow);
 
@@ -42,20 +46,26 @@ public class MainApplicationFrame extends JFrame
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
-    protected LogWindow createLogWindow()
+    protected void fillLogWindow()
     {
-        LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
         logWindow.setLocation(10,10);
         logWindow.setSize(300, 800);
         setMinimumSize(logWindow.getSize());
         logWindow.pack();
-        Logger.debug("Протокол работает");
-        return logWindow;
+        Logger.debug(LocalizationManager.getStringByName("log.debug.title"));
     }
     
     protected void addWindow(JInternalFrame frame)
     {
         desktopPane.add(frame);
         frame.setVisible(true);
+    }
+
+    @Override
+    public void changeLanguage() {
+        logWindow.changeLanguage();
+        gameWindow.changeLanguage();
+
+        this.invalidate();
     }
 }

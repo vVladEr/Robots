@@ -11,19 +11,12 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.JPanel;
 
-public class GameVisualizer extends JPanel
+public class GameVisualizer extends JPanel implements ILocalizable
 {
-    private final Timer m_timer = initTimer();
-    
-    private static Timer initTimer() 
-    {
-        Timer timer = new Timer("events generator", true);
-        return timer;
-    }
-    
+    private final Timer m_timer = new Timer("Event Generator", true);
+
     private volatile double m_robotPositionX = 100;
     private volatile double m_robotPositionY = 100; 
     private volatile double m_robotDirection = 0; 
@@ -215,4 +208,7 @@ public class GameVisualizer extends JPanel
         g.setColor(Color.BLACK);
         drawOval(g, x, y, 5, 5);
     }
+
+    @Override
+    public void changeLanguage() { }
 }
