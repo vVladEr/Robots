@@ -75,6 +75,10 @@ public class LogWindowSource
         return m_messages.size();
     }
 
+    public int listenersCount(){
+        return m_listeners.size();
+    }
+
     public Iterable<LogEntry> range(int startFrom, int count){
         List<LogEntry> currentMessages = Arrays.asList(m_messages.toArray(new LogEntry [0]));
         if (startFrom < 0 || startFrom >= currentMessages.size())
