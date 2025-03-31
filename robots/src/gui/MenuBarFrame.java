@@ -5,18 +5,14 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import localization.Languages;
-import java.awt.event.WindowEvent;
 
-import java.awt.Window;
 import localization.LocalizationManager;
 import log.Logger;
 
 public class MenuBarFrame extends JFrame implements ILocalizable {
-    private final LanguageChangeListener languageChangeListener;
+    private final MainApplicationListeners languageChangeListener;
 
     private final JMenuBar menuBar = new JMenuBar();
 
@@ -32,12 +28,10 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
     private final JMenuItem crossplatformLookAndFeel = new JMenuItem(LocalizationManager.getStringByName("menu.lookandfeel.crossplatform"), KeyEvent.VK_S);
 
     private final JMenuItem exitOption = new JMenuItem(LocalizationManager.getStringByName("menu.closing.title"));
-    private final Window mainApplicationFrame;
 
-    public MenuBarFrame(LanguageChangeListener languageChangeListener, Window mainApplicationFrame) {
+    public MenuBarFrame(MainApplicationListeners languageChangeListener) {
         this.languageChangeListener = languageChangeListener;
         fillMenuBar();
-        this.mainApplicationFrame = mainApplicationFrame;
     }
 
     private void fillMenuBar() {
@@ -82,12 +76,12 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
         });
 
         systemLookAndFeel.addActionListener((event) -> {
-            setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            languageChangeListener.onSetLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             this.invalidate();
         });
 
         crossplatformLookAndFeel.addActionListener((event) -> {
-            setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            languageChangeListener.onSetLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             this.invalidate();
         });
 
@@ -97,20 +91,8 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
 
         exitOption.addActionListener((event) -> 
         {
-            mainApplicationFrame.dispatchEvent(new WindowEvent(mainApplicationFrame, WindowEvent.WINDOW_CLOSING));
+            languageChangeListener.onDispatch();
         });
-    }
-
-    private void setLookAndFeel(String className)
-    {
-        try
-        {
-            UIManager.setLookAndFeel(className);
-            SwingUtilities.updateComponentTreeUI(this.mainApplicationFrame);
-        }
-        catch (ClassNotFoundException | InstantiationException
-            | IllegalAccessException | UnsupportedLookAndFeelException e)
-        { }
     }
 
     @Override
