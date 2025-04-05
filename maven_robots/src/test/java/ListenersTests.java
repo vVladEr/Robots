@@ -10,7 +10,7 @@ import maven_robots.log.LogWindowSource;
 public class ListenersTests {
 
     @Test
-    public void RemoveListenersAfterWindowClosing(){
+    public void RemoveListenersWhenWindowClosed(){
         LogWindowSource logSource = new LogWindowSource(5);
         LogWindow logWindow = new LogWindow(logSource);
         Assert.assertEquals(1, logSource.listenersCount());

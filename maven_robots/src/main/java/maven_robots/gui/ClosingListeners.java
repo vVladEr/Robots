@@ -11,7 +11,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-
 public class ClosingListeners{
 
     private static String[] getYesNoOptions() {

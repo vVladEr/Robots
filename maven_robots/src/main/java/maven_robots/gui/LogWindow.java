@@ -19,7 +19,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, ILoc
     private final TextArea m_logContent;
     private final InternalFrameAdapter logRemoveFrameAdapter = new InternalFrameAdapter() {
         @Override
-        public void internalFrameClosing(InternalFrameEvent e)
+        public void internalFrameClosed(InternalFrameEvent e)
         {
             m_logSource.unregisterListener((LogChangeListener)e.getInternalFrame());
         }
