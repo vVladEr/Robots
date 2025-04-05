@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.TextArea;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+<<<<<<< HEAD
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
@@ -14,6 +15,26 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, ILoc
 {
     private final LogWindowSource m_logSource;
     private final TextArea m_logContent;
+=======
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+
+import maven_robots.log.LogChangeListener;
+import maven_robots.log.LogEntry;
+import maven_robots.log.LogWindowSource;
+
+public class LogWindow extends JInternalFrame implements LogChangeListener
+{
+    private LogWindowSource m_logSource;
+    private TextArea m_logContent;
+    private final InternalFrameAdapter logRemoveFrameAdapter = new InternalFrameAdapter() {
+        @Override
+        public void internalFrameClosing(InternalFrameEvent e)
+        {
+            m_logSource.unregisterListener((LogChangeListener)e.getInternalFrame());
+        }
+    };
+>>>>>>> master
 
     public LogWindow(LogWindowSource logSource) 
     {
@@ -22,6 +43,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, ILoc
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
         m_logContent.setSize(200, 500);
+        addInternalFrameListener(logRemoveFrameAdapter);
         
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_logContent, BorderLayout.CENTER);

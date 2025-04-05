@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <<<<<<<< HEAD:maven_robots/src/main/java/maven_robots/gui/GameVisualizer.java
 package maven_robots.gui;
 ========
@@ -8,21 +7,11 @@ package maven_robots.logic;
 import java.awt.Dimension;
 import java.awt.Point;
 <<<<<<<< HEAD:maven_robots/src/main/java/maven_robots/gui/GameVisualizer.java
-=======
-package maven_robots.gui;
-
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
->>>>>>> master
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Timer;
 import java.util.TimerTask;
-<<<<<<< HEAD
 import javax.swing.JPanel;
 
 public class GameVisualizer extends JPanel implements ILocalizable
@@ -167,75 +156,13 @@ public class RobotLogic {
     }
 <<<<<<<< HEAD:maven_robots/src/main/java/maven_robots/gui/GameVisualizer.java
     
-=======
-
-import javax.swing.JPanel;
-
-import maven_robots.logic.RobotData;
-import maven_robots.logic.RobotLogic;
-
-public class GameVisualizer extends JPanel
-{
-    private final Timer m_timer = initTimer();
-    private final RobotLogic robotLogic;
-    
-    private static Timer initTimer() 
-    {
-        Timer timer = new Timer("events generator", true);
-        return timer;
-    }
-  
-    public GameVisualizer() 
-    {
-        robotLogic = new RobotLogic();
-        m_timer.schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                onRedrawEvent();
-            }
-        }, 0, 50);
-        m_timer.schedule(new TimerTask()
-        {
-            @Override
-            public void run()
-            {
-                robotLogic.update(getSize());
-            }
-        }, 0, 10);
-        addMouseListener(new MouseAdapter()
-        {
-            @Override
-            public void mouseClicked(MouseEvent e)
-            {
-                robotLogic.setTargetPosition(e.getPoint());
-                repaint();
-            }
-        });
-        setDoubleBuffered(true);
-    }
-
-    protected void onRedrawEvent()
-    {
-        EventQueue.invokeLater(this::repaint);
-    }
-    
->>>>>>> master
     @Override
     public void paint(Graphics g)
     {
         super.paint(g);
         Graphics2D g2d = (Graphics2D)g; 
-<<<<<<< HEAD
         drawRobot(g2d, round(m_robotPositionX), round(m_robotPositionY), m_robotDirection);
         drawTarget(g2d, m_targetPositionX, m_targetPositionY);
-=======
-        Point target = robotLogic.getTargetPosition();
-        RobotData robot = robotLogic.getRobot();
-        drawRobot(g2d, robot.x, robot.y, robot.direction);
-        drawTarget(g2d, target.x, target.y);
->>>>>>> master
     }
     
     private static void fillOval(Graphics g, int centerX, int centerY, int diam1, int diam2)
@@ -248,15 +175,10 @@ public class GameVisualizer extends JPanel
         g.drawOval(centerX - diam1 / 2, centerY - diam2 / 2, diam1, diam2);
     }
     
-<<<<<<< HEAD
     private void drawRobot(Graphics2D g, int x, int y, double direction)
     {
         int robotCenterX = round(m_robotPositionX); 
         int robotCenterY = round(m_robotPositionY);
-=======
-    private void drawRobot(Graphics2D g, int robotCenterX, int robotCenterY, double direction)
-    {
->>>>>>> master
         AffineTransform t = AffineTransform.getRotateInstance(direction, robotCenterX, robotCenterY); 
         g.setTransform(t);
         g.setColor(Color.MAGENTA);
@@ -278,12 +200,9 @@ public class GameVisualizer extends JPanel
         g.setColor(Color.BLACK);
         drawOval(g, x, y, 5, 5);
     }
-<<<<<<< HEAD
 
     @Override
     public void changeLanguage() { }
 ========
 >>>>>>>> master:maven_robots/src/main/java/maven_robots/logic/RobotLogic.java
-=======
->>>>>>> master
 }
