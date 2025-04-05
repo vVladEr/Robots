@@ -6,3 +6,4 @@ eclipse.bat
 .project
 .settings/
 target/
+maven_robots/target

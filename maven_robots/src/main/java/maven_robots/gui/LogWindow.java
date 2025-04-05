@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import java.awt.TextArea;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
+
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
@@ -14,6 +17,13 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, ILoc
 {
     private final LogWindowSource m_logSource;
     private final TextArea m_logContent;
+    private final InternalFrameAdapter logRemoveFrameAdapter = new InternalFrameAdapter() {
+        @Override
+        public void internalFrameClosing(InternalFrameEvent e)
+        {
+            m_logSource.unregisterListener((LogChangeListener)e.getInternalFrame());
+        }
+    };
 
     public LogWindow(LogWindowSource logSource) {
         super(LocalizationManager.getStringByName("log.title"), true, true, true, true);
@@ -27,6 +37,7 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, ILoc
         getContentPane().add(panel);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addInternalFrameListener(ClosingListeners.getFrameClosingListener());
+        addInternalFrameListener(logRemoveFrameAdapter);
         pack();
         updateLogContent();
     }
