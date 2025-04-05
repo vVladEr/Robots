@@ -1,35 +1,21 @@
-<<<<<<< HEAD
-<<<<<<<< HEAD:maven_robots/src/main/java/maven_robots/gui/GameVisualizer.java
 package maven_robots.gui;
-========
-package maven_robots.logic;
->>>>>>>> master:maven_robots/src/main/java/maven_robots/logic/RobotLogic.java
-
 import java.awt.Dimension;
 import java.awt.Point;
-<<<<<<<< HEAD:maven_robots/src/main/java/maven_robots/gui/GameVisualizer.java
-=======
-package maven_robots.gui;
-
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
->>>>>>> master
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.util.Timer;
 import java.util.TimerTask;
-<<<<<<< HEAD
 import javax.swing.JPanel;
 
 public class GameVisualizer extends JPanel implements ILocalizable
 {
     private final Timer m_timer = new Timer("Event Generator", true);
 
-========
 
 public class RobotLogic {
 
