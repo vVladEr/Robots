@@ -4,12 +4,12 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import javax.swing.JDesktopPane;
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import maven_robots.gui.BaseClasses.BaseJFrame;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 
@@ -19,7 +19,7 @@ import maven_robots.log.Logger;
  * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
  *
  */
-public final class MainApplicationFrame extends JFrame implements ILocalizable
+public final class MainApplicationFrame extends BaseJFrame implements ILocalizable
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuBarFrame menuBarFrame;
@@ -63,8 +63,6 @@ public final class MainApplicationFrame extends JFrame implements ILocalizable
         addWindow(gameWindow);
 
         setJMenuBar(menuBarFrame.getJMenuBar());
-        addWindowListener(ClosingListeners.getFramewindowClosingAdapter());
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
     protected void fillLogWindow()

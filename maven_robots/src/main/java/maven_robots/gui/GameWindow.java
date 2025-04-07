@@ -1,11 +1,12 @@
 package maven_robots.gui;
 
 import java.awt.BorderLayout;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+
+import maven_robots.gui.BaseClasses.BaseInternalJFrame;
 import maven_robots.localization.LocalizationManager;
 
-public class GameWindow extends JInternalFrame implements ILocalizable
+public class GameWindow extends BaseInternalJFrame implements ILocalizable
 {
     private final GameVisualizer m_visualizer;
     public GameWindow() 
@@ -15,8 +16,6 @@ public class GameWindow extends JInternalFrame implements ILocalizable
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_visualizer, BorderLayout.CENTER);
         getContentPane().add(panel);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addInternalFrameListener(ClosingListeners.getFrameClosingListener());
         pack();
     }
 

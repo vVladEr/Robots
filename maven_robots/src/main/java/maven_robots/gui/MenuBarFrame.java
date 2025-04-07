@@ -12,7 +12,7 @@ import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 
 public class MenuBarFrame extends JFrame implements ILocalizable {
-    private final MainApplicationListeners languageChangeListener;
+  private final MainApplicationListeners languageChangeListener;
 
     private final JMenuBar menuBar = new JMenuBar();
 
@@ -29,23 +29,26 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
 
     private final JMenuItem exitOption = new JMenuItem(LocalizationManager.getStringByName("menu.closing.title"));
 
-    public MenuBarFrame(MainApplicationListeners languageChangeListener) {
+    public MenuBarFrame(final MainApplicationListeners languageChangeListener) {
         this.languageChangeListener = languageChangeListener;
         fillMenuBar();
     }
 
     private void fillMenuBar() {
         lookAndFeelMenu.setMnemonic(KeyEvent.VK_V);
-        lookAndFeelMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.lookandfeel.description"));
+        lookAndFeelMenu.getAccessibleContext()
+                .setAccessibleDescription(LocalizationManager.getStringByName("menu.lookandfeel.description"));
 
         testMenu.setMnemonic(KeyEvent.VK_T);
-        testMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.test.description"));
+        testMenu.getAccessibleContext()
+                .setAccessibleDescription(LocalizationManager.getStringByName("menu.test.description"));
 
         languageMenu.setMnemonic(KeyEvent.VK_L);
-        languageMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.language.description"));
+        languageMenu.getAccessibleContext()
+                .setAccessibleDescription(LocalizationManager.getStringByName("menu.language.description"));
 
         initMenuBarListeners();
-        
+
         lookAndFeelMenu.add(systemLookAndFeel);
         lookAndFeelMenu.add(crossplatformLookAndFeel);
 
@@ -89,25 +92,28 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
             Logger.debug(LocalizationManager.getStringByName("log.debug.message"));
         });
 
-        exitOption.addActionListener((event) -> 
-        {
+        exitOption.addActionListener((event) -> {
             languageChangeListener.onDispatch();
         });
     }
 
     @Override
-    public JMenuBar getJMenuBar() {
+    public final JMenuBar getJMenuBar() {
         return menuBar;
     }
 
     @Override
-    public void changeLanguage() {
-        languageMenu.setText(LocalizationManager.getStringByName("menu.language.title"));
-        russian.setText(LocalizationManager.getStringByName("menu.language.russian"));
-        english.setText(LocalizationManager.getStringByName("menu.language.english"));
-    
-        testMenu.setText(LocalizationManager.getStringByName("menu.test.title"));
-        addLogMessageItem.setText(LocalizationManager.getStringByName("menu.test.addlogmessage"));
+    public final void changeLanguage() {
+        languageMenu.setText(
+            LocalizationManager.getStringByName("menu.language.title"));
+        russian.setText(
+            LocalizationManager.getStringByName("menu.language.russian"));
+        english.setText(
+            LocalizationManager.getStringByName("menu.language.english"));
+        testMenu.setText(
+            LocalizationManager.getStringByName("menu.test.title"));
+        addLogMessageItem.setText(
+            LocalizationManager.getStringByName("menu.test.addlogmessage"));
     
         lookAndFeelMenu.setText(LocalizationManager.getStringByName("menu.lookandfeel.title"));
         systemLookAndFeel.setText(LocalizationManager.getStringByName("menu.lookandfeel.system"));
@@ -119,6 +125,6 @@ public class MenuBarFrame extends JFrame implements ILocalizable {
         testMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.test.description"));
         languageMenu.getAccessibleContext().setAccessibleDescription(LocalizationManager.getStringByName("menu.language.description"));
         
-        this.invalidate();
-    }
+    this.invalidate();
+}
 }

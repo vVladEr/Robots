@@ -11,45 +11,44 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 
-public class ClosingListeners{
+public final class ClosingListeners {
 
     private static String[] getYesNoOptions() {
-        return new String[]{
-            LocalizationManager.getStringByName("option.yes"),
-            LocalizationManager.getStringByName("option.no")};
+        return new String[] {
+                LocalizationManager.getStringByName("option.yes"),
+                LocalizationManager.getStringByName("option.no") };
     }
 
     private static InternalFrameListener frameClosingListener = new InternalFrameAdapter() {
         @Override
-        public void internalFrameClosing(InternalFrameEvent e)
-        {
+        public void internalFrameClosing(final InternalFrameEvent e) {
             String[] yesNoOptions = getYesNoOptions();
             int op = JOptionPane.showOptionDialog(
-                e.getInternalFrame(),
-                LocalizationManager.getStringByName("window.closing.text"),
-                LocalizationManager.getStringByName("window.closing.title"),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, 
-                null, 
-                yesNoOptions, 
-                yesNoOptions[0]);
+                    e.getInternalFrame(),
+                    LocalizationManager.getStringByName("window.closing.text"),
+                    LocalizationManager.getStringByName("window.closing.title"),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    yesNoOptions,
+                    yesNoOptions[0]);
 
-        if (op == JOptionPane.YES_OPTION) {
-            e.getInternalFrame().dispose();
+            if (op == JOptionPane.YES_OPTION) {
+                e.getInternalFrame().dispose();
             }
         }
     };
 
     private static WindowAdapter windowClosingAdapter = new WindowAdapter() {
         @Override
-        public void windowClosing(WindowEvent e)
-        {
+        public void windowClosing(final WindowEvent e) {
             String[] yesNoOptions = getYesNoOptions();
             int op = JOptionPane.showOptionDialog(
                 e.getWindow(),
                 LocalizationManager.getStringByName("app.closing.text"),
                 LocalizationManager.getStringByName("app.closing.title"),
-            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, yesNoOptions, yesNoOptions[0]);
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE, null, yesNoOptions, yesNoOptions[0]);
 
             if (op == JOptionPane.YES_OPTION) {
                 System.exit(0);
@@ -59,13 +58,11 @@ public class ClosingListeners{
 
     private ClosingListeners(){}
 
-    public static InternalFrameListener getFrameClosingListener()
-    {
+    public static InternalFrameListener getFrameClosingListener() {
         return frameClosingListener;
     }
 
-    public static WindowAdapter getFramewindowClosingAdapter()
-    {
+    public static WindowAdapter getFramewindowClosingAdapter() {
         return windowClosingAdapter;
     }
 }

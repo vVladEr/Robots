@@ -17,17 +17,17 @@ public class RobotTargetTests {
     private static final double eps = 0.00001;
 
     @BeforeClass
-    public static void Setup(){
+    public static void setup() {
         robotLogic = new RobotLogic();
     }
 
     @Test
-    public void StopsWhenReachTarget(){  
+    public void stopsWhenReachTarget() {  
         RobotData startRobot = new RobotData(1, 1, Math.PI);
         Dimension dim = new Dimension(50, 50);
         robotLogic.setTargetPosition(new Point(1, 1));
         robotLogic.setRobotPosition(startRobot);
-        for (int i =0; i < 5; i++){
+        for (int i = 0; i < 5; i++){
             robotLogic.update(dim);
             RobotData actualRobot = robotLogic.getRobot();
             Assert.assertEquals(startRobot.x, actualRobot.x);

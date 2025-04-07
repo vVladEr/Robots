@@ -3,17 +3,17 @@ package maven_robots.gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import maven_robots.gui.BaseClasses.BaseInternalJFrame;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
 import maven_robots.log.LogWindowSource;
 
-public class LogWindow extends JInternalFrame implements LogChangeListener, ILocalizable
+public class LogWindow extends BaseInternalJFrame implements LogChangeListener, ILocalizable
 {
     private final LogWindowSource m_logSource;
     private final TextArea m_logContent;
@@ -35,8 +35,6 @@ public class LogWindow extends JInternalFrame implements LogChangeListener, ILoc
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_logContent, BorderLayout.CENTER);
         getContentPane().add(panel);
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addInternalFrameListener(ClosingListeners.getFrameClosingListener());
         addInternalFrameListener(logRemoveFrameAdapter);
         pack();
         updateLogContent();

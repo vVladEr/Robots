@@ -27,7 +27,7 @@ public class RobotBouncingTest  extends Assert{
     private static final double eps = 0.00001;
 
     @BeforeClass
-    public static void Setup(){
+    public static void setup() {
         robotLogic = new RobotLogic();
     }
 
