@@ -8,12 +8,11 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import maven_robots.gui.BaseClasses.BaseInternalJFrame;
-import maven_robots.localization.LocalizationManager;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
 import maven_robots.log.LogWindowSource;
 
-public class LogWindow extends BaseInternalJFrame implements LogChangeListener, ILocalizable
+public class LogWindow extends BaseInternalJFrame implements LogChangeListener
 {
     private final LogWindowSource m_logSource;
     private final TextArea m_logContent;
@@ -26,7 +25,7 @@ public class LogWindow extends BaseInternalJFrame implements LogChangeListener, 
     };
 
     public LogWindow(LogWindowSource logSource) {
-        super(LocalizationManager.getStringByName("log.title"), true, true, true, true);
+        super("log.title", true, true, true, true);
         m_logSource = logSource;
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
@@ -55,11 +54,5 @@ public class LogWindow extends BaseInternalJFrame implements LogChangeListener, 
     public void onLogChanged()
     {
         EventQueue.invokeLater(this::updateLogContent);
-    }
-
-    @Override
-    public void changeLanguage() {
-        this.setTitle(LocalizationManager.getStringByName("log.title"));
-        this.invalidate();
     }
 }

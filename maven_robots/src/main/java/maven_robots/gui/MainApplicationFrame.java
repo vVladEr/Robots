@@ -19,7 +19,7 @@ import maven_robots.log.Logger;
  * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
  *
  */
-public final class MainApplicationFrame extends BaseJFrame implements ILocalizable
+public final class MainApplicationFrame extends BaseJFrame
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuBarFrame menuBarFrame;
@@ -27,7 +27,7 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
     private final GameWindow gameWindow = new GameWindow();
     
     public MainApplicationFrame() {
-
+        super();
         MainApplicationListeners listeners = new MainApplicationListeners() {
             @Override
             public void onLanguageChange() {
