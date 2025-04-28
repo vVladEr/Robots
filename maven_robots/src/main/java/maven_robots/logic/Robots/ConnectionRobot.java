@@ -43,7 +43,7 @@ public class ConnectionRobot implements IRobot {
     public void move(Direction dir) {
         Coord nextpos = dir.getPosInDirection(pos);
         if (lastTakenPowerPoint.isPresent()
-            && !isRobotMoveBackward(nextpos)) {
+            && !isMovingBackward(nextpos)) {
             prevPositions.add(pos);
         }
 
@@ -74,7 +74,7 @@ public class ConnectionRobot implements IRobot {
         }
     }
 
-    private Boolean isRobotMoveBackward(Coord newPos)
+    public Boolean isMovingBackward(Coord newPos)
     {
         Optional<Coord> prevPos = getPreviousCabelPos();
         return prevPos.isPresent() && prevPos.get() == newPos;

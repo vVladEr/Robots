@@ -1,7 +1,5 @@
 package maven_robots.logic.Cells.Controllers;
 
-import java.util.Optional;
-
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Cells.ICell;
@@ -15,10 +13,8 @@ public class BaseCellController implements ICellController {
             || robot.getChargeColor() == ChargeColor.EMPTY) {
                 return true; 
         }
-        Optional<Coord> prevCabelPos = robot.getPreviousCabelPos();
         return (robot.getChargeColor() == cell.getColor() 
-                && prevCabelPos.isPresent()
-                && prevCabelPos.get() == cellCoord);
+                && robot.isMovingBackward(cellCoord));
     }
 
     @Override

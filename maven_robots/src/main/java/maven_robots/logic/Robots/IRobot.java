@@ -26,4 +26,6 @@ public interface IRobot {
     public Coord[] getCurrentRoute();
 
     public Optional<Coord> getPreviousCabelPos();
+
+    public Boolean isMovingBackward(Coord newPos);
 }
