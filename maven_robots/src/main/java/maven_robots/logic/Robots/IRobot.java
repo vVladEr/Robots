@@ -21,6 +21,10 @@ public interface IRobot {
 
     public void startCabel(ICell cell, Coord powerPointCoord);
 
+    public void finishCabel();
+
+    public boolean getIsCableFinished();
+
     public void resetRobotRoute();
 
     public Coord[] getCurrentRoute();

@@ -18,7 +18,9 @@ public class PowerPointController implements ICellController {
     public void moveRobotOn(IRobot robot, ICell cell, Coord cellCoord) {
         if (!isEnteringSecondPP(robot, cell, cellCoord)) {
             robot.startCabel(cell, cellCoord);
+            return;
         }
+        robot.finishCabel();
     }
 
     private Boolean isEnteringSecondPP(IRobot robot, ICell cell, Coord cellCoord) {

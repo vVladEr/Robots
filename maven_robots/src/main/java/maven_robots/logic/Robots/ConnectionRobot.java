@@ -15,6 +15,7 @@ public class ConnectionRobot implements IRobot {
     private ChargeColor chargeColor;
     private Stack<Coord> prevPositions;
     private Optional<Coord> lastTakenPowerPoint;
+    private boolean isCableFinished = false;
 
     public ConnectionRobot(Coord pos)
     {
@@ -46,13 +47,22 @@ public class ConnectionRobot implements IRobot {
             && !isMovingBackward(nextpos)) {
             prevPositions.add(pos);
         }
-
+        if (isMovingBackward(nextpos))
+            prevPositions.pop();
         pos = nextpos;
     }
 
     public void startCabel(ICell cell, Coord powerPointCoord) {
         lastTakenPowerPoint = Optional.of(powerPointCoord);
         setChargeColor(cell.getColor());
+    }
+
+    public void finishCabel() {
+        isCableFinished = true;
+    }
+
+    public boolean getIsCableFinished() {
+        return isCableFinished;
     }
 
     public Coord[] getCurrentRoute() {
@@ -80,7 +90,7 @@ public class ConnectionRobot implements IRobot {
         return prevPos.isPresent() && prevPos.get() == newPos;
     }
 
-
+    
 }
 
 /*

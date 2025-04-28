@@ -1,5 +1,6 @@
 package maven_robots.logic.Fields;
 
+import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
 import maven_robots.logic.Cells.ICell;
@@ -14,6 +15,7 @@ public class Field {
     private final int height;
     private final int width;
     private final IControllerManager controllerManager;
+    private final ICabelStorage cabelStorage;
 
     public Field(ICell[][] field, IRobot robot, IControllerManager controllerManager) {
         height = field.length;
@@ -21,6 +23,12 @@ public class Field {
         this.field = field;
         this.robot = robot;
         this.controllerManager = controllerManager;
+        cabelStorage = new CabelStorage();
+    }
+
+    public ICabelStorage getCabelStorage()
+    {
+        return cabelStorage;
     }
 
     public void moveRobot(Direction dir) {
@@ -38,6 +46,16 @@ public class Field {
         }
         robot.move(dir);
         cellController.moveRobotOn(robot, nextCell, nextPos);
+        if (robot.getIsCableFinished()) {
+            saveCabel();
+        }
+    }
+
+    private void saveCabel() {
+        Coord[] cabelRoute = robot.getCurrentRoute();
+        ChargeColor cabelColour = robot.getChargeColor();
+        robot.resetRobotRoute();
+        cabelStorage.saveCabel(cabelRoute, cabelColour);
     }
 
     private Boolean isCellInsideBorders(Coord pos) {
