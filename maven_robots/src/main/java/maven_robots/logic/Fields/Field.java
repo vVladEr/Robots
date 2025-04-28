@@ -41,10 +41,12 @@ public class Field {
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
         if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos))
             return false;
+
         if (robot.isMovingBackward(nextPos)) {
             Coord robotPos = robot.getCoord();
             field[robotPos.y][robotPos.x].reset();
         }
+
         robot.move(dir);
         cellController.moveRobotOn(robot, nextCell, nextPos);
         if (robot.getIsCableFinished()) {
@@ -69,10 +71,15 @@ public class Field {
             }
         }
         catch (EmptyStackException e) {
-
         }
     }
 
+    public void resetAllCreatedCabels() {
+        for (int i = 0; i < cabelStorage.getCabels().size(); i++){
+            resertLastCabel();
+        }
+    }
+    
     public boolean isGameFinished() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
