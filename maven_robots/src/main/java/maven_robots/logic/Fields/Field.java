@@ -76,6 +76,17 @@ public class Field {
         }
     }
 
+    public boolean isGameFinished()
+    {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (field[y][x].getColor() == ChargeColor.EMPTY)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     private void saveCabel() {
         Coord[] cabelRoute = robot.getCurrentRoute();
         ChargeColor cabelColour = robot.getChargeColor();
