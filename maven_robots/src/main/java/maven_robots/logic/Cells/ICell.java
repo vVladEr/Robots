@@ -1,10 +1,12 @@
 package maven_robots.logic.Cells;
 
-import maven_robots.logic.Robots.IRobot;
+import maven_robots.logic.ChargeColor;
 
 public interface ICell {
 
-    public Boolean isRobotAllowedToEnter(IRobot robot);
+    public CellType getType();
 
-    public void moveRobotOn(IRobot robot);
+    public ChargeColor getColor();
+
+    public void setColor(ChargeColor color);
 }
