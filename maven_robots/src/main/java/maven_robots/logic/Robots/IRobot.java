@@ -13,4 +13,6 @@ public interface IRobot {
     public void setChargeColor(ChargeColor chargeColor);
 
     public void move(Direction dir);
+
+    public Coord[] resetRobotRoute();
 }

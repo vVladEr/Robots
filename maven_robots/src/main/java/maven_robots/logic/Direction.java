@@ -6,8 +6,8 @@ public enum Direction {
     LEFT,
     RIGHT;
 
-    public static Coord getDir(Direction dir) {
-        switch (dir) {
+    public Coord toCoord() {
+        switch (this) {
             case UP:
                 return new Coord(0, 1);
             
@@ -23,5 +23,10 @@ public enum Direction {
             default:
                 return new Coord(0, 0);
         }
+    }
+
+    public Coord getPosInDirection(Coord curPos) {
+        Coord vecDir = toCoord();
+        return new Coord(curPos.x + vecDir.x, curPos.y + vecDir.y);    
     }
 }

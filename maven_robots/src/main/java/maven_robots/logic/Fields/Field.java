@@ -20,13 +20,11 @@ public class Field {
     }
 
     public void moveRobot(Direction dir) {
-        Coord dirVec = Direction.getDir(dir);
-        Coord robotCoord = robot.getCoord();
-        Coord nextPos = new Coord(robotCoord.x + dirVec.x, robotCoord.y + dirVec.y);
+        Coord nextPos = dir.getPosInDirection(robot.getCoord());
         ICell nextCell = field[nextPos.y][nextPos.x];
         if (!isCellInsideBorders(nextPos) 
             || !nextCell.isRobotAllowedToEnter(robot))
-            return;
+            return; // добавить результат операции
         robot.move(dir);
         nextCell.moveRobotOn(robot);
     }

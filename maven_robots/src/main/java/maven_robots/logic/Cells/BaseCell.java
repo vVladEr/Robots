@@ -18,6 +18,4 @@ public class BaseCell implements ICell {
             color = robot.getChargeColor();
         }
     }
-
-
 }
