@@ -21,7 +21,7 @@ public class ConnectionRobot implements IRobot {
     {
         this.pos = pos;
         chargeColor = ChargeColor.EMPTY;
-        prevPositions = new Stack<Coord>();
+        prevPositions = new Stack<>();
         lastTakenPowerPoint = Optional.empty();
     }
 

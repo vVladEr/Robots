@@ -9,10 +9,10 @@ public enum Direction {
     public Coord toCoord() {
         switch (this) {
             case UP:
-                return new Coord(0, 1);
+                return new Coord(0, -1);
             
             case DOWN:
-                return new Coord(0, -1);
+                return new Coord(0, 1);
 
             case LEFT:
                 return new Coord(-1, 0);

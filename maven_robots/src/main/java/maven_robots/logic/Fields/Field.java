@@ -1,6 +1,8 @@
 package maven_robots.logic.Fields;
 
+import java.util.ArrayList;
 import java.util.EmptyStackException;
+import java.util.List;
 
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
@@ -19,6 +21,8 @@ public class Field {
     private final IControllerManager controllerManager;
     private final ICabelStorage cabelStorage;
 
+    private List<FieldObserver> observers = new ArrayList<>();
+
     public Field(ICell[][] field, IRobot robot, IControllerManager controllerManager) {
         height = field.length;
         width = field[0].length;
@@ -26,6 +30,14 @@ public class Field {
         this.robot = robot;
         this.controllerManager = controllerManager;
         cabelStorage = new CabelStorage();
+    }
+
+    public ICell[][] getField() {
+        return field;
+    }
+
+    public IRobot getRobot() {
+        return robot;
     }
 
     public ICabelStorage getCabelStorage() {
@@ -50,6 +62,8 @@ public class Field {
         if (robot.getIsCableFinished()) {
             saveCabel();
         }
+
+        notifyObservers();
         return true;
     }
 
@@ -59,6 +73,7 @@ public class Field {
         for (Coord coord : currentCabel) {
             field[coord.y][coord.x].reset();
         }
+        notifyObservers();
     }
 
     public void resertLastCabel() {
@@ -67,6 +82,7 @@ public class Field {
             for (Coord coord : lastCabel) {
                 field[coord.y][coord.x].reset();
             }
+            notifyObservers();
         }
         catch (EmptyStackException e) {
 
@@ -92,5 +108,19 @@ public class Field {
 
     private Boolean isCellInsideBorders(Coord pos) {
         return pos.x < width && pos.x >= 0 && pos.y < height && pos.y >= 0;
+    }
+
+    public void addObserver(FieldObserver observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(FieldObserver observer) {
+        observers.remove(observer);
+    }
+
+    private void notifyObservers() {
+        for (FieldObserver observer : observers) {
+            observer.onFieldChanged();
+        }
     }
 }

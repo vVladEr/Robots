@@ -14,7 +14,7 @@ public class ControllerManager implements IControllerManager {
         
 
     public ControllerManager() {
-        controllers = new HashMap<CellType, ICellController>();
+        controllers = new HashMap<>();
         controllers.put(CellType.CELL, new BaseCellController());
         controllers.put(CellType.POWER_POINT, new PowerPointController());
         controllers.put(CellType.WALL, new WallController());

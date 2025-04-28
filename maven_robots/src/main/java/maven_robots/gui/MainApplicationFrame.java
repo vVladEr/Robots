@@ -12,21 +12,17 @@ import javax.swing.UnsupportedLookAndFeelException;
 import maven_robots.gui.BaseClasses.BaseJFrame;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
+import maven_robots.logic.Fields.Field;
 
-/**
- * Что требуется сделать:
- * 1. Метод создания меню перегружен функционалом и трудно читается. 
- * Следует разделить его на серию более простых методов (или вообще выделить отдельный класс).
- *
- */
 public final class MainApplicationFrame extends BaseJFrame implements ILocalizable
 {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuBarFrame menuBarFrame;
     private final LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
-    private final GameWindow gameWindow = new GameWindow();
+    private final GameWindow gameWindow;
     
-    public MainApplicationFrame() {
+    public MainApplicationFrame(Field field) {
+        gameWindow = new GameWindow(field);
 
         MainApplicationListeners listeners = new MainApplicationListeners() {
             @Override
@@ -44,6 +40,7 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
                 dispatch();
             }
         };
+
         menuBarFrame = new MenuBarFrame(listeners);
         
         //Make the big window be indented 50 pixels from each edge

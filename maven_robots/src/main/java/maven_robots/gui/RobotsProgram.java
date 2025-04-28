@@ -5,6 +5,9 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import maven_robots.data.parser.Parser;
+import maven_robots.logic.Fields.Field;
+
 public class RobotsProgram
 {
     public static void main(String[] args) {
@@ -15,10 +18,13 @@ public class RobotsProgram
 //        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
       } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
       }
+      Parser parser = new Parser("D:/Projects/Java/Robots/maven_robots/src/main/java/maven_robots/data/levels");
+      Field field = parser.parseLevel(1);
+      System.out.println(field);
       SwingUtilities.invokeLater(() -> {
-        MainApplicationFrame frame = new MainApplicationFrame();
+        MainApplicationFrame frame = new MainApplicationFrame(field);
         frame.pack();
         frame.setVisible(true);
         frame.setExtendedState(Frame.MAXIMIZED_BOTH);
       });
-    }} 
+    }}
