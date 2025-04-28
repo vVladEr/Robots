@@ -27,7 +27,7 @@ public class PowerPointController implements ICellController {
         Optional<Coord> lastTakenPP = robot.getLastTakenPowerPoint();
         return( robot.getChargeColor() == cell.getColor() 
             && lastTakenPP.isPresent()
-            && lastTakenPP.get() != cellCoord); 
+            && !lastTakenPP.get().equals(cellCoord)); 
     }
 
 }

@@ -36,8 +36,7 @@ public class Cell implements ICell {
         }
     }
 
-    public void Reset()
-    {
+    public void reset() {
         color = baseColor;
     }
 

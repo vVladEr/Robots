@@ -25,9 +25,9 @@ public interface IRobot {
 
     public boolean getIsCableFinished();
 
-    public void resetRobotRoute();
+    public void resetCurrentCabel();
 
-    public Coord[] getCurrentRoute();
+    public Coord[] getCurrentCabel();
 
     public Optional<Coord> getPreviousCabelPos();
 

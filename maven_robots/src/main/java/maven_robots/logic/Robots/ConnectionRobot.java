@@ -5,9 +5,9 @@ import java.util.Optional;
 import java.util.Stack;
 
 import maven_robots.logic.ChargeColor;
+import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
 import maven_robots.logic.Cells.ICell;
-import maven_robots.logic.Coord;
 
 public class ConnectionRobot implements IRobot {
 
@@ -65,18 +65,18 @@ public class ConnectionRobot implements IRobot {
         return isCableFinished;
     }
 
-    public Coord[] getCurrentRoute() {
+    public Coord[] getCurrentCabel() {
         return prevPositions.toArray(new Coord [0]);
     }
 
-    public void resetRobotRoute() {
+    public void resetCurrentCabel() {
         prevPositions.clear();
         setChargeColor(ChargeColor.EMPTY);
         lastTakenPowerPoint = Optional.empty();
+        isCableFinished = false;
     }
 
-    public Optional<Coord> getPreviousCabelPos()
-    {
+    public Optional<Coord> getPreviousCabelPos() {
         try {
             return Optional.of(prevPositions.peek());
         } catch (EmptyStackException  e) {
@@ -84,10 +84,9 @@ public class ConnectionRobot implements IRobot {
         }
     }
 
-    public Boolean isMovingBackward(Coord newPos)
-    {
+    public Boolean isMovingBackward(Coord newPos) {
         Optional<Coord> prevPos = getPreviousCabelPos();
-        return prevPos.isPresent() && prevPos.get() == newPos;
+        return prevPos.isPresent() && prevPos.get().equals(newPos);
     }
 
     

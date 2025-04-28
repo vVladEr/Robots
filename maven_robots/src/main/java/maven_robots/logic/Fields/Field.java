@@ -28,8 +28,7 @@ public class Field {
         cabelStorage = new CabelStorage();
     }
 
-    public ICabelStorage getCabelStorage()
-    {
+    public ICabelStorage getCabelStorage() {
         return cabelStorage;
     }
 
@@ -41,10 +40,10 @@ public class Field {
         ICell nextCell = field[nextPos.y][nextPos.x];
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
         if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos))
-            return false; // добавить результат операции
+            return false;
         if (robot.isMovingBackward(nextPos)) {
             Coord robotPos = robot.getCoord();
-            field[robotPos.y][robotPos.x].Reset();
+            field[robotPos.y][robotPos.x].reset();
         }
         robot.move(dir);
         cellController.moveRobotOn(robot, nextCell, nextPos);
@@ -54,21 +53,19 @@ public class Field {
         return true;
     }
 
-    public void resertCurrentCabel()
-    {
-        Coord[] currentCabel = robot.getCurrentRoute();
-        robot.resetRobotRoute();
+    public void resertCurrentCabel() {
+        Coord[] currentCabel = robot.getCurrentCabel();
+        robot.resetCurrentCabel();
         for (Coord coord : currentCabel) {
-            field[coord.y][coord.x].Reset();
+            field[coord.y][coord.x].reset();
         }
     }
 
-    public void resertLastCabel()
-    {
+    public void resertLastCabel() {
         try {
             Coord[] lastCabel = cabelStorage.resetLastCable();
             for (Coord coord : lastCabel) {
-                field[coord.y][coord.x].Reset();
+                field[coord.y][coord.x].reset();
             }
         }
         catch (EmptyStackException e) {
@@ -76,8 +73,7 @@ public class Field {
         }
     }
 
-    public boolean isGameFinished()
-    {
+    public boolean isGameFinished() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (field[y][x].getColor() == ChargeColor.EMPTY)
@@ -88,9 +84,9 @@ public class Field {
     }
 
     private void saveCabel() {
-        Coord[] cabelRoute = robot.getCurrentRoute();
+        Coord[] cabelRoute = robot.getCurrentCabel();
         ChargeColor cabelColour = robot.getChargeColor();
-        robot.resetRobotRoute();
+        robot.resetCurrentCabel();
         cabelStorage.saveCabel(cabelRoute, cabelColour);
     }
 

@@ -13,8 +13,7 @@ public class ControllerManager implements IControllerManager {
     private final HashMap<CellType, ICellController> controllers;
         
 
-    public ControllerManager()
-    {
+    public ControllerManager() {
         controllers = new HashMap<CellType, ICellController>();
         controllers.put(CellType.CELL, new BaseCellController());
         controllers.put(CellType.POWER_POINT, new PowerPointController());

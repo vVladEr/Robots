@@ -10,5 +10,5 @@ public interface ICell {
 
     public void setColor(ChargeColor color);
 
-    public void Reset();
+    public void reset();
 }

@@ -5,8 +5,7 @@ public enum CellType {
     POWER_POINT,
     WALL;
 
-    public static Boolean isColorChangable(CellType cellType)
-    {
+    public static Boolean isColorChangable(CellType cellType) {
         return cellType == CELL;
     }
 }
