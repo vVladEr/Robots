@@ -32,6 +32,10 @@ public class Field {
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
         if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos))
             return; // добавить результат операции
+        if (robot.isMovingBackward(nextPos)) {
+            Coord robotPos = robot.getCoord();
+            field[robotPos.y][robotPos.x].Reset();
+        }
         robot.move(dir);
         cellController.moveRobotOn(robot, nextCell, nextPos);
     }

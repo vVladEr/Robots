@@ -8,10 +8,13 @@ public class Cell implements ICell {
 
     private ChargeColor color;
 
+    private final ChargeColor baseColor;
+
     public Cell(CellType cellType, ChargeColor color)
     {
         this.cellType = cellType;
         this.color = color;
+        baseColor = color;
     }
 
     @Override
@@ -31,6 +34,11 @@ public class Cell implements ICell {
             this.color = color;
             return;
         }
+    }
+
+    public void Reset()
+    {
+        color = baseColor;
     }
 
 }

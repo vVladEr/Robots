@@ -11,19 +11,23 @@ public class PowerPointController implements ICellController {
 
     @Override
     public Boolean isRobotAllowedToEnter(IRobot robot, ICell cell, Coord cellCoord) {
-        if (robot.getChargeColor() == ChargeColor.EMPTY) {
-            return true;
-        }
-        Optional<Coord> lastTakenPP = robot.getLastTakenPowerPoint();
-        return ( robot.getChargeColor() == cell.getColor() 
-                && lastTakenPP.isPresent()
-                && lastTakenPP.get() != cellCoord); 
+        return robot.getChargeColor() == ChargeColor.EMPTY || isEnteringSecondPP(robot, cell, cellCoord); 
     }
 
     @Override
     public void moveRobotOn(IRobot robot, ICell cell, Coord cellCoord) {
-        robot.startCabel(cell, cellCoord);
+        if (!isEnteringSecondPP(robot, cell, cellCoord)) {
+            robot.startCabel(cell, cellCoord);
+        }
     }
+
+    private Boolean isEnteringSecondPP(IRobot robot, ICell cell, Coord cellCoord) {
+        Optional<Coord> lastTakenPP = robot.getLastTakenPowerPoint();
+        return( robot.getChargeColor() == cell.getColor() 
+            && lastTakenPP.isPresent()
+            && lastTakenPP.get() != cellCoord); 
+    }
+
 }
 
 /*

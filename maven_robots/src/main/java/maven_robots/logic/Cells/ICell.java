@@ -9,4 +9,6 @@ public interface ICell {
     public ChargeColor getColor();
 
     public void setColor(ChargeColor color);
+
+    public void Reset();
 }
