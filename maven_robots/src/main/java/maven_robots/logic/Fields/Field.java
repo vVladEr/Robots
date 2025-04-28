@@ -1,5 +1,7 @@
 package maven_robots.logic.Fields;
 
+import java.util.EmptyStackException;
+
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
@@ -31,15 +33,15 @@ public class Field {
         return cabelStorage;
     }
 
-    public void moveRobot(Direction dir) {
+    public Boolean moveRobot(Direction dir) {
         Coord nextPos = dir.getPosInDirection(robot.getCoord());
         if (!isCellInsideBorders(nextPos)) {
-            return;
+            return false;
         }
         ICell nextCell = field[nextPos.y][nextPos.x];
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
         if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos))
-            return; // добавить результат операции
+            return false; // добавить результат операции
         if (robot.isMovingBackward(nextPos)) {
             Coord robotPos = robot.getCoord();
             field[robotPos.y][robotPos.x].Reset();
@@ -48,6 +50,29 @@ public class Field {
         cellController.moveRobotOn(robot, nextCell, nextPos);
         if (robot.getIsCableFinished()) {
             saveCabel();
+        }
+        return true;
+    }
+
+    public void resertCurrentCabel()
+    {
+        Coord[] currentCabel = robot.getCurrentRoute();
+        robot.resetRobotRoute();
+        for (Coord coord : currentCabel) {
+            field[coord.y][coord.x].Reset();
+        }
+    }
+
+    public void resertLastCabel()
+    {
+        try {
+            Coord[] lastCabel = cabelStorage.resetLastCable();
+            for (Coord coord : lastCabel) {
+                field[coord.y][coord.x].Reset();
+            }
+        }
+        catch (EmptyStackException e) {
+
         }
     }
 

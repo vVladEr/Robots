@@ -29,9 +29,11 @@ public class CabelStorage implements ICabelStorage {
     }
 
     @Override
-    public void resetLastCable() throws EmptyStackException {
+    public Coord[] resetLastCable() throws EmptyStackException {
         ChargeColor lastColor = colorStack.pop();
+        Coord[] cabel = cabels.get(lastColor);
         cabels.remove(lastColor);
+        return cabel;
     }
 
 

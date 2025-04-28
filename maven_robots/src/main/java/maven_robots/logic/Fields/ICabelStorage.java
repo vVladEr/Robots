@@ -12,5 +12,5 @@ public interface ICabelStorage {
 
     public void saveCabel(Coord[] coords, ChargeColor color);
 
-    public void resetLastCable() throws EmptyStackException;
+    public Coord[] resetLastCable() throws EmptyStackException;
 }
