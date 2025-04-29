@@ -11,15 +11,22 @@ public class CabelStorage implements ICabelStorage {
 
     private HashMap<ChargeColor, Coord[]> cabels;
     private Stack<ChargeColor> colorStack;
+    private final int maxColorCount;
 
-    public CabelStorage() {
+    public CabelStorage(int colorCount) {
         cabels = new HashMap<ChargeColor, Coord[]>();
         colorStack = new Stack<ChargeColor>();
+        this.maxColorCount = colorCount;
     }
 
     @Override
     public HashMap<ChargeColor, Coord[]> getCabels() {
         return cabels;
+    }
+
+    @Override
+    public boolean isAllCabelsCreated() {
+        return maxColorCount == cabels.size();
     }
 
     @Override

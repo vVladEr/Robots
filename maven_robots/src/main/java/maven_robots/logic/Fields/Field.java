@@ -5,6 +5,7 @@ import java.util.EmptyStackException;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
+import maven_robots.logic.Cells.CellType;
 import maven_robots.logic.Cells.ICell;
 import maven_robots.logic.Cells.Controllers.ICellController;
 import maven_robots.logic.Cells.Controllers.ControllerManager.IControllerManager;
@@ -25,7 +26,19 @@ public class Field {
         this.field = field;
         this.robot = robot;
         this.controllerManager = controllerManager;
-        cabelStorage = new CabelStorage();
+        int ppCount = countColors();
+        cabelStorage = new CabelStorage(ppCount);
+    }
+
+    private int countColors() {
+        int ppCount = 0;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (field[y][x].getType() == CellType.POWER_POINT)
+                    ppCount += 1;
+            }
+        }
+        return ppCount / 2;
     }
 
     public ICabelStorage getCabelStorage() {
@@ -92,6 +105,8 @@ public class Field {
     }
     
     public boolean isGameFinished() {
+        if (!cabelStorage.isAllCabelsCreated())
+            return false;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (field[y][x].getColor() == ChargeColor.EMPTY)
