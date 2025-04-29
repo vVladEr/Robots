@@ -23,7 +23,7 @@ public class ConfirmationCloseTests {
     }
 
     @Test
-    public void internalFrameShouldClose_WhenYes() throws PropertyVetoException {
+    public void frameShouldClose_WhenYes() throws PropertyVetoException {
         ClosingListeners.setOptionPane(yesMockOptionPane);
         TestJFrame frame = new TestJFrame();
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
@@ -31,7 +31,7 @@ public class ConfirmationCloseTests {
     }
 
     @Test
-    public void internalFrameShouldNotClose_WhenNo() throws PropertyVetoException {
+    public void frameShouldNotClose_WhenNo() throws PropertyVetoException {
         ClosingListeners.setOptionPane(noMockOptionPane);
         TestJFrame frame = new TestJFrame();
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
