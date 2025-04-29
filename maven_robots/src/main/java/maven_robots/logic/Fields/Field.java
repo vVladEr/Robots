@@ -61,6 +61,17 @@ public class Field {
         for (Coord coord : currentCabel) {
             field[coord.y][coord.x].reset();
         }
+        Coord robotPos = robot.getCoord();
+
+        field[robotPos.y][robotPos.x].reset();
+        actualizeState(robot);
+    }
+
+    private void actualizeState(IRobot robot) {
+        Coord robotPos = robot.getCoord();
+        ICell robotCell = field[robotPos.y][robotPos.x];
+        ICellController cellController = controllerManager.getCellController(robotCell.getType());
+        cellController.moveRobotOn(robot, robotCell, robotPos);
     }
 
     public void resertLastCabel() {
