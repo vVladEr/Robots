@@ -51,6 +51,8 @@ public class Field {
             return false;
         }
         ICell nextCell = field[nextPos.y][nextPos.x];
+        if (isPowerPointConnected(nextCell))
+            return false;
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
         if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos))
             return false;
@@ -125,5 +127,10 @@ public class Field {
 
     private Boolean isCellInsideBorders(Coord pos) {
         return pos.x < width && pos.x >= 0 && pos.y < height && pos.y >= 0;
+    }
+
+    private Boolean isPowerPointConnected(ICell cell) {
+        return cell.getType() == CellType.POWER_POINT
+            && cabelStorage.getCabels().containsKey(cell.getColor());
     }
 }
