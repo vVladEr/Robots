@@ -7,6 +7,7 @@ import java.util.List;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
+import maven_robots.logic.Cells.CellType;
 import maven_robots.logic.Cells.ICell;
 import maven_robots.logic.Cells.Controllers.ICellController;
 import maven_robots.logic.Cells.Controllers.ControllerManager.IControllerManager;
@@ -29,7 +30,19 @@ public class Field {
         this.field = field;
         this.robot = robot;
         this.controllerManager = controllerManager;
-        cabelStorage = new CabelStorage();
+        int ppCount = countColors();
+        cabelStorage = new CabelStorage(ppCount);
+    }
+
+    private int countColors() {
+        int ppCount = 0;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (field[y][x].getType() == CellType.POWER_POINT)
+                    ppCount += 1;
+            }
+        }
+        return ppCount / 2;
     }
 
     public ICell[][] getField() {
@@ -50,13 +63,17 @@ public class Field {
             return false;
         }
         ICell nextCell = field[nextPos.y][nextPos.x];
+        if (isPowerPointConnected(nextCell))
+            return false;
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
         if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos))
             return false;
+
         if (robot.isMovingBackward(nextPos)) {
             Coord robotPos = robot.getCoord();
             field[robotPos.y][robotPos.x].reset();
         }
+
         robot.move(dir);
         cellController.moveRobotOn(robot, nextCell, nextPos);
         if (robot.getIsCableFinished()) {
@@ -73,6 +90,17 @@ public class Field {
         for (Coord coord : currentCabel) {
             field[coord.y][coord.x].reset();
         }
+        Coord robotPos = robot.getCoord();
+
+        field[robotPos.y][robotPos.x].reset();
+        actualizeState(robot);
+    }
+
+    private void actualizeState(IRobot robot) {
+        Coord robotPos = robot.getCoord();
+        ICell robotCell = field[robotPos.y][robotPos.x];
+        ICellController cellController = controllerManager.getCellController(robotCell.getType());
+        cellController.moveRobotOn(robot, robotCell, robotPos);
         notifyObservers();
     }
 
@@ -85,11 +113,18 @@ public class Field {
             notifyObservers();
         }
         catch (EmptyStackException e) {
-
         }
     }
 
+    public void resetAllCreatedCabels() {
+        for (int i = 0; i < cabelStorage.getCabels().size(); i++){
+            resertLastCabel();
+        }
+    }
+    
     public boolean isGameFinished() {
+        if (!cabelStorage.isAllCabelsCreated())
+            return false;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (field[y][x].getColor() == ChargeColor.EMPTY)
@@ -108,6 +143,11 @@ public class Field {
 
     private Boolean isCellInsideBorders(Coord pos) {
         return pos.x < width && pos.x >= 0 && pos.y < height && pos.y >= 0;
+    }
+
+    private Boolean isPowerPointConnected(ICell cell) {
+        return cell.getType() == CellType.POWER_POINT
+            && cabelStorage.getCabels().containsKey(cell.getColor());
     }
 
     public void addObserver(FieldObserver observer) {

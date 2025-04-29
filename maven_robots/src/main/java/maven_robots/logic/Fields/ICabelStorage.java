@@ -10,6 +10,8 @@ public interface ICabelStorage {
 
     public HashMap<ChargeColor, Coord[]> getCabels();
 
+    public boolean isAllCabelsCreated();
+
     public void saveCabel(Coord[] coords, ChargeColor color);
 
     public Coord[] resetLastCable() throws EmptyStackException;

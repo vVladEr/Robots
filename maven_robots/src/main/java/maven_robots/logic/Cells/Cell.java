@@ -32,7 +32,6 @@ public class Cell implements ICell {
         if (CellType.isColorChangable(cellType))
         {
             this.color = color;
-            return;
         }
     }
 
