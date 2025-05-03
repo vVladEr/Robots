@@ -18,8 +18,7 @@ public class ConnectionRobot implements IRobot {
     private Optional<Coord> lastTakenPowerPoint;
     private boolean isCableFinished = false;
 
-    public ConnectionRobot(Coord pos)
-    {
+    public ConnectionRobot(Coord pos) {
         this.pos = pos;
         chargeColor = ChargeColor.EMPTY;
         prevPositions = new Stack<>();
@@ -49,13 +48,14 @@ public class ConnectionRobot implements IRobot {
     }
 
     private void updateStack(Coord nextPos) {
-        if (!lastTakenPowerPoint.isPresent()) 
+        if (!lastTakenPowerPoint.isPresent()) {
             return;
+        }
+            
 
         if (isMovingBackward(nextPos)) {
             prevPositions.pop();
-        }
-        else {
+        } else {
             prevPositions.add(pos);
         } 
 

@@ -9,8 +9,8 @@ public class BaseInternalJFrame extends JInternalFrame {
     public BaseInternalJFrame(final String title, final boolean resizable,
             final boolean closable,
             final boolean maximizable, final boolean iconable) {
-            super(title, resizable, closable, maximizable, iconable);
-            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-            addInternalFrameListener(ClosingListeners.getFrameClosingListener());
+        super(title, resizable, closable, maximizable, iconable);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addInternalFrameListener(ClosingListeners.getFrameClosingListener());
     }
 }

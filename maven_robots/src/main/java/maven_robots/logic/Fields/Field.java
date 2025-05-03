@@ -38,8 +38,10 @@ public class Field {
         int ppCount = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (field[y][x].getType() == CellType.POWER_POINT)
+                if (field[y][x].getType() == CellType.POWER_POINT) {
                     ppCount += 1;
+                }
+                    
             }
         }
         return ppCount / 2;
@@ -63,11 +65,15 @@ public class Field {
             return false;
         }
         ICell nextCell = field[nextPos.y][nextPos.x];
-        if (isPowerPointConnected(nextCell))
+        if (isPowerPointConnected(nextCell)) {
             return false;
+        }
+            
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
-        if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos))
+        if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos)) {
             return false;
+        }
+            
 
         if (robot.isMovingBackward(nextPos)) {
             Coord robotPos = robot.getCoord();
@@ -111,8 +117,7 @@ public class Field {
                 field[coord.y][coord.x].reset();
             }
             notifyObservers();
-        }
-        catch (EmptyStackException e) {
+        } catch (EmptyStackException e) {
         }
     }
 
@@ -123,12 +128,16 @@ public class Field {
     }
     
     public boolean isGameFinished() {
-        if (!cabelStorage.isAllCabelsCreated())
+        if (!cabelStorage.isAllCabelsCreated()) {
             return false;
+        }
+            
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (field[y][x].getColor() == ChargeColor.EMPTY)
+                if (field[y][x].getColor() == ChargeColor.EMPTY) {
                     return false;
+                }
+                    
             }
         }
         return true;
@@ -164,3 +173,9 @@ public class Field {
         }
     }
 }
+
+/*
+ * баги:
+ *  - через точки можно ходить, но нельзя брать цвет
+ *  - ресет на пп заново выдаёт цвет
+ */

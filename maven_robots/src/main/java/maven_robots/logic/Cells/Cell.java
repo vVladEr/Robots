@@ -10,8 +10,7 @@ public class Cell implements ICell {
 
     private final ChargeColor baseColor;
 
-    public Cell(CellType cellType, ChargeColor color)
-    {
+    public Cell(CellType cellType, ChargeColor color) {
         this.cellType = cellType;
         this.color = color;
         baseColor = color;
@@ -29,8 +28,7 @@ public class Cell implements ICell {
 
     @Override
     public void setColor(ChargeColor color) {
-        if (CellType.isColorChangable(cellType))
-        {
+        if (CellType.isColorChangable(cellType)) {
             this.color = color;
         }
     }

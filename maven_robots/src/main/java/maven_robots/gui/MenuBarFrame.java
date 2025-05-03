@@ -12,7 +12,7 @@ import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 
 public class MenuBarFrame extends JFrame implements ILocalizable {
-  private final MainApplicationListeners languageChangeListener;
+    private final MainApplicationListeners languageChangeListener;
 
     private final JMenuBar menuBar = new JMenuBar();
 

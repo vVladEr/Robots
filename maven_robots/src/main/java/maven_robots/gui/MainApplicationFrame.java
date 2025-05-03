@@ -14,8 +14,7 @@ import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 import maven_robots.logic.Fields.Field;
 
-public final class MainApplicationFrame extends BaseJFrame implements ILocalizable
-{
+public final class MainApplicationFrame extends BaseJFrame implements ILocalizable {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuBarFrame menuBarFrame;
     private final LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());
@@ -48,8 +47,8 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         int inset = 50;        
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setBounds(inset, inset,
-            screenSize.width  - inset*2,
-            screenSize.height - inset*2);
+            screenSize.width  - inset * 2,
+            screenSize.height - inset * 2);
 
         setContentPane(desktopPane);
         
@@ -64,15 +63,14 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
     
     protected void fillLogWindow()
     {
-        logWindow.setLocation(10,10);
+        logWindow.setLocation(10, 10);
         logWindow.setSize(300, 800);
         setMinimumSize(logWindow.getSize());
         logWindow.pack();
         Logger.debug(LocalizationManager.getStringByName("log.debug.title"));
     }
     
-    protected void addWindow(JInternalFrame frame)
-    {
+    protected void addWindow(JInternalFrame frame) {
         desktopPane.add(frame);
         frame.setVisible(true);
     }
@@ -89,15 +87,12 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
-    private void setLookAndFeel(String className)
-    {
-        try
-        {
+    private void setLookAndFeel(String className) {
+        try {
             UIManager.setLookAndFeel(className);
             SwingUtilities.updateComponentTreeUI(this);
+        } catch (ClassNotFoundException | InstantiationException
+            | IllegalAccessException | UnsupportedLookAndFeelException e) {
         }
-        catch (ClassNotFoundException | InstantiationException
-            | IllegalAccessException | UnsupportedLookAndFeelException e)
-        { }
     }
 }

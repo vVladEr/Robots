@@ -27,7 +27,7 @@ public class RobotTargetTests {
         Dimension dim = new Dimension(50, 50);
         robotLogic.setTargetPosition(new Point(1, 1));
         robotLogic.setRobotPosition(startRobot);
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             robotLogic.update(dim);
             RobotData actualRobot = robotLogic.getRobot();
             Assert.assertEquals(startRobot.x, actualRobot.x);
