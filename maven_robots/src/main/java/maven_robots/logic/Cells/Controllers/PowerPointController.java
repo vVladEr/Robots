@@ -11,7 +11,8 @@ public class PowerPointController implements ICellController {
 
     @Override
     public Boolean isRobotAllowedToEnter(IRobot robot, ICell cell, Coord cellCoord) {
-        return robot.getChargeColor() == ChargeColor.EMPTY || isEnteringSecondPP(robot, cell, cellCoord); 
+        return robot.getChargeColor() == ChargeColor.EMPTY
+            || isEnteringSecondPP(robot, cell, cellCoord); 
     }
 
     @Override
@@ -25,7 +26,7 @@ public class PowerPointController implements ICellController {
 
     private Boolean isEnteringSecondPP(IRobot robot, ICell cell, Coord cellCoord) {
         Optional<Coord> lastTakenPP = robot.getLastTakenPowerPoint();
-        return( robot.getChargeColor() == cell.getColor() 
+        return (robot.getChargeColor() == cell.getColor() 
             && lastTakenPP.isPresent()
             && !lastTakenPP.get().equals(cellCoord)); 
     }

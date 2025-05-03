@@ -15,7 +15,7 @@ public class ListenersTests {
         
         Assert.assertEquals(1, logSource.listenersCount());
         try {
-        logWindow.setClosed(true);
+            logWindow.setClosed(true);
         } catch (PropertyVetoException ex) {
             System.err.println("Closing Exception");
         }

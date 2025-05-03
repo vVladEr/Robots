@@ -3,11 +3,11 @@ package maven_robots.logic;
 import java.awt.Color;
 
 public enum ChargeColor {
-    EMPTY ("w", Color.WHITE),
-    RED ("r", Color.RED),
-    GREEN ("g", Color.GREEN),
-    BLUE ("b", Color.BLUE),
-    PURPLE ("p", new Color(128, 0, 128));
+    EMPTY("w", Color.WHITE),
+    RED("r", Color.RED),
+    GREEN("g", Color.GREEN),
+    BLUE("b", Color.BLUE),
+    PURPLE("p", new Color(128, 0, 128));
 
     private final String colorCode;
     private final Color awtColor;

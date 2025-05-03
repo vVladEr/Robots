@@ -7,7 +7,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
-import maven_robots.logic.Cells.CellType;
 import maven_robots.logic.Cells.ICell;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
@@ -46,7 +45,8 @@ public class GameField extends JPanel implements FieldObserver, KeyListener {
         }
 
         g.setColor(Color.BLACK);
-        g.fillOval(startX + robotCoord.x * cellSize, startY + robotCoord.y * cellSize, cellSize, cellSize);
+        g.fillOval(startX + robotCoord.x * cellSize, startY + robotCoord.y * cellSize,
+                    cellSize, cellSize);
 
         if (field.isGameFinished()) {
             g.setColor(Color.YELLOW);

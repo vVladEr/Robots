@@ -11,7 +11,7 @@ public class BaseCellController implements ICellController {
     public Boolean isRobotAllowedToEnter(IRobot robot, ICell cell, Coord cellCoord) {
         if (cell.getColor() == ChargeColor.EMPTY 
             || robot.getChargeColor() == ChargeColor.EMPTY) {
-                return true; 
+            return true; 
         }
         return (robot.getChargeColor() == cell.getColor() 
                 && robot.isMovingBackward(cellCoord));
