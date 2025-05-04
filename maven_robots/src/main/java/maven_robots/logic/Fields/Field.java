@@ -65,9 +65,7 @@ public class Field {
             return false;
         }
         ICell nextCell = field[nextPos.y][nextPos.x];
-        if (isPowerPointConnected(nextCell)) {
-            return false;
-        }
+
             
         ICellController cellController = controllerManager.getCellController(nextCell.getType());
         if (!cellController.isRobotAllowedToEnter(robot, nextCell, nextPos)) {
@@ -81,7 +79,9 @@ public class Field {
         }
 
         robot.move(dir);
-        cellController.moveRobotOn(robot, nextCell, nextPos);
+        if (!isPowerPointConnected(nextCell)) {
+            cellController.moveRobotOn(robot, nextCell, nextPos);
+        }
         if (robot.getIsCableFinished()) {
             saveCabel();
         }
@@ -106,7 +106,9 @@ public class Field {
         Coord robotPos = robot.getCoord();
         ICell robotCell = field[robotPos.y][robotPos.x];
         ICellController cellController = controllerManager.getCellController(robotCell.getType());
-        cellController.moveRobotOn(robot, robotCell, robotPos);
+        if (!isPowerPointConnected(robotCell)) {
+            cellController.moveRobotOn(robot, robotCell, robotPos);
+        }
         notifyObservers();
     }
 
@@ -122,7 +124,7 @@ public class Field {
     }
 
     public void resetAllCreatedCabels() {
-        for (int i = 0; i < cabelStorage.getCabels().size(); i++){
+        for (int i = 0; i < cabelStorage.getCabels().size(); i++) {
             resertLastCabel();
         }
     }
