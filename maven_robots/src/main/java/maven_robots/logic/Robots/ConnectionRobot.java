@@ -51,8 +51,7 @@ public class ConnectionRobot implements IRobot {
         if (!lastTakenPowerPoint.isPresent()) {
             return;
         }
-            
-
+        
         if (isMovingBackward(nextPos)) {
             prevPositions.pop();
         } else {
