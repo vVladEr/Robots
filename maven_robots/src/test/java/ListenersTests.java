@@ -3,8 +3,7 @@ import java.beans.PropertyVetoException;
 import org.junit.Assert;
 import org.junit.Test;
 
-
-import maven_robots.gui.LogWindow;
+import Helpers.TestWindows.TestLogWindow;
 import maven_robots.log.LogWindowSource;
 
 public class ListenersTests {
@@ -12,7 +11,7 @@ public class ListenersTests {
     @Test
     public void removeListenersWhenWindowClosed() {
         LogWindowSource logSource = new LogWindowSource(5);
-        LogWindow logWindow = new LogWindow(logSource);
+        TestLogWindow logWindow = new TestLogWindow(logSource);
         
         Assert.assertEquals(1, logSource.listenersCount());
         try {

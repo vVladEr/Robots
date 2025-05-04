@@ -5,6 +5,8 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
+import maven_robots.gui.OptionPane.DefaultOptionPane;
+import maven_robots.gui.OptionPane.IOptionPane;
 import maven_robots.localization.LocalizationManager;
 
 import java.awt.event.WindowAdapter;
@@ -19,19 +21,25 @@ public final class ClosingListeners {
                 LocalizationManager.getStringByName("option.no") };
     }
 
+    private static IOptionPane optionPane = new DefaultOptionPane();
+
+    public static void setOptionPane(IOptionPane pane) {
+        optionPane = pane;
+    }
+
     private static InternalFrameListener frameClosingListener = new InternalFrameAdapter() {
         @Override
         public void internalFrameClosing(final InternalFrameEvent e) {
             String[] yesNoOptions = getYesNoOptions();
-            int op = JOptionPane.showOptionDialog(
-                    e.getInternalFrame(),
-                    LocalizationManager.getStringByName("window.closing.text"),
-                    LocalizationManager.getStringByName("window.closing.title"),
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    yesNoOptions,
-                    yesNoOptions[0]);
+            int op = optionPane.showOptionDialog(
+                e.getInternalFrame(),
+                LocalizationManager.getStringByName("window.closing.text"),
+                LocalizationManager.getStringByName("window.closing.title"),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                yesNoOptions,
+                yesNoOptions[0]);
 
             if (op == JOptionPane.YES_OPTION) {
                 e.getInternalFrame().dispose();
@@ -43,7 +51,7 @@ public final class ClosingListeners {
         @Override
         public void windowClosing(final WindowEvent e) {
             String[] yesNoOptions = getYesNoOptions();
-            int op = JOptionPane.showOptionDialog(
+            int op = optionPane.showOptionDialog(
                 e.getWindow(),
                 LocalizationManager.getStringByName("app.closing.text"),
                 LocalizationManager.getStringByName("app.closing.title"),
@@ -51,7 +59,7 @@ public final class ClosingListeners {
             JOptionPane.QUESTION_MESSAGE, null, yesNoOptions, yesNoOptions[0]);
 
             if (op == JOptionPane.YES_OPTION) {
-                System.exit(0);
+                e.getWindow().dispose();
             }
         }
     };
