@@ -3,40 +3,38 @@ package maven_robots.gui;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.TextArea;
-
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
+import maven_robots.gui.BaseClasses.BaseInternalJFrame;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
 import maven_robots.log.LogWindowSource;
 
-public class LogWindow extends JInternalFrame implements LogChangeListener
+public class LogWindow extends BaseInternalJFrame implements LogChangeListener
 {
-    private LogWindowSource m_logSource;
-    private TextArea m_logContent;
+    private final LogWindowSource m_logSource;
+    private final TextArea m_logContent;
     private final InternalFrameAdapter logRemoveFrameAdapter = new InternalFrameAdapter() {
         @Override
-        public void internalFrameClosing(InternalFrameEvent e)
+        public void internalFrameClosed(InternalFrameEvent e)
         {
             m_logSource.unregisterListener((LogChangeListener)e.getInternalFrame());
         }
     };
 
-    public LogWindow(LogWindowSource logSource) 
-    {
-        super("Протокол работы", true, true, true, true);
+    public LogWindow(LogWindowSource logSource) {
+        super("log.title", true, true, true, true);
         m_logSource = logSource;
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
         m_logContent.setSize(200, 500);
-        addInternalFrameListener(logRemoveFrameAdapter);
         
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_logContent, BorderLayout.CENTER);
         getContentPane().add(panel);
+        addInternalFrameListener(logRemoveFrameAdapter);
         pack();
         updateLogContent();
     }
