@@ -14,7 +14,7 @@ import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 import maven_robots.logic.Fields.Field;
 
-public final class MainApplicationFrame extends BaseJFrame implements ILocalizable {
+public final class MainApplicationFrame extends BaseJFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();
     private final MenuBarFrame menuBarFrame;
     private final LogWindow logWindow = new LogWindow(Logger.getDefaultLogSource());

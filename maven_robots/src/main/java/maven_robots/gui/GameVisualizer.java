@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import maven_robots.logic.RobotData;
 import maven_robots.logic.RobotLogic;
 
-public class GameVisualizer extends JPanel implements ILocalizable {
+public class GameVisualizer extends JPanel {
     private final Timer m_timer = initTimer();
     private final RobotLogic robotLogic;
     

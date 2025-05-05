@@ -12,7 +12,7 @@ import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
 import maven_robots.log.LogWindowSource;
 
-public class LogWindow extends BaseInternalJFrame implements LogChangeListener, ILocalizable {
+public class LogWindow extends BaseInternalJFrame implements LogChangeListener {
     private final LogWindowSource m_logSource;
     private final TextArea m_logContent;
     private final InternalFrameAdapter logRemoveFrameAdapter = new InternalFrameAdapter() {

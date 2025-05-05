@@ -1,6 +1,7 @@
 package maven_robots.gui;
 
 import java.awt.event.KeyEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -12,7 +13,7 @@ import maven_robots.localization.Languages;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 
-public class MenuBarFrame extends JFrame implements ILocalizable {
+public class MenuBarFrame extends BaseJFrame {
     private final MainApplicationListeners languageChangeListener;
 
     private final JMenuBar menuBar = new JMenuBar();
