@@ -12,7 +12,7 @@ public class LocalizationTests {
     public void changeTextOnChangeLocale() {
         LocalizationManager.setLocale(Languages.RU);
         LogWindowSource logSource = new LogWindowSource(5);
-        LogWindow logWindow = new LogWindow(logSource);
+        LogWindow logWindow = new LogWindow(logSource, "default");
         String expectedRuTile = LocalizationManager.getStringByName("log.title");
         Assert.assertEquals(expectedRuTile, logWindow.getTitle());
 

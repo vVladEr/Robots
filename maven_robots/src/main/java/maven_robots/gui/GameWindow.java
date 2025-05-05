@@ -9,23 +9,28 @@ import maven_robots.logic.Fields.Field;
 
 public class GameWindow extends BaseInternalJFrame implements ILocalizable
 {
-    private final GameVisualizer m_visualizer;
 
-    public GameWindow(Field field)
-    {
-        super(LocalizationManager.getStringByName("game.title"), true, true, true, true);
-        m_visualizer = new GameVisualizer();
+    public GameWindow(Field field, String profileName) {
+        super(LocalizationManager.getStringByName("game.title"), true, true, true, true, "gameWindow");
+
         GameField gameField = new GameField(field);
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(gameField, BorderLayout.CENTER);
+        panel.add(gameField);
         getContentPane().add(panel);
-        pack();
+        //pack();
+        
+        
+        if (!profileName.equals("default")) {
+            loadFromProfile(profileName, panel);
+        }
+        else {
+
+        }  
     }
 
     @Override
     public void changeLanguage() {
         this.setTitle(LocalizationManager.getStringByName("game.title"));
-        m_visualizer.changeLanguage();
 
         this.invalidate();
     }

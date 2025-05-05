@@ -12,7 +12,7 @@ public class ListenersTests {
     @Test
     public void removeListenersWhenWindowClosed() {
         LogWindowSource logSource = new LogWindowSource(5);
-        LogWindow logWindow = new LogWindow(logSource);
+        LogWindow logWindow = new LogWindow(logSource, "default");
         
         Assert.assertEquals(1, logSource.listenersCount());
         try {

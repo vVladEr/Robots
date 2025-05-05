@@ -53,7 +53,7 @@ public final class ClosingListeners {
                 null, yesNoOptions, yesNoOptions[0]);
 
             if (op == JOptionPane.YES_OPTION) {
-                System.exit(0);
+                e.getWindow().dispose();
             }
         }
     };
