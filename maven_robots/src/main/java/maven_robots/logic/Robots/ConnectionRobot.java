@@ -1,5 +1,6 @@
 package maven_robots.logic.Robots;
 
+import java.util.ArrayList;
 import java.util.EmptyStackException;
 import java.util.Optional;
 import java.util.Stack;
@@ -74,7 +75,11 @@ public class ConnectionRobot implements IRobot {
     }
 
     public Coord[] getCurrentCabel() {
-        return prevPositions.toArray(new Coord [0]);
+        ArrayList<Coord> cabel = new ArrayList<Coord>(prevPositions);
+        if (lastTakenPowerPoint.isPresent()) {
+            cabel.add(pos);
+        }
+        return cabel.toArray(new Coord[0]);
     }
 
     public void resetCurrentCabel() {

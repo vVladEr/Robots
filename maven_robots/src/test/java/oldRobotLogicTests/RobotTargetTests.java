@@ -1,4 +1,4 @@
-package RobotLogicTests;
+package oldRobotLogicTests;
 
 import org.junit.Test;
 
