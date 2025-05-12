@@ -7,7 +7,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
-import maven_robots.gui.tmpBaseClasses.BaseJFrame;
+import maven_robots.gui.baseClasses.BaseJFrame;
 import maven_robots.localization.Languages;
 
 import maven_robots.localization.LocalizationManager;

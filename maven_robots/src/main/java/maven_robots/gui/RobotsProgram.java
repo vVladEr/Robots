@@ -6,7 +6,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import maven_robots.data.parser.Parser;
-import maven_robots.logic.tmpFields.Field;
+import maven_robots.logic.fields.Field;
 
 public class RobotsProgram {
     public static void main(String[] args) {

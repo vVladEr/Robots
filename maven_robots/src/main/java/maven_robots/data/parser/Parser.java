@@ -6,15 +6,15 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import maven_robots.logic.tmpFields.Field;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
-import maven_robots.logic.tmpCells.Cell;
-import maven_robots.logic.tmpCells.CellType;
-import maven_robots.logic.tmpCells.ICell;
-import maven_robots.logic.tmpCells.tmpControllers.tmpControllerManager.ControllerManager;
-import maven_robots.logic.tmpRobots.ConnectionRobot;
-import maven_robots.logic.tmpRobots.IRobot;
+import maven_robots.logic.cells.Cell;
+import maven_robots.logic.cells.CellType;
+import maven_robots.logic.cells.ICell;
+import maven_robots.logic.cells.controllers.controllerManager.ControllerManager;
+import maven_robots.logic.fields.Field;
+import maven_robots.logic.robots.ConnectionRobot;
+import maven_robots.logic.robots.IRobot;
 
 public class Parser {
     private String basePath;

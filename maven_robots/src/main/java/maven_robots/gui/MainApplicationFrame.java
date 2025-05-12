@@ -9,10 +9,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import maven_robots.gui.tmpBaseClasses.BaseJFrame;
+import maven_robots.gui.baseClasses.BaseJFrame;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
-import maven_robots.logic.tmpFields.Field;
+import maven_robots.logic.fields.Field;
 
 public final class MainApplicationFrame extends BaseJFrame {
     private final JDesktopPane desktopPane = new JDesktopPane();

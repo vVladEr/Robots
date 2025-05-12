@@ -8,8 +8,8 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.event.InternalFrameListener;
 
-import maven_robots.gui.tmpOptionPane.DefaultOptionPane;
-import maven_robots.gui.tmpOptionPane.IOptionPane;
+import maven_robots.gui.optionPane.DefaultOptionPane;
+import maven_robots.gui.optionPane.IOptionPane;
 import maven_robots.localization.LocalizationManager;
 
 

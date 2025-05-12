@@ -3,7 +3,7 @@ import java.beans.PropertyVetoException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import tmpHelpers.tmpTestWindows.TestLogWindow;
+import helpers.testWindows.TestLogWindow;
 import maven_robots.log.LogWindowSource;
 
 public class ListenersTests {
