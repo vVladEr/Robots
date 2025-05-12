@@ -11,7 +11,8 @@ public class PowerPointController implements ICellController {
 
     @Override
     public Boolean isRobotAllowedToEnter(IRobot robot, ICell cell, Coord cellCoord) {
-        return robot.getChargeColor() == ChargeColor.EMPTY
+        return robot.getChargeColor() == ChargeColor.EMPTY 
+            || robot.isMovingBackward(cellCoord)
             || isEnteringSecondPP(robot, cell, cellCoord); 
     }
 

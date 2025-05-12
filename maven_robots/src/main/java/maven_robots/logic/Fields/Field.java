@@ -90,15 +90,12 @@ public class Field {
         return true;
     }
 
-    public void resertCurrentCabel() {
+    public void resetCurrentCabel() {
         Coord[] currentCabel = robot.getCurrentCabel();
         robot.resetCurrentCabel();
         for (Coord coord : currentCabel) {
             field[coord.y][coord.x].reset();
         }
-        Coord robotPos = robot.getCoord();
-
-        field[robotPos.y][robotPos.x].reset();
         actualizeState(robot);
     }
 

@@ -76,7 +76,7 @@ public class GameField extends JPanel implements FieldObserver, KeyListener {
                 field.moveRobot(Direction.RIGHT);
                 break;
             case KeyEvent.VK_C:
-                field.resertCurrentCabel();
+                field.resetCurrentCabel();
                 break;
             case KeyEvent.VK_R:
                 field.resertLastCabel();

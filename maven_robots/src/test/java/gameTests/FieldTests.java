@@ -171,6 +171,28 @@ public class FieldTests extends Assert {
         Assert.assertEquals(ChargeColor.EMPTY, field.getField()[0][3].getColor());
     }
 
+    @Test
+    public void robotShouldMovesWhenMoveBackwardsOnPowerPoint() {
+        Coord startCoord = new Coord(0, 0);
+        IRobot robot = new ConnectionRobot(startCoord);
+        Field field = new Field(
+            new ICell[][] {{   
+                    new Cell(CellType.CELL, ChargeColor.EMPTY),
+                    new Cell(CellType.POWER_POINT, ChargeColor.PURPLE),
+                    new Cell(CellType.CELL, ChargeColor.EMPTY)
+                }},
+            robot, 
+            new ControllerManager());
+        Boolean result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.LEFT);
+        Assert.assertTrue(result);
+    }
+
 
     @Test
     public void shouldSaveCabelWhenCabelFinished() {
@@ -205,6 +227,103 @@ public class FieldTests extends Assert {
         };
         Assert.assertArrayEquals(expectedCabelCoords, cabelStorage.getCabels().get(cabelColor));
         Assert.assertTrue(cabelStorage.isAllCabelsCreated());
+    }
+
+    @Test
+    public void shouldResetCurrentCabelCorrectly() {
+        Coord startCoord = new Coord(0, 0);
+        ChargeColor cabelColor = ChargeColor.PURPLE;
+        IRobot robot = new ConnectionRobot(startCoord);
+        Field field = new Field(
+            new ICell[][] {{   
+                    new Cell(CellType.CELL, ChargeColor.EMPTY),
+                    new Cell(CellType.POWER_POINT, cabelColor),
+                    new Cell(CellType.CELL, ChargeColor.EMPTY),
+                    new Cell(CellType.CELL, ChargeColor.EMPTY)
+                }},
+            robot, 
+            new ControllerManager());
+        Boolean result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
         
+        Coord[] curCabel = field.getRobot().getCurrentCabel();
+        for (int i = 1; i < curCabel.length; i++) {
+            Assert.assertEquals(cabelColor, 
+                field.getField()[curCabel[i].y][curCabel[i].x].getColor());
+        }
+        field.resetCurrentCabel();
+        
+        for (int i = 1; i < curCabel.length; i++) {
+            Assert.assertEquals(ChargeColor.EMPTY, 
+                field.getField()[curCabel[i].y][curCabel[i].x].getColor());
+        }
+    }
+
+    @Test
+    public void shouldResetLastCabelCorrectly() {
+        Coord startCoord = new Coord(0, 0);
+        ChargeColor cabelColor = ChargeColor.PURPLE;
+        IRobot robot = new ConnectionRobot(startCoord);
+        Field field = new Field(
+            new ICell[][] {{   
+                    new Cell(CellType.CELL, ChargeColor.EMPTY),
+                    new Cell(CellType.POWER_POINT, cabelColor),
+                    new Cell(CellType.CELL, ChargeColor.EMPTY),
+                    new Cell(CellType.POWER_POINT, cabelColor),
+                    new Cell(CellType.CELL, ChargeColor.EMPTY)
+                }},
+            robot, 
+            new ControllerManager());
+        Boolean result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+        
+        field.resertLastCabel();
+
+        ICabelStorage cabelStorage = field.getCabelStorage();
+        Assert.assertEquals(0, cabelStorage.getCabels().size());
+
+        Assert.assertEquals(ChargeColor.EMPTY, field.getField()[0][2].getColor());
+    }
+
+    @Test
+    public void shouldFinishTheGameThenAllCoveredAndAllPowerPointsConnected() {
+        Coord startCoord = new Coord(1, 0);
+        ChargeColor cabelColor = ChargeColor.PURPLE;
+        IRobot robot = new ConnectionRobot(startCoord);
+        Field field = new Field(
+            new ICell[][] {{   
+                    new Cell(CellType.POWER_POINT, cabelColor),
+                    new Cell(CellType.CELL, ChargeColor.EMPTY),
+                    new Cell(CellType.POWER_POINT, cabelColor)
+                }},
+            robot, 
+            new ControllerManager());
+        Boolean result = field.moveRobot(Direction.LEFT);
+        Assert.assertTrue(result);
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        Assert.assertFalse(field.isGameFinished());
+
+        result = field.moveRobot(Direction.RIGHT);
+        Assert.assertTrue(result);
+
+        Assert.assertTrue(field.isGameFinished());
     }
 }
