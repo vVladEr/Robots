@@ -7,3 +7,4 @@ eclipse.bat
 .settings/
 target/
 maven_robots/target
+/maven_robots/out

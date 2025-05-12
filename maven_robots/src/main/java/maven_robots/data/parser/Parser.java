@@ -17,15 +17,21 @@ import maven_robots.logic.Robots.ConnectionRobot;
 import maven_robots.logic.Robots.IRobot;
 
 public class Parser {
-    private final String basePath;
+    private String basePath;
 
-    public Parser(String basePath) {
-        this.basePath = basePath;
+    public Parser() {
+        try {
+            String classPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            basePath = classPath.substring(1) + "maven_robots/data/levels";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Field parseLevel(int levelNumber) {
+        System.out.println(basePath);
         String currentPath = String.format("%s/%d.txt", basePath, levelNumber);
-
+        System.out.println(currentPath);
         List<ICell[]> cells = new ArrayList<>();
         IRobot robot = new ConnectionRobot(new Coord(0, 0));
         int y = 0;

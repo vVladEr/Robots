@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import javax.swing.JFrame;
@@ -24,8 +25,15 @@ public class BaseJFrame extends JFrame implements ISaveable{
 
     @Override
     public void saveToProfile(String profileName) {
-        String basePath = "D:/codes/java/Robots/maven_robots/src/main/java/maven_robots/data/profiles";
-        String currentPath = String.format("%s/%s/frames.properties", basePath, profileName);
+        String path = "";
+        try {
+            String classPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            path = classPath.substring(1) + "maven_robots/data/profiles";
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        String currentPath = String.format("%s/%s/frames.properties", path, profileName);
         File file = new File(currentPath);
         
         Properties properties = new Properties();
@@ -45,8 +53,15 @@ public class BaseJFrame extends JFrame implements ISaveable{
 
     @Override
     public void loadFromProfile(String profileName, Component comp) {
-        String basePath = "D:/codes/java/Robots/maven_robots/src/main/java/maven_robots/data/profiles";
-        String currentPath = String.format("%s/%s/frames.properties", basePath, profileName);
+        String path = "";
+        try {
+            String classPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            path = classPath.substring(1) + "maven_robots/data/profiles";
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        String currentPath = String.format("%s/%s/frames.properties", path, profileName);
         File file = new File(currentPath);
         
         Properties properties = new Properties();

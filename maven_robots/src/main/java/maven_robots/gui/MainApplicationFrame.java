@@ -6,6 +6,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
@@ -13,6 +14,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import maven_robots.data.parser.Parser;
 import maven_robots.gui.BaseClasses.BaseJFrame;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
@@ -74,16 +76,21 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         WindowAdapter windowClosingAdapter = new WindowAdapter() {
             @Override
             public void windowClosed(final WindowEvent e) {
-                File profilePath = new File("D:/codes/java/Robots/maven_robots/src/main/java/maven_robots/data/profiles/test");
+
                 try {
+                    String classPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+                    String path = classPath.substring(1) + "maven_robots/data/profiles";
+                    File profilePath = new File(path + "/test");
                     profilePath.mkdir();
-                    File profile = new File("D:/codes/java/Robots/maven_robots/src/main/java/maven_robots/data/profiles/test/frames.properties");
+                    File profile = new File(path + "/test/frames.properties");
                     profile.createNewFile();
                     saveToProfile("test");
                     
-                } catch (IOException e1) {
+                } catch (IOException e1 ) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
+                } catch (URISyntaxException e2) {
+                    e2.printStackTrace();
                 }
                 System.exit(0);
             }

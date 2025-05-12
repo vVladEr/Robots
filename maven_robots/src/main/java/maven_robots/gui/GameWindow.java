@@ -19,7 +19,6 @@ public class GameWindow extends BaseInternalJFrame implements ILocalizable
         getContentPane().add(panel);
         //pack();
         
-        
         if (!profileName.equals("default")) {
             loadFromProfile(profileName, panel);
         }

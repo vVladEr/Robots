@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="955a92cf-0a33-43d0-8705-8059cea9aef1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/robots/src/localization/messages_en.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/robots/src/localization/messages_ru.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robots/src/gui/GameVisualizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/robots/src/gui/GameVisualizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/src/main/java/maven_robots/gui/GameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/src/main/java/maven_robots/gui/GameWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/ClosingListeners$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/ClosingListeners$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/ClosingListeners$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/ClosingListeners$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/ClosingListeners.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/ClosingListeners.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/GameVisualizer.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/GameVisualizer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/GameWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/GameWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/LogWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/LogWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/MainApplicationFrame.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/MainApplicationFrame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/RobotsProgram.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/gui/RobotsProgram.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/LogEntry.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/LogEntry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/LogLevel.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/LogLevel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/LogWindowSource.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/LogWindowSource.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/Logger.class" beforeDir="false" afterPath="$PROJECT_DIR$/maven_robots/target/classes/maven_robots/log/Logger.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2uRE9OSSpZPVHO1dGPBD5pw4R2T" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -28,6 +41,11 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "save__state",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Projects/Java/Robots",
     "node.js.detected.package.eslint": "true",
