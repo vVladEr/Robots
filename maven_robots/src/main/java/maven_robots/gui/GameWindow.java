@@ -3,8 +3,8 @@ package maven_robots.gui;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-import maven_robots.gui.BaseClasses.BaseInternalJFrame;
-import maven_robots.logic.Fields.Field;
+import maven_robots.gui.tmpBaseClasses.BaseInternalJFrame;
+import maven_robots.logic.tmpFields.Field;
 
 public class GameWindow extends BaseInternalJFrame {
     public GameWindow(Field field)

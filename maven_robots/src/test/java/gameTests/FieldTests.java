@@ -10,14 +10,14 @@ import org.junit.runner.RunWith;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
-import maven_robots.logic.Cells.Cell;
-import maven_robots.logic.Cells.CellType;
-import maven_robots.logic.Cells.ICell;
-import maven_robots.logic.Cells.Controllers.ControllerManager.ControllerManager;
-import maven_robots.logic.Fields.Field;
-import maven_robots.logic.Fields.ICabelStorage;
-import maven_robots.logic.Robots.IRobot;
-import maven_robots.logic.Robots.ConnectionRobot;
+import maven_robots.logic.tmpCells.Cell;
+import maven_robots.logic.tmpCells.CellType;
+import maven_robots.logic.tmpCells.ICell;
+import maven_robots.logic.tmpCells.tmpControllers.tmpControllerManager.ControllerManager;
+import maven_robots.logic.tmpFields.Field;
+import maven_robots.logic.tmpFields.ICabelStorage;
+import maven_robots.logic.tmpRobots.ConnectionRobot;
+import maven_robots.logic.tmpRobots.IRobot;
 
 
 @RunWith(Theories.class)

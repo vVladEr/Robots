@@ -5,12 +5,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
-import Helpers.MockOptionPanes.NoMockOptionPane;
-import Helpers.MockOptionPanes.YesMockOptionPane;
-import Helpers.TestWindows.TestJFrame;
+import tmpHelpers.tmpMockOptionPanes.NoMockOptionPane;
+import tmpHelpers.tmpMockOptionPanes.YesMockOptionPane;
+import tmpHelpers.tmpTestWindows.TestJFrame;
 import maven_robots.gui.ClosingListeners;
-import maven_robots.gui.OptionPane.DefaultOptionPane;
-import maven_robots.gui.OptionPane.IOptionPane;
+import maven_robots.gui.tmpOptionPane.DefaultOptionPane;
+import maven_robots.gui.tmpOptionPane.IOptionPane;
 
 public class ConfirmationCloseTests {
 

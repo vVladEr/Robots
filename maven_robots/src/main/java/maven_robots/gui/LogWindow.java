@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import maven_robots.gui.BaseClasses.BaseInternalJFrame;
+import maven_robots.gui.tmpBaseClasses.BaseInternalJFrame;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
 import maven_robots.log.LogWindowSource;

@@ -7,12 +7,12 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 
-import maven_robots.logic.Cells.ICell;
+import maven_robots.logic.tmpFields.Field;
+import maven_robots.logic.tmpFields.FieldObserver;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
-import maven_robots.logic.Fields.Field;
-import maven_robots.logic.Fields.FieldObserver;
+import maven_robots.logic.tmpCells.ICell;
 
 public class GameField extends JPanel implements FieldObserver, KeyListener {
     private final Field field;

@@ -8,10 +8,10 @@ import org.junit.Test;
 import maven_robots.data.parser.Parser;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
-import maven_robots.logic.Cells.Cell;
-import maven_robots.logic.Cells.CellType;
-import maven_robots.logic.Cells.ICell;
-import maven_robots.logic.Fields.Field;
+import maven_robots.logic.tmpCells.Cell;
+import maven_robots.logic.tmpCells.CellType;
+import maven_robots.logic.tmpCells.ICell;
+import maven_robots.logic.tmpFields.Field;
 
 public class ParserTests {
 
