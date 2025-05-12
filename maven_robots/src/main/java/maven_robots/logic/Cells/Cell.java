@@ -10,6 +10,31 @@ public class Cell implements ICell {
 
     private final ChargeColor baseColor;
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((cellType == null) ? 0 : cellType.hashCode());
+        result = prime * result + ((color == null) ? 0 : color.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Cell other = (Cell) obj;
+        if (cellType != other.cellType)
+            return false;
+        if (color != other.color)
+            return false;
+        return true;
+    }
+
     public Cell(CellType cellType, ChargeColor color) {
         this.cellType = cellType;
         this.color = color;
