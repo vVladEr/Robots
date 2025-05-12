@@ -17,7 +17,7 @@ public class RobotsProgram {
 //        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         }
-        Parser parser = new Parser("D:/codes/java/Robots/maven_robots/src/main/java/maven_robots/data/levels");
+        Parser parser = new Parser();
         Field field = parser.parseLevel(1);
         System.out.println(field);
         SwingUtilities.invokeLater(() -> {
