@@ -1,9 +1,8 @@
 package maven_robots.gui;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -14,8 +13,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import maven_robots.data.parser.Parser;
 import maven_robots.gui.BaseClasses.BaseJFrame;
+import maven_robots.gui.parameters.DefaultParameters;
+import maven_robots.gui.parameters.Parameters;
+import maven_robots.gui.profileSaver.Profiler;
+import maven_robots.gui.profileSaver.ProfileName;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 import maven_robots.logic.Fields.Field;
@@ -26,10 +28,24 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
     private final LogWindow logWindow;
     private final GameWindow gameWindow;
     
-    public MainApplicationFrame(Field field, String profileName) {
-        super("MainFrame");
-        gameWindow = new GameWindow(field, profileName);
-        logWindow = new LogWindow(Logger.getDefaultLogSource(), profileName);
+    public MainApplicationFrame(Field field) {
+        Parameters initialGameWindowParameters = Parameters.parseParameters(
+            DefaultParameters.GameWindowDefaultParameters.getParameters()
+        );
+        Parameters initialLogWindowParameters = Parameters.parseParameters(
+            DefaultParameters.LogWindowDefaultParameters.getParameters()
+        );
+
+        gameWindow = new GameWindow(
+            field,
+            initialGameWindowParameters
+        );
+        logWindow = new LogWindow(
+            Logger.getDefaultLogSource(),
+            initialLogWindowParameters
+        );
+
+        Profiler.GetInstance().loadJFrameFromProfile(ProfileName.MainFrame.getProfileName(), this);
 
         MainApplicationListeners listeners = new MainApplicationListeners() {
             @Override
@@ -49,26 +65,11 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         };
 
         menuBarFrame = new MenuBarFrame(listeners);
-        
-        //Make the big window be indented 50 pixels from each edge
-        //of the screen.
-        if (profileName.equals("default")) {
-            int inset = 50;        
-            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            setBounds(inset, inset,
-                screenSize.width  - inset * 2,
-                screenSize.height - inset * 2);
-        } else {
-            loadFromProfile(profileName, this);
-        }
-
 
         setContentPane(desktopPane);
         
         fillLogWindow();
         addWindow(logWindow);
-        
-        gameWindow.setSize(400,  400);
         addWindow(gameWindow);
 
         setJMenuBar(menuBarFrame.getJMenuBar());
@@ -76,34 +77,22 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         WindowAdapter windowClosingAdapter = new WindowAdapter() {
             @Override
             public void windowClosed(final WindowEvent e) {
-
-                try {
-                    String classPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-                    String path = classPath.substring(1) + "maven_robots/data/profiles";
-                    File profilePath = new File(path + "/test");
-                    profilePath.mkdir();
-                    File profile = new File(path + "/test/frames.properties");
-                    profile.createNewFile();
-                    saveToProfile("test");
-                    
-                } catch (IOException e1 ) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                } catch (URISyntaxException e2) {
-                    e2.printStackTrace();
-                }
+                saveToProfile();
                 System.exit(0);
             }
         };
         this.addWindowListener(windowClosingAdapter);
+
+        Profiler.GetInstance().loadJInternalFrameFromProfile(
+                ProfileName.GameWindow.getProfileName(), gameWindow
+        );
+        Profiler.GetInstance().loadJInternalFrameFromProfile(
+                ProfileName.LogWindow.getProfileName(), logWindow
+        );
     }
     
     protected void fillLogWindow()
     {
-        logWindow.setLocation(10, 10);
-        logWindow.setSize(300, 800);
-        setMinimumSize(logWindow.getSize());
-        logWindow.pack();
         Logger.debug(LocalizationManager.getStringByName("log.debug.title"));
     }
     
@@ -133,10 +122,10 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         }
     }
 
-    @Override
-    public void saveToProfile(String profileName) {
-        super.saveToProfile(profileName);
-        logWindow.saveToProfile(profileName);
-        gameWindow.saveToProfile(profileName);
+    public void saveToProfile() {
+        Profiler.GetInstance().saveJFrameToProfile(ProfileName.MainFrame.getProfileName(), this);
+        Profiler.GetInstance().saveJInternalFrameToProfile(ProfileName.GameWindow.getProfileName(), gameWindow);
+        Profiler.GetInstance().saveJInternalFrameToProfile(ProfileName.LogWindow.getProfileName(), logWindow);
+        logWindow.saveTextArea();
     }
 }

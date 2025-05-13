@@ -21,7 +21,7 @@ public class RobotsProgram {
         Field field = parser.parseLevel(1);
         System.out.println(field);
         SwingUtilities.invokeLater(() -> {
-            MainApplicationFrame frame = new MainApplicationFrame(field, "test");
+            MainApplicationFrame frame = new MainApplicationFrame(field);
             frame.pack();
             frame.setVisible(true);
             frame.setExtendedState(Frame.MAXIMIZED_BOTH);

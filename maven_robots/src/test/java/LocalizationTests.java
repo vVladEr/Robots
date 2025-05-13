@@ -2,6 +2,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import maven_robots.gui.LogWindow;
+import maven_robots.gui.parameters.Parameters;
+import maven_robots.gui.profileSaver.ProfileName;
 import maven_robots.localization.Languages;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.LogWindowSource;
@@ -12,7 +14,8 @@ public class LocalizationTests {
     public void changeTextOnChangeLocale() {
         LocalizationManager.setLocale(Languages.RU);
         LogWindowSource logSource = new LogWindowSource(5);
-        LogWindow logWindow = new LogWindow(logSource, "default");
+        Parameters initialLogWindowParameters = new Parameters(10, 10, 300, 800);
+        LogWindow logWindow = new LogWindow(logSource, initialLogWindowParameters);
         String expectedRuTile = LocalizationManager.getStringByName("log.title");
         Assert.assertEquals(expectedRuTile, logWindow.getTitle());
 

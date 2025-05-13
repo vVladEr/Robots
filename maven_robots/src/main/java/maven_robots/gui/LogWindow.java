@@ -8,6 +8,9 @@ import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
 import maven_robots.gui.BaseClasses.BaseInternalJFrame;
+import maven_robots.gui.parameters.Parameters;
+import maven_robots.gui.profileSaver.Profiler;
+import maven_robots.gui.profileSaver.ProfileName;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
@@ -23,25 +26,29 @@ public class LogWindow extends BaseInternalJFrame implements LogChangeListener, 
         }
     };
 
-    public LogWindow(LogWindowSource logSource, String profileName) {
-        super(LocalizationManager.getStringByName("log.title"), true, true, true, true, "logWindow");
+    public LogWindow(LogWindowSource logSource, Parameters parameters) {
+        super(LocalizationManager.getStringByName("log.title"), true, true, true, true);
         m_logSource = logSource;
         m_logSource.registerListener(this);
         m_logContent = new TextArea("");
-        m_logContent.setSize(200, 500);
 
-
+        setBounds(
+            parameters.getX(),
+            parameters.getY(),
+            parameters.getWidth(),
+            parameters.getHeight()
+        );
         
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(m_logContent, BorderLayout.CENTER);
         getContentPane().add(panel);
         addInternalFrameListener(logRemoveFrameAdapter);
 
-        pack();
+        Profiler.GetInstance().loadTextAreaFromProfile(
+                ProfileName.TextArea.getProfileName(), m_logContent
+        );
+
         updateLogContent();
-        if (!profileName.equals("default")) {
-            loadFromProfile(profileName, m_logContent);
-        }
     }
 
     private void updateLogContent() {
@@ -62,5 +69,9 @@ public class LogWindow extends BaseInternalJFrame implements LogChangeListener, 
     public void changeLanguage() {
         this.setTitle(LocalizationManager.getStringByName("log.title"));
         this.invalidate();
+    }
+
+    public void saveTextArea() {
+        Profiler.GetInstance().saveTextAreaToProfile(ProfileName.TextArea.getProfileName(), m_logContent);
     }
 }

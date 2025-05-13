@@ -21,7 +21,15 @@ public class Parser {
 
     public Parser() {
         try {
-            String classPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            String classPath = this
+                    .getClass()
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI()
+                    .getPath()
+                    .replace("out/production", "src")
+                    .replace("/main/", "/main/java/");
             basePath = classPath.substring(1) + "maven_robots/data/levels";
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,9 +37,7 @@ public class Parser {
     }
 
     public Field parseLevel(int levelNumber) {
-        System.out.println(basePath);
         String currentPath = String.format("%s/%d.txt", basePath, levelNumber);
-        System.out.println(currentPath);
         List<ICell[]> cells = new ArrayList<>();
         IRobot robot = new ConnectionRobot(new Coord(0, 0));
         int y = 0;
