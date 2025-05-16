@@ -11,6 +11,9 @@ import maven_robots.logic.cells.CellType;
 import maven_robots.logic.cells.ICell;
 import maven_robots.logic.cells.controllers.ICellController;
 import maven_robots.logic.cells.controllers.controllerManager.IControllerManager;
+import maven_robots.logic.fields.cabels.CabelPart;
+import maven_robots.logic.fields.cabels.CabelStorage;
+import maven_robots.logic.fields.cabels.ICabelStorage;
 import maven_robots.logic.robots.IRobot;
 
 public class Field {
@@ -111,9 +114,9 @@ public class Field {
 
     public void resertLastCabel() {
         try {
-            Coord[] lastCabel = cabelStorage.resetLastCable();
-            for (Coord coord : lastCabel) {
-                field[coord.y][coord.x].reset();
+            CabelPart[] lastCabel = cabelStorage.resetLastCable();
+            for (CabelPart part : lastCabel) {
+                field[part.getCoord().y][part.getCoord().x].reset();
             }
             notifyObservers();
         } catch (EmptyStackException e) {

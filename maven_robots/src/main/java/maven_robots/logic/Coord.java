@@ -40,4 +40,8 @@ public class Coord {
         }   
         return true;
     }
+
+    public static Coord getDiff(Coord to, Coord from) {
+        return new Coord(to.x - from.x, to.y - from.y);
+    }
 }
