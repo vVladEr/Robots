@@ -1,4 +1,5 @@
 package maven_robots.log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,8 +15,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * величиной m_iQueueLength (т.е. реально нужна очередь сообщений 
  * ограниченного размера) 
  */
-public class LogWindowSource
-{
+public class LogWindowSource {
     private int m_iQueueLength;
     
     private volatile ArrayBlockingQueue<LogEntry> m_messages;
@@ -28,68 +28,60 @@ public class LogWindowSource
         m_listeners = new ArrayList<LogChangeListener>();
     }
     
-    public void registerListener(LogChangeListener listener){
-        synchronized(m_listeners)
-        {
+    public void registerListener(LogChangeListener listener) {
+        synchronized (m_listeners) {
             m_listeners.add(listener);
             m_activeListeners = null;
         }
     }
     
-    public void unregisterListener(LogChangeListener listener){
-        synchronized(m_listeners)
-        {
+    public void unregisterListener(LogChangeListener listener) {
+        synchronized (m_listeners) {
             m_listeners.remove(listener);
             m_activeListeners = null;
         }
     }
     
-    public void append(LogLevel logLevel, String strMessage){
+    public void append(LogLevel logLevel, String strMessage) {
         LogEntry entry = new LogEntry(logLevel, strMessage);
-        synchronized (m_messages)
-        {
+        synchronized (m_messages) {
             if (m_messages.size() == m_iQueueLength){
                 m_messages.poll();
             }
             m_messages.add(entry);
         }
         LogChangeListener[] activeListeners = m_activeListeners;
-        if (activeListeners == null)
-        {
-            synchronized (m_listeners)
-            {
-                if (m_activeListeners == null)
-                {
+        if (activeListeners == null) {
+            synchronized (m_listeners) {
+                if (m_activeListeners == null) {
                     activeListeners = m_listeners.toArray(new LogChangeListener [0]);
                     m_activeListeners = activeListeners;
                 }
             }
         }
-        for (LogChangeListener listener : activeListeners)
-        {
+        for (LogChangeListener listener : activeListeners) {
             listener.onLogChanged();
         }
     }
     
-    public int size(){
+    public int size() {
         return m_messages.size();
     }
 
-    public int listenersCount(){
+    public int listenersCount() {
         return m_listeners.size();
     }
 
-    public Iterable<LogEntry> range(int startFrom, int count){
+    public Iterable<LogEntry> range(int startFrom, int count) {
         List<LogEntry> currentMessages = Arrays.asList(m_messages.toArray(new LogEntry [0]));
-        if (startFrom < 0 || startFrom >= currentMessages.size())
-        {
+        if (startFrom < 0 || startFrom >= currentMessages.size()) {
             return Collections.emptyList();
         }
         int indexTo = Math.min(startFrom + count, currentMessages.size());
-        return currentMessages.subList(startFrom, indexTo-startFrom);
+        return currentMessages.subList(startFrom, indexTo - startFrom);
     }
 
-    public Iterable<LogEntry> all(){
+    public Iterable<LogEntry> all() {
         return m_messages;
     }
 }

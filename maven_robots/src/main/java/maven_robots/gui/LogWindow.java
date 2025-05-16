@@ -7,20 +7,18 @@ import javax.swing.JPanel;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
-import maven_robots.gui.BaseClasses.BaseInternalJFrame;
+import maven_robots.gui.baseClasses.BaseInternalJFrame;
 import maven_robots.log.LogChangeListener;
 import maven_robots.log.LogEntry;
 import maven_robots.log.LogWindowSource;
 
-public class LogWindow extends BaseInternalJFrame implements LogChangeListener
-{
+public class LogWindow extends BaseInternalJFrame implements LogChangeListener {
     private final LogWindowSource m_logSource;
     private final TextArea m_logContent;
     private final InternalFrameAdapter logRemoveFrameAdapter = new InternalFrameAdapter() {
         @Override
-        public void internalFrameClosed(InternalFrameEvent e)
-        {
-            m_logSource.unregisterListener((LogChangeListener)e.getInternalFrame());
+        public void internalFrameClosed(InternalFrameEvent e) {
+            m_logSource.unregisterListener((LogChangeListener) e.getInternalFrame());
         }
     };
 
@@ -39,11 +37,9 @@ public class LogWindow extends BaseInternalJFrame implements LogChangeListener
         updateLogContent();
     }
 
-    private void updateLogContent()
-    {
+    private void updateLogContent() {
         StringBuilder content = new StringBuilder();
-        for (LogEntry entry : m_logSource.all())
-        {
+        for (LogEntry entry : m_logSource.all()) {
             content.append(entry.getMessage()).append("\n");
         }
         m_logContent.setText(content.toString());
@@ -51,8 +47,7 @@ public class LogWindow extends BaseInternalJFrame implements LogChangeListener
     }
     
     @Override
-    public void onLogChanged()
-    {
+    public void onLogChanged() {
         EventQueue.invokeLater(this::updateLogContent);
     }
 }

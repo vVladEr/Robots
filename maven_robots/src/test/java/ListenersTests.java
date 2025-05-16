@@ -3,7 +3,7 @@ import java.beans.PropertyVetoException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import Helpers.TestWindows.TestLogWindow;
+import helpers.testWindows.TestLogWindow;
 import maven_robots.log.LogWindowSource;
 
 public class ListenersTests {
@@ -15,7 +15,7 @@ public class ListenersTests {
         
         Assert.assertEquals(1, logSource.listenersCount());
         try {
-        logWindow.setClosed(true);
+            logWindow.setClosed(true);
         } catch (PropertyVetoException ex) {
             System.err.println("Closing Exception");
         }

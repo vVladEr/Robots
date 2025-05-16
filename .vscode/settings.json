@@ -1,3 +1,5 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.checkstyle.configuration": "${workspaceFolder}\\maven_robots\\src\\checkstyle\\google_checkstyle.xml",
+    "java.checkstyle.version": "10.23.1",
 }
