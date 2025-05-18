@@ -14,6 +14,8 @@ import maven_robots.logic.cells.controllers.controllerManager.IControllerManager
 import maven_robots.logic.fields.cabels.CabelPart;
 import maven_robots.logic.fields.cabels.CabelStorage;
 import maven_robots.logic.fields.cabels.ICabelStorage;
+import maven_robots.logic.fields.cabels.impulses.IImpulseManager;
+import maven_robots.logic.fields.cabels.impulses.ImpulseManager;
 import maven_robots.logic.robots.IRobot;
 
 public class Field {
@@ -24,6 +26,7 @@ public class Field {
     private final int width;
     private final IControllerManager controllerManager;
     private final ICabelStorage cabelStorage;
+    private final IImpulseManager impulseManager;
 
     private List<FieldObserver> observers = new ArrayList<>();
 
@@ -35,6 +38,7 @@ public class Field {
         this.controllerManager = controllerManager;
         int ppCount = countColors();
         cabelStorage = new CabelStorage(ppCount);
+        impulseManager = new ImpulseManager(cabelStorage, null);
     }
 
     private int countColors() {
@@ -60,6 +64,10 @@ public class Field {
 
     public ICabelStorage getCabelStorage() {
         return cabelStorage;
+    }
+
+    public IImpulseManager getImpulseManager() {
+        return impulseManager;
     }
 
     public Boolean moveRobot(Direction dir) {
@@ -115,9 +123,14 @@ public class Field {
     public void resertLastCabel() {
         try {
             CabelPart[] lastCabel = cabelStorage.resetLastCable();
+
             for (CabelPart part : lastCabel) {
                 field[part.getCoord().y][part.getCoord().x].reset();
             }
+
+            Coord startPointCoord = lastCabel[0].getCoord();
+            ChargeColor cabelColor = field[startPointCoord.y][startPointCoord.x].getColor();
+            impulseManager.removeImpulse(cabelColor);
             notifyObservers();
         } catch (EmptyStackException e) {
         }
@@ -150,6 +163,7 @@ public class Field {
         ChargeColor cabelColour = robot.getChargeColor();
         robot.resetCurrentCabel();
         cabelStorage.saveCabel(cabelRoute, cabelColour);
+        impulseManager.addImpulse(cabelColour);
     }
 
     private Boolean isCellInsideBorders(Coord pos) {

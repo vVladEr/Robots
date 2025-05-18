@@ -9,30 +9,42 @@ import java.util.concurrent.atomic.AtomicInteger;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.fields.cabels.ICabelStorage;
 
-public class ImpulseManager {
+public class ImpulseManager implements IImpulseManager {
 
     private final HashMap<ChargeColor, ImpulseParameters> colorsParameters;
     private final ICabelStorage cabelStorage;
     private final AtomicInteger totalChargeCapacity;
-    private HashMap<ChargeColor, TimerTask> impulseMoveTasks;
-    private volatile ConcurrentHashMap<ChargeColor, Integer> impulsePositions;
+    private volatile ConcurrentHashMap<ChargeColor, TimerTask> impulseMoveTasks;
+    private volatile ConcurrentHashMap<ChargeColor, ImpulseTaskData> impulseDatas;
     private final Timer timer;
 
     public ImpulseManager(ICabelStorage cabelStorage, AtomicInteger totalChargeCapacity) {
         colorsParameters = null;
         this.cabelStorage = cabelStorage;
         this.totalChargeCapacity = totalChargeCapacity;
-        impulseMoveTasks = new HashMap<ChargeColor, TimerTask>();
-        impulsePositions = new ConcurrentHashMap<ChargeColor, Integer>();
+        impulseMoveTasks = new ConcurrentHashMap<ChargeColor, TimerTask>();
+        impulseDatas = new ConcurrentHashMap<ChargeColor, ImpulseTaskData>();
         timer = new Timer();
     }
 
     public void addImpulse(ChargeColor color) {
-        impulsePositions.put(color, -1);
+        impulseDatas.put(color, 
+            new ImpulseTaskData(color,
+                cabelStorage.getCabels().get(color).length,
+                calculateTotalCharge(color)));
+
         TimerTask newColorTask = new TimerTask() {
             @Override
             public void run() {
-                impulseTask(color);
+                if (impulseMoveTasks.containsKey(color)) {
+                    impulseTask(color);
+                    return;
+                }
+                if (impulseDatas.get(color).getImpulsePosition() != 0) {
+                    totalChargeCapacity.addAndGet(impulseDatas.get(color).chargeVolume);
+                    impulseDatas.remove(color);
+                    cancel();
+                }
             }
         };
         impulseMoveTasks.put(color, newColorTask);
@@ -40,16 +52,11 @@ public class ImpulseManager {
     }
 
     public void removeImpulse(ChargeColor color) {
-        impulseMoveTasks.get(color).cancel();
         impulseMoveTasks.remove(color);
-        if (impulsePositions.get(color) != 1) {
-            totalChargeCapacity.addAndGet(calculateTotalCharge(color));
-        }
-        impulsePositions.remove(color);
     }
 
     public int getImpulsePosition(ChargeColor color) {
-        return impulsePositions.get(color);
+        return impulseDatas.get(color).getImpulsePosition();
     }
 
     private int calculateTotalCharge(ChargeColor color) {
@@ -58,17 +65,15 @@ public class ImpulseManager {
 
 
     private void impulseTask(ChargeColor color) {
-        if (impulsePositions.get(color) == -1) {
-            int impulseCost = calculateTotalCharge(color);
-            int res = totalChargeCapacity.addAndGet(-impulseCost);
+        if (impulseDatas.get(color).getImpulsePosition() == 0) {
+            int res = totalChargeCapacity.addAndGet(-impulseDatas.get(color).chargeVolume);
             if (res < 0) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException(); //TODO нужен какой-то ивент
             }
         }
-        if (impulsePositions.get(color) == cabelStorage.getCabels().get(color).length) {
-            impulsePositions.put(color, -2);
-            totalChargeCapacity.addAndGet(calculateTotalCharge(color));
+        if (impulseDatas.get(color).isImpulseReachEndOfCabel()) {
+            totalChargeCapacity.addAndGet(impulseDatas.get(color).chargeVolume);
         }
-        impulsePositions.put(color, impulsePositions.get(color) + 1);
+        impulseDatas.get(color).moveImpulseForward();
     }
 }
