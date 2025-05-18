@@ -16,7 +16,7 @@ public final class ImpulseTaskData {
         this.color = color;
         this.cabelLength = cabelLength;
         this.chargeVolume = chargeVolume;
-        impulsePositionIndex = -1;
+        impulsePositionIndex = 0;
     }
 
     public int getImpulsePosition() {

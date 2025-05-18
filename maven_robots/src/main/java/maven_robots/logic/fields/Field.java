@@ -38,7 +38,7 @@ public class Field {
         this.controllerManager = controllerManager;
         int ppCount = countColors();
         cabelStorage = new CabelStorage(ppCount);
-        impulseManager = new ImpulseManager(cabelStorage, null);
+        impulseManager = new ImpulseManager(cabelStorage, 1000);
     }
 
     private int countColors() {
