@@ -1,4 +1,4 @@
-package oldRobotLogicTests;
+package RobotLogicTests;
 
 import java.awt.Dimension;
 import java.awt.Point;

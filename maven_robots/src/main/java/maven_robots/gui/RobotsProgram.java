@@ -1,12 +1,14 @@
 package maven_robots.gui;
 
-import java.awt.Frame;
+import java.net.URISyntaxException;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import maven_robots.data.parser.Parser;
-import maven_robots.logic.fields.Field;
+import maven_robots.data.profiler.IProfiler;
+import maven_robots.data.profiler.Profiler;
+import maven_robots.gui.mainFrame.MainApplicationFrame;
 
 public class RobotsProgram {
     public static void main(String[] args) {
@@ -17,13 +19,34 @@ public class RobotsProgram {
 //        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         }
-        Parser parser = new Parser();
-        Field field = parser.parseLevel(1);
-        System.out.println(field);
+        String path = getPath();
+
         SwingUtilities.invokeLater(() -> {
-            MainApplicationFrame frame = new MainApplicationFrame(field);
-            frame.pack();
-            frame.setVisible(true);
-            frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+            IProfiler profiler = new Profiler(path);
+
+            MainApplicationFrame mainFrame = new MainApplicationFrame(profiler, path);
+
+            mainFrame.showProfilePickerDialog();
         });
-    }}
+    }
+
+    public static String getPath() {
+        String path;
+
+        try {
+            String classPath =
+                    RobotsProgram.class
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI()
+                    .getPath()
+                    .replace("out/production", "src")
+                    .replace("/main/", "/main/java/");
+            path = classPath.substring(1) + "maven_robots/data";
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        return path;
+    }
+}

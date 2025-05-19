@@ -1,17 +1,27 @@
+import static maven_robots.gui.RobotsProgram.getPath;
+
 import java.beans.PropertyVetoException;
+
+import javax.swing.JTextArea;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import helpers.testWindows.TestLogWindow;
+
+import maven_robots.gui.frames.internalFrames.LogWindow;
+import maven_robots.data.parameters.Parameters;
+import maven_robots.data.profiler.Profiler;
 import maven_robots.log.LogWindowSource;
 
 public class ListenersTests {
 
     @Test
     public void removeListenersWhenWindowClosed() {
+        String path = getPath();
         LogWindowSource logSource = new LogWindowSource(5);
-        TestLogWindow logWindow = new TestLogWindow(logSource);
+        Parameters initialLogWindowParameters = new Parameters(10, 10, 300, 800);
+        LogWindow logWindow = new LogWindow(new Profiler(path),
+             new JTextArea(), logSource, initialLogWindowParameters);
         
         Assert.assertEquals(1, logSource.listenersCount());
         try {
