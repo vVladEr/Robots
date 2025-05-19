@@ -30,7 +30,8 @@ public class Field {
 
     private List<FieldObserver> observers = new ArrayList<>();
 
-    public Field(ICell[][] field, IRobot robot, IControllerManager controllerManager) {
+    public Field(ICell[][] field, IRobot robot,
+        IControllerManager controllerManager, int maxChargeCapacity) {
         height = field.length;
         width = field[0].length;
         this.field = field;
@@ -38,7 +39,11 @@ public class Field {
         this.controllerManager = controllerManager;
         int ppCount = countColors();
         cabelStorage = new CabelStorage(ppCount);
-        impulseManager = new ImpulseManager(cabelStorage, 1000);
+        impulseManager = new ImpulseManager(cabelStorage, maxChargeCapacity);
+    }
+
+    public Field(ICell[][] field, IRobot robot, IControllerManager controllerManager) {
+        this(field, robot, controllerManager, 1000);
     }
 
     private int countColors() {

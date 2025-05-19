@@ -83,8 +83,8 @@ public class ImpulseManager implements IImpulseManager {
         return maxChargeCapacity;
     }
 
-    public AtomicInteger getCurrentCharge() {
-        return currentCharge;
+    public int getCurrentCharge() {
+        return currentCharge.get();
     }
 
     

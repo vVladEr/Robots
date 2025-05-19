@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import maven_robots.logic.ChargeColor;
@@ -13,6 +14,7 @@ import maven_robots.logic.cells.CellType;
 import maven_robots.logic.cells.ICell;
 import maven_robots.logic.cells.controllers.controllerManager.ControllerManager;
 import maven_robots.logic.fields.Field;
+import maven_robots.logic.fields.cabels.impulses.ColorImpulseParameters;
 import maven_robots.logic.robots.ConnectionRobot;
 import maven_robots.logic.robots.IRobot;
 
@@ -33,6 +35,7 @@ public class Parser {
         System.out.println(basePath);
         String currentPath = String.format("%s/%d.txt", basePath, levelNumber);
         System.out.println(currentPath);
+        HashMap<ChargeColor, Integer> colorCells = new HashMap<>();
         List<ICell[]> cells = new ArrayList<>();
         IRobot robot = new ConnectionRobot(new Coord(0, 0));
         int y = 0;
@@ -49,10 +52,15 @@ public class Parser {
                     if (cellDataParts.length == 3) {
                         robot = new ConnectionRobot(new Coord(x, y));
                     }
-
+                    ChargeColor cellColor = ChargeColor.getChargeColorByCode(cellDataParts[1]);
+                    if (colorCells.containsKey(cellColor)) {
+                        colorCells.put(cellColor, colorCells.get(cellColor) + 1);
+                    } else {
+                        colorCells.put(cellColor, 1);
+                    }
                     switch (cellDataParts[0]) {
                         case "E":
-                            row.add(new Cell(CellType.CELL, ChargeColor.getChargeColorByCode(cellDataParts[1])));
+                            row.add(new Cell(CellType.CELL, ChargeColor.EMPTY));
                             break;
                         case "P":
                             row.add(new Cell(CellType.POWER_POINT, ChargeColor.getChargeColorByCode(cellDataParts[1])));
@@ -71,6 +79,16 @@ public class Parser {
             e.printStackTrace();
         }
 
-        return new Field(cells.toArray(new ICell[0][]), robot, new ControllerManager());
+        return new Field(cells.toArray(new ICell[0][]), robot,
+            new ControllerManager(), countNeededCharge(colorCells));
+    }
+
+    private int countNeededCharge(HashMap<ChargeColor, Integer> cellsNumberByColor) {
+        int res = 0;
+        for (ChargeColor color : cellsNumberByColor.keySet()) {
+            res += cellsNumberByColor.get(color) 
+                * ColorImpulseParameters.getByColorOrDefault(color).costByCell;
+        }
+        return res;
     }
 }

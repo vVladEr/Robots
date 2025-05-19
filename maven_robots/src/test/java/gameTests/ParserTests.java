@@ -12,6 +12,7 @@ import maven_robots.logic.cells.Cell;
 import maven_robots.logic.cells.CellType;
 import maven_robots.logic.cells.ICell;
 import maven_robots.logic.fields.Field;
+import maven_robots.logic.fields.cabels.impulses.ColorImpulseParameters;
 
 public class ParserTests {
 
@@ -35,9 +36,13 @@ public class ParserTests {
         };
 
         Field actualField = parser.parseLevel(0);
+        int expectedMaxCharge = 4 
+            * (ColorImpulseParameters.getByColorOrDefault(ChargeColor.RED).costByCell 
+                + ColorImpulseParameters.getByColorOrDefault(ChargeColor.GREEN).costByCell); 
         
         assertArrayEquals(expectedField, actualField.getField());
         assertEquals(robotPos, actualField.getRobot().getCoord());
+        assertEquals(expectedMaxCharge, actualField.getImpulseManager().getMaxChargeCapacity());
     }
 }
 

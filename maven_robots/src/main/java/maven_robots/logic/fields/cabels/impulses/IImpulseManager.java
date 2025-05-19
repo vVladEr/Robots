@@ -9,4 +9,9 @@ public interface IImpulseManager {
     public void removeImpulse(ChargeColor color);
 
     public int getImpulsePosition(ChargeColor color);
+
+    public int getMaxChargeCapacity();
+
+    public int getCurrentCharge();
+
 }
