@@ -7,7 +7,8 @@ public enum FrameName {
     TEXT_AREA("textArea"),
     MAIN_FRAME("mainFrame"),
     MENU_BAR_FRAME("menuBarFrame"),
-    PROFILE_PICKER_DIALOG("profilePickerDialog");
+    PROFILE_PICKER_DIALOG("profilePickerDialog"),
+    TEST_FRAME("testFrame");
 
     private final String frameName;
 
