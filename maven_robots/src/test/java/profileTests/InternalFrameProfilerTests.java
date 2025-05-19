@@ -10,20 +10,20 @@ import maven_robots.data.profiler.Profiler;
 import maven_robots.data.profiler.enums.FrameName;
 import maven_robots.data.profiler.strategies.JInternalFrameStrategy;
 
-public class ProfilerTests {
+public class InternalFrameProfilerTests {
 
     private static Profiler profiler;
     
     @BeforeClass
     public static void setup() {
         profiler = new Profiler();
-        profiler.addStrategy(TestFrame.class, new JInternalFrameStrategy());
+        profiler.addStrategy(TestInternalFrame.class, new JInternalFrameStrategy());
         profiler.setProfileName("test");
     }
 
     @Test
     public void savingAndLoadPositionWorksCorrectly() {
-        TestFrame testFrame = new TestFrame(profiler, FrameName.TEST_FRAME, "test");
+        TestInternalFrame testFrame = new TestInternalFrame(profiler, FrameName.TEST_FRAME, "test");
         int expectedX = 20;
         int expectedY = 30;
         int expectedWidth = 100;
@@ -31,7 +31,8 @@ public class ProfilerTests {
         testFrame.setBounds(expectedX, expectedY, expectedWidth, expectedHeight);
         testFrame.saveProfile();
 
-        TestFrame loadedTestFrame = new TestFrame(profiler, FrameName.TEST_FRAME, "newTest");
+        TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
+            FrameName.TEST_FRAME, "newTest");
         loadedTestFrame.loadProfile();
 
         Assert.assertEquals(expectedX, loadedTestFrame.getX());
@@ -42,7 +43,7 @@ public class ProfilerTests {
 
     @Test
     public void savingAndLoadIconofiedWorksCorrectly() {
-        TestFrame testFrame = new TestFrame(profiler, FrameName.TEST_FRAME, "test");
+        TestInternalFrame testFrame = new TestInternalFrame(profiler, FrameName.TEST_FRAME, "test");
         int expectedX = 20;
         int expectedY = 30;
         int expectedWidth = 100;
@@ -56,7 +57,8 @@ public class ProfilerTests {
         }
         testFrame.saveProfile();
 
-        TestFrame loadedTestFrame = new TestFrame(profiler, FrameName.TEST_FRAME, "newTest");
+        TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
+            FrameName.TEST_FRAME, "newTest");
         loadedTestFrame.loadProfile();
 
         Assert.assertEquals(expectedX, loadedTestFrame.getX());
@@ -68,7 +70,7 @@ public class ProfilerTests {
 
     @Test
     public void savingAndLoadClosedWorksCorrectly() {
-        TestFrame testFrame = new TestFrame(profiler, FrameName.TEST_FRAME, "test");
+        TestInternalFrame testFrame = new TestInternalFrame(profiler, FrameName.TEST_FRAME, "test");
         try {
             testFrame.setClosed(true);
         } catch (PropertyVetoException e) {
@@ -77,7 +79,8 @@ public class ProfilerTests {
         }
         testFrame.saveProfile();
 
-        TestFrame loadedTestFrame = new TestFrame(profiler, FrameName.TEST_FRAME, "newTest");
+        TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
+            FrameName.TEST_FRAME, "newTest");
         loadedTestFrame.loadProfile();
         Assert.assertTrue(loadedTestFrame.isClosed());
     }
