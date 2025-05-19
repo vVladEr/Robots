@@ -17,23 +17,10 @@ import maven_robots.logic.Robots.ConnectionRobot;
 import maven_robots.logic.Robots.IRobot;
 
 public class LevelParser implements IParser {
-    private String basePath;
+    private final String basePath;
 
-    public LevelParser() {
-        try {
-            String classPath = this
-                    .getClass()
-                    .getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .toURI()
-                    .getPath()
-                    .replace("out/production", "src")
-                    .replace("/main/", "/main/java/");
-            basePath = classPath.substring(1) + "maven_robots/data/levels";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public LevelParser(String path) {
+        basePath = path + "/levels";
     }
 
     public Field parseLevel(int levelNumber) {

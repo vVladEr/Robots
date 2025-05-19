@@ -1,5 +1,7 @@
 package maven_robots.gui;
 
+import java.net.URISyntaxException;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -17,12 +19,34 @@ public class RobotsProgram {
 //        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         }
+        String path = getPath();
 
         SwingUtilities.invokeLater(() -> {
-            IProfiler profiler = new Profiler();
-            MainApplicationFrame mainFrame = new MainApplicationFrame(profiler);
+            IProfiler profiler = new Profiler(path);
+
+            MainApplicationFrame mainFrame = new MainApplicationFrame(profiler, path);
 
             mainFrame.showProfilePickerDialog();
         });
+    }
+
+    private static String getPath() {
+        String path;
+
+        try {
+            String classPath =
+                    RobotsProgram.class
+                    .getProtectionDomain()
+                    .getCodeSource()
+                    .getLocation()
+                    .toURI()
+                    .getPath()
+                    .replace("out/production", "src")
+                    .replace("/main/", "/main/java/");
+            path = classPath.substring(1) + "maven_robots/data";
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        return path;
     }
 }

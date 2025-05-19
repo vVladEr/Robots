@@ -4,14 +4,12 @@ import java.awt.Component;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JTextArea;
 
 import maven_robots.data.profiler.strategies.JInternalFrameStrategy;
@@ -20,19 +18,22 @@ import maven_robots.data.profiler.strategies.JFrameStrategy;
 import maven_robots.data.profiler.strategies.interfaces.IComponentLoadStrategy;
 import maven_robots.data.profiler.strategies.interfaces.IComponentSaveStrategy;
 import maven_robots.data.profiler.strategies.interfaces.IComponentStrategy;
-import maven_robots.gui.frames.baseFrames.BaseJFrame;
-import maven_robots.gui.frames.baseFrames.BaseJInternalFrame;
 import maven_robots.gui.frames.internalFrames.GameWindow;
 import maven_robots.gui.frames.internalFrames.LogWindow;
 import maven_robots.gui.mainFrame.MainApplicationFrame;
+import maven_robots.localization.LocalizationManager;
 
 public class Profiler implements IProfiler{
-    private String path;
-    private String profileName;
+    private final String path;
+    private String folderPath;
+    private String currentPath;
+    private File profile;
 
     private final Map<Class<? extends Component>, IComponentStrategy> strategies = new HashMap<>();
 
-    public Profiler() {
+    public Profiler(String path) {
+        this.path = path + "/profiles";
+
         JFrameStrategy jFrameStrategy = new JFrameStrategy();
         JInternalFrameStrategy jInternalFrameStrategy = new JInternalFrameStrategy();
 
@@ -40,28 +41,10 @@ public class Profiler implements IProfiler{
         strategies.put(LogWindow.class, jInternalFrameStrategy);
         strategies.put(GameWindow.class, jInternalFrameStrategy);
         strategies.put(JTextArea.class, new JTextAreaStrategy());
-
-        try {
-            String classPath = this
-                    .getClass()
-                    .getProtectionDomain()
-                    .getCodeSource()
-                    .getLocation()
-                    .toURI()
-                    .getPath()
-                    .replace("out/production", "src")
-                    .replace("/main/", "/main/java/");
-            path = classPath.substring(1) + "maven_robots/data/profiles";
-
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
 
     public boolean isProfileExists() {
-        String folderPath = path + "/" + profileName;
-        String currentPath = folderPath + "/frames.properties";
-        return new File(currentPath).exists();
+        return profile.exists();
     }
 
     public void saveComponentToProfile(String frameName, Component comp) {
@@ -75,7 +58,7 @@ public class Profiler implements IProfiler{
         }
     }
 
-    public void loadComponentToProfile(String frameName, Component comp) {
+    public void loadComponentFromProfile(String frameName, Component comp) {
         IComponentLoadStrategy strategy = strategies.get(comp.getClass());
         if (strategy != null) {
             String[] propertyNames = strategy.getPropertyNames(comp);
@@ -89,14 +72,26 @@ public class Profiler implements IProfiler{
     }
 
     public void setProfileName(String profileName) {
-        this.profileName = profileName;
+        folderPath = path + "/" + profileName;
+        currentPath = folderPath + "/frames.properties";
+        profile = new File(currentPath);
+    }
+
+    public void saveLanguage() {
+        Properties properties = new Properties();
+
+        try {
+            properties.load(new FileReader(profile));
+
+            properties.setProperty("locale", LocalizationManager.getLanguage().getLanguageName());
+
+            properties.store(Files.newOutputStream(new File(currentPath).toPath()), null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void saveProfileProperties(String frameName, ProfileData profileData) {
-        String folderPath = path + "/" + profileName;
-        String currentPath = folderPath + "/frames.properties";
-        File profile = new File(currentPath);
-
         createFramePropertyFile(folderPath, profile);
 
         Properties properties = new Properties();
@@ -115,11 +110,21 @@ public class Profiler implements IProfiler{
         }
     }
 
-    private ProfileData loadProfileProperties(String frameName, String[] propertyNames) {
-        String folderPath = path + "/" + profileName;
-        String currentPath = folderPath + "/frames.properties";
-        File profile = new File(currentPath);
+    public void loadLanguage() {
+        Properties properties = new Properties();
 
+        try {
+            properties.load(new FileReader(profile));
+
+            Locale locale =  Locale.forLanguageTag(properties.getProperty("locale"));
+
+            LocalizationManager.setLocal(locale);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ProfileData loadProfileProperties(String frameName, String[] propertyNames) {
         Properties properties = new Properties();
         ProfileData profileData = new ProfileData();
 

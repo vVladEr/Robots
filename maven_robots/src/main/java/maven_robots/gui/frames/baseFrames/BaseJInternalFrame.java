@@ -29,7 +29,7 @@ public class BaseJInternalFrame extends JInternalFrame implements IProfileProces
 
     @Override
     public void loadProfile() {
-        profiler.loadComponentToProfile(frameName.getFrameName(), this);
+        profiler.loadComponentFromProfile(frameName.getFrameName(), this);
     }
 
     @Override

@@ -8,7 +8,7 @@ import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 
 import maven_robots.localization.ILocalizable;
-import maven_robots.localization.Languages;
+import maven_robots.localization.Language;
 
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
@@ -65,14 +65,14 @@ public class MenuBarFrame extends JMenuBar implements ILocalizable {
 
     private void initMenuBarListeners() {
         russian.addActionListener((event) -> {
-            LocalizationManager.setLocale(Languages.RU);
+            LocalizationManager.setLanguage(Language.RU);
             System.out.println(LocalizationManager.getStringByName("menu.language.title"));
             languageChangeListener.onLanguageChange();
             changeLanguage();
         });
 
         english.addActionListener((event) -> {
-            LocalizationManager.setLocale(Languages.EN);
+            LocalizationManager.setLanguage(Language.EN);
             System.out.println(LocalizationManager.getStringByName("menu.language.title"));
             languageChangeListener.onLanguageChange();
             changeLanguage();

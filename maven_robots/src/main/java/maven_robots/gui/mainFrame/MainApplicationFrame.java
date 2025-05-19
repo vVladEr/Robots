@@ -33,15 +33,17 @@ import maven_robots.logic.Fields.Field;
 
 public final class MainApplicationFrame extends BaseJFrame implements ILocalizable {
     private final LinkedHashMap<FrameName, Component> components;
+    private final String path;
 
     private final IProfiler profiler;
     private final IParser levelParser;
 
-    public MainApplicationFrame(IProfiler profiler) {
+    public MainApplicationFrame(IProfiler profiler, String path) {
         super(profiler, FrameName.MAIN_FRAME);
 
+        this.path = path;
         this.profiler = profiler;
-        this.levelParser = new LevelParser();
+        this.levelParser = new LevelParser(path);
 
         components = new LinkedHashMap<>();
         initComponents();
@@ -61,6 +63,7 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
     public void changeLanguage() {
         ((LogWindow) components.get(FrameName.LOG_WINDOW)).changeLanguage();
         ((GameWindow) components.get(FrameName.GAME_WINDOW)).changeLanguage();
+        ((MenuBarFrame) components.get(FrameName.MENU_BAR_FRAME)).changeLanguage();
 
         this.invalidate();
     }
@@ -94,7 +97,6 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         if (dialog.getSelectedProfileName() != null) {
             String profileName = dialog.getSelectedProfileName();
             profiler.setProfileName(profileName);
-            System.out.println("Выбран или создан профиль: " + profileName);
 
             Field field = levelParser.parseLevel(1);
             ((GameWindow) components.get(FrameName.GAME_WINDOW)).setField(field);
@@ -108,11 +110,13 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
             setVisible(true);
             setExtendedState(Frame.MAXIMIZED_BOTH);
 
-            if (((Profiler) profiler).isProfileExists()) {
+            Profiler profiler = (Profiler) this.profiler;
+            if (profiler.isProfileExists()) {
                 loadProfiles();
+                profiler.loadLanguage();
+                changeLanguage();
             }
         } else {
-            System.out.println("Выбор/создание профиля отменено или окно закрыто.");
             System.exit(0);
         }
     }
@@ -140,6 +144,7 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
             @Override
             public void windowClosed(final WindowEvent e) {
                 saveProfiles();
+                ((Profiler) profiler).saveLanguage();
                 System.exit(0);
             }
         };
@@ -204,7 +209,7 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
     }
 
     private void initProfilePickerDialog() {
-        components.put(FrameName.PROFILE_PICKER_DIALOG, new ProfilePickerDialog(this));
+        components.put(FrameName.PROFILE_PICKER_DIALOG, new ProfilePickerDialog(this, path));
     }
 
     private void setLookAndFeel(String className) {
