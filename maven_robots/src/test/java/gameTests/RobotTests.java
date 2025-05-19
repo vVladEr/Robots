@@ -9,6 +9,8 @@ import maven_robots.logic.Direction;
 import maven_robots.logic.cells.Cell;
 import maven_robots.logic.cells.CellType;
 import maven_robots.logic.cells.ICell;
+import maven_robots.logic.fields.cabels.CabelPart;
+import maven_robots.logic.fields.cabels.ICabelStorage;
 import maven_robots.logic.robots.ConnectionRobot;
 import maven_robots.logic.robots.IRobot;
 
@@ -45,9 +47,11 @@ public class RobotTests {
         robot.startCabel(pp, ppCoord);
         robot.move(Direction.DOWN);
         robot.move(Direction.RIGHT);
-        Coord[] track = robot.getCurrentCabel();
+        CabelPart[] track = robot.getCurrentCabel();
+        CabelPart[] expectedTrack = ICabelStorage.fromCoordsToCabelParts(
+            new Coord[] {ppCoord, new Coord(0, 1), new Coord(1, 1) });
         Assert.assertEquals(3, track.length);
-        Assert.assertArrayEquals(new Coord[] {ppCoord, new Coord(0, 1), new Coord(1, 1) }, track);
+        Assert.assertArrayEquals(expectedTrack, track);
         Assert.assertEquals(new Coord(1, 1), robot.getCoord());
     }
 
@@ -61,9 +65,11 @@ public class RobotTests {
         robot.move(Direction.DOWN);
         robot.move(Direction.RIGHT);
         robot.move(Direction.LEFT);
-        Coord[] track = robot.getCurrentCabel();
+        CabelPart[] track = robot.getCurrentCabel();
+        CabelPart[] expectedTrack = ICabelStorage.fromCoordsToCabelParts(
+            new Coord[] {ppCoord, new Coord(0, 1)});
         Assert.assertEquals(2, track.length);
-        Assert.assertArrayEquals(new Coord[] {ppCoord, new Coord(0, 1)}, track);
+        Assert.assertArrayEquals(expectedTrack, track);
     }
 
     @Test
@@ -74,13 +80,15 @@ public class RobotTests {
         robot.startCabel(pp, ppCoord);
         robot.move(Direction.DOWN);
         robot.move(Direction.RIGHT);
-        Coord[] track = robot.getCurrentCabel();
+        CabelPart[] track = robot.getCurrentCabel();
+        CabelPart[] expectedTrack = ICabelStorage.fromCoordsToCabelParts(
+            new Coord[] {ppCoord, new Coord(0, 1), new Coord(1, 1) });
         Assert.assertEquals(3, track.length);
-        Assert.assertArrayEquals(new Coord[] {ppCoord, new Coord(0, 1), new Coord(1, 1) }, track);
+        Assert.assertArrayEquals(expectedTrack, track);
         Assert.assertEquals(new Coord(1, 1), robot.getCoord());
 
         robot.resetCurrentCabel();
-        Coord[] newTrack = robot.getCurrentCabel();
+        CabelPart[] newTrack = robot.getCurrentCabel();
         Assert.assertEquals(0, newTrack.length);
         Assert.assertFalse(robot.getLastTakenPowerPoint().isPresent());
         Assert.assertEquals(ChargeColor.EMPTY, robot.getChargeColor());

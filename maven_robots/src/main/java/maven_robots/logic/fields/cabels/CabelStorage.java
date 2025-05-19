@@ -1,26 +1,25 @@
-package maven_robots.logic.fields;
+package maven_robots.logic.fields.cabels;
 
 import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Stack;
 
 import maven_robots.logic.ChargeColor;
-import maven_robots.logic.Coord;
 
 public class CabelStorage implements ICabelStorage {
 
-    private HashMap<ChargeColor, Coord[]> cabels;
+    private HashMap<ChargeColor, CabelPart[]> cabels;
     private Stack<ChargeColor> colorStack;
     private final int maxColorCount;
 
     public CabelStorage(int colorCount) {
-        cabels = new HashMap<ChargeColor, Coord[]>();
+        cabels = new HashMap<ChargeColor, CabelPart[]>();
         colorStack = new Stack<ChargeColor>();
         this.maxColorCount = colorCount;
     }
 
     @Override
-    public HashMap<ChargeColor, Coord[]> getCabels() {
+    public HashMap<ChargeColor, CabelPart[]> getCabels() {
         return cabels;
     }
 
@@ -30,15 +29,15 @@ public class CabelStorage implements ICabelStorage {
     }
 
     @Override
-    public void saveCabel(Coord[] coords, ChargeColor color) {
+    public void saveCabel(CabelPart[] coords, ChargeColor color) {
         cabels.put(color, coords);
         colorStack.add(color);
     }
 
     @Override
-    public Coord[] resetLastCable() throws EmptyStackException {
+    public CabelPart[] resetLastCable() throws EmptyStackException {
         ChargeColor lastColor = colorStack.pop();
-        Coord[] cabel = cabels.get(lastColor);
+        CabelPart[] cabel = cabels.get(lastColor);
         cabels.remove(lastColor);
         return cabel;
     }

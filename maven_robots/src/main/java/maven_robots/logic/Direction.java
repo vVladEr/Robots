@@ -29,4 +29,39 @@ public enum Direction {
         Coord vecDir = toCoord();
         return new Coord(curPos.x + vecDir.x, curPos.y + vecDir.y);    
     }
+
+    public static Direction toDirection(Coord diff) {
+        if (diff.x == 0 && diff.y == -1) {
+            return UP;
+        }
+        if (diff.x == 0 && diff.y == 1) {
+            return DOWN;
+        }
+        if (diff.x == -1 && diff.y == 0) {
+            return LEFT;
+        }
+        if (diff.x == 1 && diff.y == 0) {
+            return RIGHT;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public Direction getOpposite() {
+        switch (this) {
+            case UP:
+                return DOWN;
+            
+            case DOWN:
+                return UP;
+
+            case LEFT:
+                return RIGHT;
+
+            case RIGHT:
+                return LEFT;
+        
+            default:
+                throw new IllegalArgumentException("no opposite for this direction");
+        }
+    }
 }

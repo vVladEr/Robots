@@ -15,7 +15,8 @@ import maven_robots.logic.cells.CellType;
 import maven_robots.logic.cells.ICell;
 import maven_robots.logic.cells.controllers.controllerManager.ControllerManager;
 import maven_robots.logic.fields.Field;
-import maven_robots.logic.fields.ICabelStorage;
+import maven_robots.logic.fields.cabels.CabelPart;
+import maven_robots.logic.fields.cabels.ICabelStorage;
 import maven_robots.logic.robots.ConnectionRobot;
 import maven_robots.logic.robots.IRobot;
 
@@ -208,6 +209,15 @@ public class FieldTests extends Assert {
                 }},
             robot, 
             new ControllerManager());
+
+        CabelPart[] expectedCabelParts = new CabelPart[] {
+            new CabelPart(new Coord(1, 0)),
+            new CabelPart(new Coord(2, 0), Direction.LEFT),
+            new CabelPart(new Coord(3, 0), Direction.LEFT)
+        };
+        expectedCabelParts[0].setTo(Direction.RIGHT);
+        expectedCabelParts[1].setTo(Direction.RIGHT);
+
         Boolean result = field.moveRobot(Direction.RIGHT);
         Assert.assertTrue(result);
 
@@ -220,12 +230,8 @@ public class FieldTests extends Assert {
         ICabelStorage cabelStorage = field.getCabelStorage();
         Assert.assertEquals(1, cabelStorage.getCabels().size());
         Assert.assertTrue(cabelStorage.getCabels().containsKey(cabelColor));
-        Coord[] expectedCabelCoords = new Coord[] {
-            new Coord(1, 0),
-            new Coord(2, 0),
-            new Coord(3, 0)
-        };
-        Assert.assertArrayEquals(expectedCabelCoords, cabelStorage.getCabels().get(cabelColor));
+
+        Assert.assertArrayEquals(expectedCabelParts, cabelStorage.getCabels().get(cabelColor));
         Assert.assertTrue(cabelStorage.isAllCabelsCreated());
     }
 
@@ -252,16 +258,16 @@ public class FieldTests extends Assert {
         result = field.moveRobot(Direction.RIGHT);
         Assert.assertTrue(result);
         
-        Coord[] curCabel = field.getRobot().getCurrentCabel();
+        CabelPart[] curCabel = field.getRobot().getCurrentCabel();
         for (int i = 1; i < curCabel.length; i++) {
             Assert.assertEquals(cabelColor, 
-                field.getField()[curCabel[i].y][curCabel[i].x].getColor());
+                field.getField()[curCabel[i].getCoord().y][curCabel[i].getCoord().x].getColor());
         }
         field.resetCurrentCabel();
         
         for (int i = 1; i < curCabel.length; i++) {
             Assert.assertEquals(ChargeColor.EMPTY, 
-                field.getField()[curCabel[i].y][curCabel[i].x].getColor());
+                field.getField()[curCabel[i].getCoord().y][curCabel[i].getCoord().x].getColor());
         }
     }
 

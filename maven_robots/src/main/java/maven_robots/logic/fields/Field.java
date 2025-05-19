@@ -11,6 +11,11 @@ import maven_robots.logic.cells.CellType;
 import maven_robots.logic.cells.ICell;
 import maven_robots.logic.cells.controllers.ICellController;
 import maven_robots.logic.cells.controllers.controllerManager.IControllerManager;
+import maven_robots.logic.fields.cabels.CabelPart;
+import maven_robots.logic.fields.cabels.CabelStorage;
+import maven_robots.logic.fields.cabels.ICabelStorage;
+import maven_robots.logic.fields.cabels.impulses.IImpulseManager;
+import maven_robots.logic.fields.cabels.impulses.ImpulseManager;
 import maven_robots.logic.robots.IRobot;
 
 public class Field {
@@ -21,10 +26,12 @@ public class Field {
     private final int width;
     private final IControllerManager controllerManager;
     private final ICabelStorage cabelStorage;
+    private final IImpulseManager impulseManager;
 
     private List<FieldObserver> observers = new ArrayList<>();
 
-    public Field(ICell[][] field, IRobot robot, IControllerManager controllerManager) {
+    public Field(ICell[][] field, IRobot robot,
+        IControllerManager controllerManager, int maxChargeCapacity) {
         height = field.length;
         width = field[0].length;
         this.field = field;
@@ -32,6 +39,11 @@ public class Field {
         this.controllerManager = controllerManager;
         int ppCount = countColors();
         cabelStorage = new CabelStorage(ppCount);
+        impulseManager = new ImpulseManager(cabelStorage, maxChargeCapacity);
+    }
+
+    public Field(ICell[][] field, IRobot robot, IControllerManager controllerManager) {
+        this(field, robot, controllerManager, 1000);
     }
 
     private int countColors() {
@@ -57,6 +69,10 @@ public class Field {
 
     public ICabelStorage getCabelStorage() {
         return cabelStorage;
+    }
+
+    public IImpulseManager getImpulseManager() {
+        return impulseManager;
     }
 
     public Boolean moveRobot(Direction dir) {
@@ -91,10 +107,10 @@ public class Field {
     }
 
     public void resetCurrentCabel() {
-        Coord[] currentCabel = robot.getCurrentCabel();
+        CabelPart[] currentCabel = robot.getCurrentCabel();
         robot.resetCurrentCabel();
-        for (Coord coord : currentCabel) {
-            field[coord.y][coord.x].reset();
+        for (CabelPart coord : currentCabel) {
+            field[coord.getCoord().y][coord.getCoord().x].reset();
         }
         actualizeState(robot);
     }
@@ -111,10 +127,15 @@ public class Field {
 
     public void resertLastCabel() {
         try {
-            Coord[] lastCabel = cabelStorage.resetLastCable();
-            for (Coord coord : lastCabel) {
-                field[coord.y][coord.x].reset();
+            CabelPart[] lastCabel = cabelStorage.resetLastCable();
+
+            for (CabelPart part : lastCabel) {
+                field[part.getCoord().y][part.getCoord().x].reset();
             }
+
+            Coord startPointCoord = lastCabel[0].getCoord();
+            ChargeColor cabelColor = field[startPointCoord.y][startPointCoord.x].getColor();
+            impulseManager.removeImpulse(cabelColor);
             notifyObservers();
         } catch (EmptyStackException e) {
         }
@@ -143,10 +164,11 @@ public class Field {
     }
 
     private void saveCabel() {
-        Coord[] cabelRoute = robot.getCurrentCabel();
+        CabelPart[] cabelRoute = robot.getCurrentCabel();
         ChargeColor cabelColour = robot.getChargeColor();
         robot.resetCurrentCabel();
         cabelStorage.saveCabel(cabelRoute, cabelColour);
+        impulseManager.addImpulse(cabelColour);
     }
 
     private Boolean isCellInsideBorders(Coord pos) {

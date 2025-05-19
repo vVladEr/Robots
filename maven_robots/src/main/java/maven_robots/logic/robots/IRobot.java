@@ -6,6 +6,7 @@ import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
 import maven_robots.logic.cells.ICell;
+import maven_robots.logic.fields.cabels.CabelPart;
 
 public interface IRobot {
 
@@ -27,9 +28,9 @@ public interface IRobot {
 
     public void resetCurrentCabel();
 
-    public Coord[] getCurrentCabel();
+    public CabelPart[] getCurrentCabel();
 
-    public Optional<Coord> getPreviousCabelPos();
+    public Optional<CabelPart> getPreviousCabelPos();
 
     public Boolean isMovingBackward(Coord newPos);
 }
