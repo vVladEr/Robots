@@ -1,12 +1,12 @@
 package maven_robots.gui;
 
-import java.awt.Frame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import maven_robots.data.parser.Parser;
-import maven_robots.logic.Fields.Field;
+import maven_robots.data.profiler.IProfiler;
+import maven_robots.data.profiler.Profiler;
+import maven_robots.gui.mainFrame.MainApplicationFrame;
 
 public class RobotsProgram {
     public static void main(String[] args) {
@@ -17,13 +17,12 @@ public class RobotsProgram {
 //        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         }
-        Parser parser = new Parser();
-        Field field = parser.parseLevel(1);
-        System.out.println(field);
+
         SwingUtilities.invokeLater(() -> {
-            MainApplicationFrame frame = new MainApplicationFrame(field);
-            frame.pack();
-            frame.setVisible(true);
-            frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+            IProfiler profiler = new Profiler();
+            MainApplicationFrame mainFrame = new MainApplicationFrame(profiler);
+
+            mainFrame.showProfilePickerDialog();
         });
-    }}
+    }
+}

@@ -1,9 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import maven_robots.gui.LogWindow;
-import maven_robots.gui.parameters.Parameters;
-import maven_robots.gui.profileSaver.ProfileName;
+import maven_robots.gui.frames.internalFrames.LogWindow;
+import maven_robots.data.parameters.Parameters;
 import maven_robots.localization.Languages;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.LogWindowSource;
