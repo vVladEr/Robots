@@ -100,7 +100,7 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
             profiler.setProfileName(profileName);
 
             Field field = levelParser.parseLevel(1);
-            ((GameWindow) components.get(FrameName.GAME_WINDOW)).setField(field);
+            ((GameWindow) components.get(FrameName.GAME_WINDOW)).setField(field, path);
 
             JOptionPane.showMessageDialog(
                 this,

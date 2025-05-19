@@ -7,7 +7,6 @@ import maven_robots.data.profiler.IProfiler;
 import maven_robots.data.profiler.enums.FrameName;
 import maven_robots.gui.frames.baseFrames.BaseJInternalFrame;
 import maven_robots.data.parameters.Parameters;
-import maven_robots.gui.mainFrame.GameField;
 import maven_robots.localization.ILocalizable;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.logic.fields.Field;
@@ -35,8 +34,8 @@ public class GameWindow extends BaseJInternalFrame implements ILocalizable
 
     }
 
-    public void setField(Field field) {
-        GameField gameField = new GameField(field);
+    public void setField(Field field, String path) {
+        GameField gameField = new GameField(field, path);
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(gameField);
         getContentPane().add(panel);

@@ -7,7 +7,10 @@ public enum ChargeColor {
     RED("r", Color.RED),
     GREEN("g", Color.GREEN),
     BLUE("b", Color.BLUE),
-    PURPLE("p", new Color(128, 0, 128));
+    PURPLE("p", new Color(128, 0, 128)),
+    BLACK("bl", Color.BLACK),
+    GRAY("gr", Color.GRAY),
+    LIGHT_BLUE("lb", new Color(0, 255, 255));
 
     private final String colorCode;
     private final Color awtColor;
