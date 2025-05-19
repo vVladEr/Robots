@@ -13,7 +13,7 @@ public interface ICabelStorage {
 
     public boolean isAllCabelsCreated();
 
-    public void saveCabel(Coord[] coords, ChargeColor color);
+    public void saveCabel(CabelPart[] coords, ChargeColor color);
 
     public CabelPart[] resetLastCable() throws EmptyStackException;
 

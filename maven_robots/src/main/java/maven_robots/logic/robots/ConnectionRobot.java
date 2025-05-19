@@ -9,12 +9,13 @@ import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.Direction;
 import maven_robots.logic.cells.ICell;
+import maven_robots.logic.fields.cabels.CabelPart;
 
 public class ConnectionRobot implements IRobot {
 
     private Coord pos;
     private ChargeColor chargeColor;
-    private Stack<Coord> prevPositions;
+    private Stack<CabelPart> prevPositions;
 
     private Optional<Coord> lastTakenPowerPoint;
     private boolean isCableFinished = false;
@@ -55,8 +56,21 @@ public class ConnectionRobot implements IRobot {
         
         if (isMovingBackward(nextPos)) {
             prevPositions.pop();
+            Optional<CabelPart> curTop = getPreviousCabelPos();
+            if (curTop.isPresent()) {
+                curTop.get().resetTo();
+            }
         } else {
-            prevPositions.add(pos);
+            Optional<CabelPart> curTop = getPreviousCabelPos();
+            if (curTop.isPresent()) {
+                Coord diff = Coord.getDiff(pos, curTop.get().getCoord());
+                Direction dir  = Direction.toDirection(diff);
+                curTop.get().setTo(dir);
+                prevPositions.add(new CabelPart(pos, dir.getOpposite()));
+            } else {
+                prevPositions.add(new CabelPart(pos));
+            }
+            
         } 
 
     }
@@ -74,12 +88,20 @@ public class ConnectionRobot implements IRobot {
         return isCableFinished;
     }
 
-    public Coord[] getCurrentCabel() {
-        ArrayList<Coord> cabel = new ArrayList<Coord>(prevPositions);
+    public CabelPart[] getCurrentCabel() {
+        ArrayList<CabelPart> cabel = new ArrayList<CabelPart>(prevPositions);
         if (lastTakenPowerPoint.isPresent()) {
-            cabel.add(pos);
+            if (cabel.size() == 0) {
+                cabel.add(new CabelPart(pos));
+            } else {
+                Coord prevPartCoord = cabel.get(cabel.size() - 1).getCoord();
+                Coord diff = Coord.getDiff(pos, prevPartCoord);
+                Direction dir  = Direction.toDirection(diff);
+                cabel.get(cabel.size() - 1).setTo(dir);
+                cabel.add(new CabelPart(pos, dir.getOpposite()));
+            }
         }
-        return cabel.toArray(new Coord[0]);
+        return cabel.toArray(new CabelPart[0]);
     }
 
     public void resetCurrentCabel() {
@@ -89,7 +111,7 @@ public class ConnectionRobot implements IRobot {
         isCableFinished = false;
     }
 
-    public Optional<Coord> getPreviousCabelPos() {
+    public Optional<CabelPart> getPreviousCabelPos() {
         try {
             return Optional.of(prevPositions.peek());
         } catch (EmptyStackException  e) {
@@ -98,11 +120,11 @@ public class ConnectionRobot implements IRobot {
     }
 
     public Boolean isMovingBackward(Coord newPos) {
-        Optional<Coord> prevPos = getPreviousCabelPos();
-        return prevPos.isPresent() && prevPos.get().equals(newPos);
+        Optional<CabelPart> prevPos = getPreviousCabelPos();
+        return prevPos.isPresent() && prevPos.get().getCoord().equals(newPos);
     }
 
-    
+
 }
 
 /*

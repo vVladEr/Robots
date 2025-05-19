@@ -102,10 +102,10 @@ public class Field {
     }
 
     public void resetCurrentCabel() {
-        Coord[] currentCabel = robot.getCurrentCabel();
+        CabelPart[] currentCabel = robot.getCurrentCabel();
         robot.resetCurrentCabel();
-        for (Coord coord : currentCabel) {
-            field[coord.y][coord.x].reset();
+        for (CabelPart coord : currentCabel) {
+            field[coord.getCoord().y][coord.getCoord().x].reset();
         }
         actualizeState(robot);
     }
@@ -159,7 +159,7 @@ public class Field {
     }
 
     private void saveCabel() {
-        Coord[] cabelRoute = robot.getCurrentCabel();
+        CabelPart[] cabelRoute = robot.getCurrentCabel();
         ChargeColor cabelColour = robot.getChargeColor();
         robot.resetCurrentCabel();
         cabelStorage.saveCabel(cabelRoute, cabelColour);

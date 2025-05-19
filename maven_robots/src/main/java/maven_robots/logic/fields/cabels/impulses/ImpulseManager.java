@@ -11,14 +11,16 @@ import maven_robots.logic.fields.cabels.ICabelStorage;
 public class ImpulseManager implements IImpulseManager {
 
     private final ICabelStorage cabelStorage;
-    private final AtomicInteger totalChargeCapacity;
+    private final int maxChargeCapacity;
+    private final AtomicInteger currentCharge;
     private volatile ConcurrentHashMap<ChargeColor, TimerTask> impulseMoveTasks;
     private volatile ConcurrentHashMap<ChargeColor, ImpulseTaskData> impulseDatas;
     private final Timer timer;
 
     public ImpulseManager(ICabelStorage cabelStorage, int totalChargeCapacity) {
         this.cabelStorage = cabelStorage;
-        this.totalChargeCapacity = new AtomicInteger(totalChargeCapacity);
+        maxChargeCapacity = totalChargeCapacity;
+        currentCharge = new AtomicInteger(totalChargeCapacity);
         impulseMoveTasks = new ConcurrentHashMap<ChargeColor, TimerTask>();
         impulseDatas = new ConcurrentHashMap<ChargeColor, ImpulseTaskData>();
         timer = new Timer();
@@ -38,7 +40,7 @@ public class ImpulseManager implements IImpulseManager {
                     return;
                 }
                 if (impulseDatas.get(color).getImpulsePosition() != 0) {
-                    totalChargeCapacity.addAndGet(impulseDatas.get(color).chargeVolume);
+                    currentCharge.addAndGet(impulseDatas.get(color).chargeVolume);
                     impulseDatas.remove(color);
                     cancel();
                 }
@@ -65,14 +67,25 @@ public class ImpulseManager implements IImpulseManager {
 
     private void impulseTask(ChargeColor color) {
         if (impulseDatas.get(color).getImpulsePosition() == 0) {
-            int res = totalChargeCapacity.addAndGet(-impulseDatas.get(color).chargeVolume);
-            if (res < 0) {
+            int res = currentCharge.get();
+            if (res < impulseDatas.get(color).chargeVolume) {
                 throw new IllegalArgumentException(); //TODO нужен какой-то ивент
             } 
+            currentCharge.addAndGet(-impulseDatas.get(color).chargeVolume);
         }
         if (impulseDatas.get(color).isImpulseReachEndOfCabel()) {
-            totalChargeCapacity.addAndGet(impulseDatas.get(color).chargeVolume);
+            currentCharge.addAndGet(impulseDatas.get(color).chargeVolume);
         }
         impulseDatas.get(color).moveImpulseForward();
     }
+
+    public int getMaxChargeCapacity() {
+        return maxChargeCapacity;
+    }
+
+    public AtomicInteger getCurrentCharge() {
+        return currentCharge;
+    }
+
+    
 }

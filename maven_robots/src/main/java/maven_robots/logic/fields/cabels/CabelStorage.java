@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import maven_robots.logic.ChargeColor;
-import maven_robots.logic.Coord;
 
 public class CabelStorage implements ICabelStorage {
 
@@ -30,8 +29,8 @@ public class CabelStorage implements ICabelStorage {
     }
 
     @Override
-    public void saveCabel(Coord[] coords, ChargeColor color) {
-        cabels.put(color, ICabelStorage.fromCoordsToCabelParts(coords));
+    public void saveCabel(CabelPart[] coords, ChargeColor color) {
+        cabels.put(color, coords);
         colorStack.add(color);
     }
 

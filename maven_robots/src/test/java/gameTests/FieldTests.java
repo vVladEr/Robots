@@ -258,16 +258,16 @@ public class FieldTests extends Assert {
         result = field.moveRobot(Direction.RIGHT);
         Assert.assertTrue(result);
         
-        Coord[] curCabel = field.getRobot().getCurrentCabel();
+        CabelPart[] curCabel = field.getRobot().getCurrentCabel();
         for (int i = 1; i < curCabel.length; i++) {
             Assert.assertEquals(cabelColor, 
-                field.getField()[curCabel[i].y][curCabel[i].x].getColor());
+                field.getField()[curCabel[i].getCoord().y][curCabel[i].getCoord().x].getColor());
         }
         field.resetCurrentCabel();
         
         for (int i = 1; i < curCabel.length; i++) {
             Assert.assertEquals(ChargeColor.EMPTY, 
-                field.getField()[curCabel[i].y][curCabel[i].x].getColor());
+                field.getField()[curCabel[i].getCoord().y][curCabel[i].getCoord().x].getColor());
         }
     }
 
