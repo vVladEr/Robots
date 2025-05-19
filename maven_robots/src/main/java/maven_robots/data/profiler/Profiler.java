@@ -148,4 +148,9 @@ public class Profiler implements IProfiler{
             e.printStackTrace();
         }
     }
+
+    public void addStrategy(Class<? extends Component> componentClass,
+        IComponentStrategy strategy) {
+        strategies.put(componentClass, strategy);
+    }
 }
