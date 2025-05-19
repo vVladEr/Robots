@@ -1,5 +1,7 @@
 package profileTests;
 
+import static maven_robots.gui.RobotsProgram.getPath;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -14,7 +16,8 @@ public class FrameProfilerTests {
     
     @BeforeClass
     public static void setup() {
-        profiler = new Profiler();
+        String path = getPath();
+        profiler = new Profiler(path);
         profiler.addStrategy(TestFrame.class, new JFrameStrategy());
         profiler.setProfileName("test");
     }

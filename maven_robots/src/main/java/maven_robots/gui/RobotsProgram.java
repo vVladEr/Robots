@@ -30,7 +30,7 @@ public class RobotsProgram {
         });
     }
 
-    private static String getPath() {
+    public static String getPath() {
         String path;
 
         try {

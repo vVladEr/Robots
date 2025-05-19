@@ -1,5 +1,7 @@
 package profileTests;
 
+import static maven_robots.gui.RobotsProgram.getPath;
+
 import java.beans.PropertyVetoException;
 
 import org.junit.Assert;
@@ -16,7 +18,8 @@ public class InternalFrameProfilerTests {
     
     @BeforeClass
     public static void setup() {
-        profiler = new Profiler();
+        String path = getPath();
+        profiler = new Profiler(path);
         profiler.addStrategy(TestInternalFrame.class, new JInternalFrameStrategy());
         profiler.setProfileName("test");
     }

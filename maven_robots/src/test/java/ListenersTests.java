@@ -1,3 +1,5 @@
+import static maven_robots.gui.RobotsProgram.getPath;
+
 import java.beans.PropertyVetoException;
 
 import javax.swing.JTextArea;
@@ -15,9 +17,10 @@ public class ListenersTests {
 
     @Test
     public void removeListenersWhenWindowClosed() {
+        String path = getPath();
         LogWindowSource logSource = new LogWindowSource(5);
         Parameters initialLogWindowParameters = new Parameters(10, 10, 300, 800);
-        LogWindow logWindow = new LogWindow(new Profiler(),
+        LogWindow logWindow = new LogWindow(new Profiler(path),
              new JTextArea(), logSource, initialLogWindowParameters);
         
         Assert.assertEquals(1, logSource.listenersCount());
