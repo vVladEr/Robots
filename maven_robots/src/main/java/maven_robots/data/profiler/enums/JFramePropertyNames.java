@@ -3,7 +3,8 @@ package maven_robots.data.profiler.enums;
 import java.util.Arrays;
 
 public enum JFramePropertyNames {
-    PARAMETERS("parameters");
+    PARAMETERS("parameters"),
+    IS_MAXIMIZED("isMaximized");
 
     private final String propertyName;
 

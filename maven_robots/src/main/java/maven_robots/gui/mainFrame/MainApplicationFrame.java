@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 import java.util.LinkedHashMap;
 
 import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -100,7 +101,6 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
 
             Field field = levelParser.parseLevel(1);
             ((GameWindow) components.get(FrameName.GAME_WINDOW)).setField(field);
-            System.out.println(field);
 
             JOptionPane.showMessageDialog(
                 this,
@@ -108,7 +108,6 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
             );
             pack();
             setVisible(true);
-            setExtendedState(Frame.MAXIMIZED_BOTH);
 
             Profiler profiler = (Profiler) this.profiler;
             if (profiler.isProfileExists()) {
@@ -119,10 +118,6 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         } else {
             System.exit(0);
         }
-    }
-
-    public void dispatch() {
-        this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
 
     private void addWindow(JInternalFrame frame) {
@@ -140,6 +135,10 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
     }
 
     private void initMainApplicationFrame() {
+        Parameters initialMainFrameParameters = Parameters.parseParameters(
+                DefaultParameters.MainFrameDefaultParameters.getParameters()
+        );
+
         WindowAdapter windowClosingAdapter = new WindowAdapter() {
             @Override
             public void windowClosed(final WindowEvent e) {
@@ -152,6 +151,15 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         addWindowListener(windowClosingAdapter);
 
         setContentPane(new JDesktopPane());
+
+        setBounds(
+            initialMainFrameParameters.getX(),
+            initialMainFrameParameters.getY(),
+            initialMainFrameParameters.getWidth(),
+            initialMainFrameParameters.getHeight()
+        );
+
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         components.put(FrameName.MAIN_FRAME, this);
     }
@@ -176,6 +184,11 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
 
         components.put(FrameName.MENU_BAR_FRAME, new MenuBarFrame(listeners));
     }
+
+    public void dispatch() {
+        dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
+
 
     private void initGameWindow() {
         Parameters initialGameWindowParameters = Parameters.parseParameters(

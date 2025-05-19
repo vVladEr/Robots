@@ -9,6 +9,7 @@ import maven_robots.data.parameters.Parameters;
 import maven_robots.data.profiler.ProfileData;
 import maven_robots.data.profiler.enums.JInternalFramePropertyNames;
 import maven_robots.data.profiler.strategies.interfaces.IComponentStrategy;
+import maven_robots.gui.frames.baseFrames.BaseJInternalFrame;
 
 public class JInternalFrameStrategy implements IComponentStrategy {
     @Override
@@ -17,18 +18,28 @@ public class JInternalFrameStrategy implements IComponentStrategy {
         ProfileData profileData = new ProfileData();
 
         profileData.setProperty(
-            "parameters",
+            JInternalFramePropertyNames.PARAMETERS.getPropertyName(),
             String.format(
-                    "%d;%d;%d;%d",
-                    comp.getX(),
-                    comp.getY(),
-                    comp.getWidth(),
-                    comp.getHeight()
+                "%d;%d;%d;%d",
+                comp.getX(),
+                comp.getY(),
+                comp.getWidth(),
+                comp.getHeight()
             )
         );
 
-        profileData.setProperty("isClosed", Boolean.toString(jInternalFrame.isClosed()));
-        profileData.setProperty("isIcon", Boolean.toString(jInternalFrame.isIcon()));
+        profileData.setProperty(
+                JInternalFramePropertyNames.IS_CLOSED.getPropertyName(),
+                Boolean.toString(jInternalFrame.isClosed())
+        );
+        profileData.setProperty(
+                JInternalFramePropertyNames.IS_ICON.getPropertyName(),
+                Boolean.toString(jInternalFrame.isIcon())
+        );
+        profileData.setProperty(
+                JInternalFramePropertyNames.IS_MAXIMIZED.getPropertyName(),
+                Boolean.toString(jInternalFrame.isMaximum())
+        );
 
         return profileData;
     }
@@ -41,30 +52,28 @@ public class JInternalFrameStrategy implements IComponentStrategy {
     @Override
     public void applyProperties(ProfileData profileData, Component comp) {
         JInternalFrame jInternalFrame = (JInternalFrame) comp;
-        Parameters parameters = Parameters.parseParameters(
-                profileData.getProperty(JInternalFramePropertyNames.PARAMETERS.getPropertyName())
-        );
-
-        jInternalFrame.setBounds(
-                parameters.getX(),
-                parameters.getY(),
-                parameters.getWidth(),
-                parameters.getHeight()
-        );
 
         try {
-            boolean isClosed = Boolean.parseBoolean(
-                    profileData.getProperty(JInternalFramePropertyNames.IS_CLOSED.getPropertyName())
-            );
-            boolean isIcon = Boolean.parseBoolean(
-                    profileData.getProperty(JInternalFramePropertyNames.IS_ICON.getPropertyName())
-            );
+            boolean isMaximized = Boolean.parseBoolean(profileData.getProperty(
+                    JInternalFramePropertyNames.IS_MAXIMIZED.getPropertyName()
+            ));
 
-            jInternalFrame.setClosed(isClosed);
-            jInternalFrame.setIcon(isIcon);
-        } catch (PropertyVetoException e) {
-            throw new RuntimeException(e);
+            if (isMaximized) {
+                jInternalFrame.setMaximum(true);
+            }
+
+            if (Boolean.parseBoolean(
+                profileData.getProperty(JInternalFramePropertyNames.IS_CLOSED.getPropertyName()))
+            ) {
+                jInternalFrame.dispose();
+            }
+            jInternalFrame.setIcon(Boolean.parseBoolean(profileData.getProperty(JInternalFramePropertyNames.IS_ICON.getPropertyName())));
+        } catch (PropertyVetoException | NullPointerException e) {
+            System.err.println("Ошибка при применении свойств: " + e.getMessage());
         }
 
+        Parameters parameters = Parameters.parseParameters(profileData.getProperty(JInternalFramePropertyNames.PARAMETERS.getPropertyName()));
+
+        jInternalFrame.setBounds(parameters.getX(), parameters.getY(), parameters.getWidth(), parameters.getHeight());
     }
 }

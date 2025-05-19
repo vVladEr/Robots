@@ -5,7 +5,8 @@ import java.util.Arrays;
 public enum JInternalFramePropertyNames {
     PARAMETERS("parameters"),
     IS_CLOSED("isClosed"),
-    IS_ICON("isIcon");
+    IS_ICON("isIcon"),
+    IS_MAXIMIZED("isMaximized");
 
     private final String propertyName;
 

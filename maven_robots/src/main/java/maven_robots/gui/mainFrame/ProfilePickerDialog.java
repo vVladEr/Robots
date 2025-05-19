@@ -2,6 +2,9 @@ package maven_robots.gui.mainFrame;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -63,7 +66,15 @@ public class ProfilePickerDialog extends JDialog {
         }
 
         profileList = new JList<>(listModel);
+
         profileList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        profileList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                deleteButton.setEnabled(true);
+                selectButton.setEnabled(true);
+            }
+        });
+
         profileList.setLayoutOrientation(JList.VERTICAL);
 
         scrollPane = new JScrollPane(profileList);
@@ -74,7 +85,8 @@ public class ProfilePickerDialog extends JDialog {
         deleteButton = new JButton("Удалить профиль");
         cancelSelectionButton = new JButton("Отмена");
 
-        selectButton.setEnabled(!listModel.isEmpty() && selectedProfileName != null);
+        selectButton.setEnabled(false);
+        deleteButton.setEnabled(false);
 
         if (listModel.size() >= MAX_PROFILES) {
             newProfileButton.setEnabled(false);
@@ -102,8 +114,8 @@ public class ProfilePickerDialog extends JDialog {
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.add(selectButton);
-        buttonPanel.add(newProfileButton);
         buttonPanel.add(deleteButton);
+        buttonPanel.add(newProfileButton);
         buttonPanel.add(cancelSelectionButton);
 
         buttonPanel.add(saveNewProfileButton);
@@ -158,6 +170,7 @@ public class ProfilePickerDialog extends JDialog {
         selectButton.setVisible(true);
         newProfileButton.setVisible(true);
         cancelSelectionButton.setVisible(true);
+        deleteButton.setVisible(true);
 
         saveNewProfileButton.setVisible(false);
         cancelCreationButton.setVisible(false);
@@ -194,6 +207,7 @@ public class ProfilePickerDialog extends JDialog {
         selectButton.setVisible(false);
         newProfileButton.setVisible(false);
         cancelSelectionButton.setVisible(false);
+        deleteButton.setVisible(false);
 
         saveNewProfileButton.setVisible(true);
         cancelCreationButton.setVisible(true);
