@@ -10,7 +10,7 @@ import maven_robots.data.parameters.Parameters;
 import maven_robots.gui.mainFrame.GameField;
 import maven_robots.localization.ILocalizable;
 import maven_robots.localization.LocalizationManager;
-import maven_robots.logic.Fields.Field;
+import maven_robots.logic.fields.Field;
 
 public class GameWindow extends BaseJInternalFrame implements ILocalizable
 {

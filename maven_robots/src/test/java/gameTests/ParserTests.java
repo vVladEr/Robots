@@ -3,9 +3,12 @@ package gameTests;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import static maven_robots.gui.RobotsProgram.getPath;
+
 import org.junit.Test;
 
-import maven_robots.data.parser.Parser;
+import maven_robots.data.parser.IParser;
+import maven_robots.data.parser.LevelParser;
 import maven_robots.logic.ChargeColor;
 import maven_robots.logic.Coord;
 import maven_robots.logic.cells.Cell;
@@ -17,7 +20,8 @@ public class ParserTests {
 
     @Test
     public void parserShouldParseFieldCorrectly() {
-        Parser parser = new Parser();
+        String path = getPath();
+        IParser parser = new LevelParser(path);
         Coord robotPos = new Coord(1, 0);
         ICell[][] expectedField = new ICell[][] {
             {

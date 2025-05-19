@@ -2,11 +2,11 @@ package maven_robots.gui.baseClasses;
 
 import javax.swing.JInternalFrame;
 
-import maven_robots.gui.ClosingListeners;
-import maven_robots.gui.ILocalizable;
+import maven_robots.gui.mainFrame.ClosingListeners;
+import maven_robots.localization.ILocalizable;
 import maven_robots.localization.LocalizationManager;
 
-public abstract class BaseInternalJFrame extends JInternalFrame implements ILocalizable{
+public abstract class BaseInternalJFrame extends JInternalFrame implements ILocalizable {
 
     protected final String titleBandleName;
 

@@ -30,7 +30,7 @@ import maven_robots.localization.ILocalizable;
 import maven_robots.gui.frames.internalFrames.LogWindow;
 import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
-import maven_robots.logic.Fields.Field;
+import maven_robots.logic.fields.Field;
 
 public final class MainApplicationFrame extends BaseJFrame implements ILocalizable {
     private final LinkedHashMap<FrameName, Component> components;

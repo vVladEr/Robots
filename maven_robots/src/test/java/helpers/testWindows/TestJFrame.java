@@ -1,10 +1,16 @@
 package helpers.testWindows;
 
-import maven_robots.gui.baseClasses.BaseJFrame;
+import maven_robots.data.profiler.IProfiler;
+import maven_robots.data.profiler.enums.FrameName;
+import maven_robots.gui.frames.baseFrames.BaseJFrame;
+import maven_robots.localization.ILocalizable;
 
-public class TestJFrame extends BaseJFrame {
+;
 
-    public TestJFrame() {
+public class TestJFrame extends BaseJFrame implements ILocalizable {
+
+    public TestJFrame(IProfiler profiler) {
+        super(profiler, FrameName.DefaultWindow);
         setVisible(true);
     }
     @Override
@@ -12,6 +18,4 @@ public class TestJFrame extends BaseJFrame {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'changeLanguage'");
     }
-
-    
 }

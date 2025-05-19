@@ -1,4 +1,4 @@
-ackage maven_robots.data.parser;
+package maven_robots.data.parser;
 
 import java.io.IOException;
 import java.nio.file.Files;
