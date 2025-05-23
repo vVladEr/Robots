@@ -41,13 +41,13 @@ public class ImpulseManager implements IImpulseManager {
                 }
                 if (impulseDatas.get(color).getImpulsePosition() != 0) {
                     currentCharge.addAndGet(impulseDatas.get(color).chargeVolume);
-                    impulseDatas.remove(color);
-                    cancel();
                 }
+                impulseDatas.remove(color);
+                this.cancel();
             }
         };
         impulseMoveTasks.put(color, newColorTask);
-        timer.schedule(newColorTask, 0,
+        timer.schedule(newColorTask, 10,
             ColorImpulseParameters.getByColorOrDefault(color).moveDelayMilliseconds);
     }
 

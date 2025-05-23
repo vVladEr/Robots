@@ -56,10 +56,6 @@ public class ConnectionRobot implements IRobot {
         
         if (isMovingBackward(nextPos)) {
             prevPositions.pop();
-            Optional<CabelPart> curTop = getPreviousCabelPos();
-            if (curTop.isPresent()) {
-                curTop.get().resetTo();
-            }
         } else {
             Optional<CabelPart> curTop = getPreviousCabelPos();
             if (curTop.isPresent()) {
