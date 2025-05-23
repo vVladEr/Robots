@@ -136,7 +136,7 @@ public class Field {
             Coord startPointCoord = lastCabel[0].getCoord();
             ChargeColor cabelColor = field[startPointCoord.y][startPointCoord.x].getColor();
             impulseManager.removeImpulse(cabelColor);
-            notifyObservers();
+            actualizeState(robot);
         } catch (EmptyStackException e) {
         }
     }
