@@ -1,8 +1,9 @@
 package maven_robots.logic.fields.cabels.impulses;
 
 import maven_robots.logic.ChargeColor;
+import maven_robots.logic.fields.IObservable;
 
-public interface IImpulseManager {
+public interface IImpulseManager extends IObservable {
 
     public void addImpulse(ChargeColor color);
 

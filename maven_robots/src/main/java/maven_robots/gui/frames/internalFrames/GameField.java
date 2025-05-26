@@ -26,6 +26,7 @@ import maven_robots.logic.cells.ICell;
 import maven_robots.logic.fields.Field;
 import maven_robots.logic.fields.FieldObserver;
 import maven_robots.logic.fields.cabels.CabelPart;
+import maven_robots.logic.fields.cabels.impulses.IImpulseManager;
 import maven_robots.logic.robots.IRobot;
 
 public class GameField extends JPanel implements FieldObserver, KeyListener {
@@ -35,6 +36,8 @@ public class GameField extends JPanel implements FieldObserver, KeyListener {
     public GameField(Field field, String path) {
         this.field = field;
         this.field.addObserver(this);
+        this.field.getImpulseManager().addObserver(this);
+
         setFocusable(true);
         addKeyListener(this);
 
@@ -95,6 +98,7 @@ public class GameField extends JPanel implements FieldObserver, KeyListener {
         IRobot robot = field.getRobot();
         Coord robotCoord = robot.getCoord();
         HashMap<ChargeColor, CabelPart[]> completedCables = field.getCabelStorage().getCabels();
+        IImpulseManager impulseManager = field.getImpulseManager();
         ChargeColor currentChargeColor = robot.getChargeColor();
         CabelPart[] currentCable = robot.getCurrentCabel();
 
@@ -151,6 +155,15 @@ public class GameField extends JPanel implements FieldObserver, KeyListener {
             }
         }
 
+        for (ChargeColor chargeColor : completedCables.keySet()) {
+            int index = impulseManager.getImpulsePosition(chargeColor);
+            CabelPart[] cableParts = completedCables.get(chargeColor);
+            CabelPart cabelPart = cableParts[index];
+            int x = startX + cabelPart.getCoord().x * cellSize;
+            int y = startY + cabelPart.getCoord().y * cellSize;
+            drawImpulse(g2d, x, y, cellSize);
+        }
+
         if (robotSprite != null) {
             int x = startX + robotCoord.x * cellSize;
             int y = startY + robotCoord.y * cellSize;
@@ -159,6 +172,10 @@ public class GameField extends JPanel implements FieldObserver, KeyListener {
             g2d.setColor(Color.BLACK);
             g2d.fillOval(startX + robotCoord.x * cellSize, startY + robotCoord.y * cellSize, cellSize, cellSize);
         }
+
+        int currentCharge = impulseManager.getCurrentCharge();
+        int maxChargeCapacity = impulseManager.getMaxChargeCapacity();
+        drawBattery(g2d, cellSize, startX, startY, cells[0].length, cells.length, currentCharge, maxChargeCapacity);
 
         if (field.isGameFinished()) {
             g.setColor(Color.YELLOW);
@@ -262,5 +279,41 @@ public class GameField extends JPanel implements FieldObserver, KeyListener {
         }
 
         g2d.fillOval(centerX - innerRadius, centerY - innerRadius, 2 * innerRadius, 2 * innerRadius);
+    }
+
+    private void drawImpulse(Graphics2D g2d, int x, int y, int cellSize) {
+        int impulseSize = cellSize / 4;
+        int impulseX = x + cellSize / 2 - impulseSize / 2;
+        int impulseY = y + cellSize / 2 - impulseSize / 2;
+
+        g2d.setColor(ChargeColor.LIGHT_BLUE.getAwtColor());
+        g2d.fillOval(impulseX, impulseY, impulseSize, impulseSize);
+    }
+
+    private void drawBattery(Graphics2D g2d, int cellSize, int startX, int startY, int fieldWidth, int fieldHeight, float currentCharge, float maxChargeCapacity) {
+        int batteryBorderWidth = 2;
+        int batteryWidth = cellSize;
+        int totalBatteryHeight = (fieldHeight - 2) * cellSize;
+        int currentBatteryHeight = Math.round((1 - currentCharge / maxChargeCapacity) * totalBatteryHeight);
+        int batteryX = startX + fieldWidth * cellSize + cellSize;
+        int batteryY = startY + cellSize;
+
+        setDrawOptions(g2d, ChargeColor.GREEN, batteryBorderWidth);
+        g2d.fillRect(batteryX, batteryY, batteryWidth, totalBatteryHeight);
+        if (currentCharge == maxChargeCapacity) {
+            g2d.fillRect(batteryX + batteryWidth / 4, batteryY - cellSize / 4, batteryWidth - batteryWidth / 2, cellSize / 4);
+        } else {
+            setDrawOptions(g2d, ChargeColor.GRAY, batteryBorderWidth);
+            g2d.fillRect(batteryX + batteryWidth / 4, batteryY - cellSize / 4, batteryWidth - batteryWidth / 2, cellSize / 4);
+        }
+
+        setDrawOptions(g2d, ChargeColor.GRAY, batteryBorderWidth);
+        g2d.fillRect(batteryX, batteryY, batteryWidth, currentBatteryHeight);
+
+        setDrawOptions(g2d, ChargeColor.BLACK, batteryBorderWidth);
+        g2d.drawRect(batteryX, batteryY, batteryWidth, totalBatteryHeight);
+        g2d.drawRect(batteryX + batteryWidth / 4, batteryY - cellSize / 4, batteryWidth - batteryWidth / 2, cellSize / 4);
+
+        //g2d.fillRect(batteryX, batteryY, batteryWidth, totalBatteryHeight);
     }
 }

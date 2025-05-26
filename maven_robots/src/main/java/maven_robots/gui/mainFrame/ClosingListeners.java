@@ -64,11 +64,11 @@ public final class ClosingListeners {
                 e.getWindow().dispose();
             }
         }
-        
-        @Override
-        public void windowClosed(final WindowEvent e) {
-            System.exit(0);
-        }
+
+//        @Override
+//        public void windowClosed(final WindowEvent e) {
+//            System.exit(0);
+//        }
     };
 
     private ClosingListeners() {

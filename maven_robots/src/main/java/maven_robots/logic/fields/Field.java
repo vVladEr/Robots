@@ -18,7 +18,7 @@ import maven_robots.logic.fields.cabels.impulses.IImpulseManager;
 import maven_robots.logic.fields.cabels.impulses.ImpulseManager;
 import maven_robots.logic.robots.IRobot;
 
-public class Field {
+public class Field implements IObservable {
 
     private final ICell[][] field;
     private final IRobot robot;
@@ -28,7 +28,7 @@ public class Field {
     private final ICabelStorage cabelStorage;
     private final IImpulseManager impulseManager;
 
-    private List<FieldObserver> observers = new ArrayList<>();
+    private final List<FieldObserver> observers = new ArrayList<>();
 
     public Field(ICell[][] field, IRobot robot,
         IControllerManager controllerManager, int maxChargeCapacity) {
@@ -39,7 +39,7 @@ public class Field {
         this.controllerManager = controllerManager;
         int ppCount = countColors();
         cabelStorage = new CabelStorage(ppCount);
-        impulseManager = new ImpulseManager(cabelStorage, maxChargeCapacity);
+        impulseManager = new ImpulseManager(cabelStorage, maxChargeCapacity, observers);
     }
 
     public Field(ICell[][] field, IRobot robot, IControllerManager controllerManager) {
@@ -180,15 +180,18 @@ public class Field {
             && cabelStorage.getCabels().containsKey(cell.getColor());
     }
 
+    @Override
     public void addObserver(FieldObserver observer) {
         observers.add(observer);
     }
 
+    @Override
     public void removeObserver(FieldObserver observer) {
         observers.remove(observer);
     }
 
-    private void notifyObservers() {
+    @Override
+    public void notifyObservers() {
         for (FieldObserver observer : observers) {
             observer.onFieldChanged();
         }

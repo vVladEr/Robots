@@ -1,11 +1,15 @@
 package maven_robots.logic.fields.cabels.impulses;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import maven_robots.logic.ChargeColor;
+import maven_robots.logic.fields.FieldObserver;
+import maven_robots.logic.fields.IObservable;
 import maven_robots.logic.fields.cabels.ICabelStorage;
 
 public class ImpulseManager implements IImpulseManager {
@@ -17,7 +21,10 @@ public class ImpulseManager implements IImpulseManager {
     private volatile ConcurrentHashMap<ChargeColor, ImpulseTaskData> impulseDatas;
     private final Timer timer;
 
-    public ImpulseManager(ICabelStorage cabelStorage, int totalChargeCapacity) {
+    private final List<FieldObserver> observers;
+
+    public ImpulseManager(ICabelStorage cabelStorage, int totalChargeCapacity, List<FieldObserver> observers) {
+        this.observers = observers;
         this.cabelStorage = cabelStorage;
         maxChargeCapacity = totalChargeCapacity;
         currentCharge = new AtomicInteger(totalChargeCapacity);
@@ -37,10 +44,12 @@ public class ImpulseManager implements IImpulseManager {
             public void run() {
                 if (impulseMoveTasks.containsKey(color)) {
                     impulseTask(color);
+                    notifyObservers();
                     return;
                 }
                 if (impulseDatas.get(color).getImpulsePosition() != 0) {
                     currentCharge.addAndGet(impulseDatas.get(color).chargeVolume);
+                    notifyObservers();
                 }
                 impulseDatas.remove(color);
                 this.cancel();
@@ -87,5 +96,20 @@ public class ImpulseManager implements IImpulseManager {
         return currentCharge.get();
     }
 
-    
+    @Override
+    public void addObserver(FieldObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(FieldObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (FieldObserver observer : observers) {
+            observer.onFieldChanged();
+        }
+    }
 }
