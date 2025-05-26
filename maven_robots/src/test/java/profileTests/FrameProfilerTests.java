@@ -6,9 +6,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import helpers.testWindows.TestJFrame;
 import maven_robots.data.profiler.Profiler;
-import maven_robots.data.profiler.enums.FrameName;
-import maven_robots.data.profiler.strategies.JFrameStrategy;
 
 public class FrameProfilerTests {
 
@@ -23,7 +22,7 @@ public class FrameProfilerTests {
 
     @Test
     public void savingAndLoadPositionWorksCorrectly() {
-        TestFrame testFrame = new TestFrame(profiler, FrameName.TEST_FRAME);
+        TestJFrame testFrame = new TestJFrame(profiler);
         int expectedX = 20;
         int expectedY = 30;
         int expectedWidth = 100;
@@ -31,7 +30,7 @@ public class FrameProfilerTests {
         testFrame.setBounds(expectedX, expectedY, expectedWidth, expectedHeight);
         testFrame.saveFrameState();
 
-        TestFrame loadedTestFrame = new TestFrame(profiler, FrameName.TEST_FRAME);
+        TestJFrame loadedTestFrame = new TestJFrame(profiler);
         loadedTestFrame.loadFrameState();
 
         Assert.assertEquals(expectedX, loadedTestFrame.getX());

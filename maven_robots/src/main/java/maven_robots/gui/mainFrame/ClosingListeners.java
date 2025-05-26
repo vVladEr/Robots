@@ -32,7 +32,7 @@ public final class ClosingListeners {
             @Override
             public void internalFrameClosing(final InternalFrameEvent e) {
                 String[] yesNoOptions = getYesNoOptions();
-                int op = JOptionPane.showOptionDialog(
+                int op = optionPane.showOptionDialog(
                         e.getInternalFrame(),
                         LocalizationManager.getStringByName("window.closing.text"),
                         LocalizationManager.getStringByName("window.closing.title"),

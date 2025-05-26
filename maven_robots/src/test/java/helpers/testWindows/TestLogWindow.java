@@ -1,4 +1,5 @@
 package helpers.testWindows;
+
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 import javax.swing.JInternalFrame;

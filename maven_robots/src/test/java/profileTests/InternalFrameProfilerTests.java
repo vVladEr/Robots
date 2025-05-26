@@ -8,25 +8,28 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import helpers.mocks.mockOptionPanes.YesMockOptionPane;
+import helpers.testWindows.TestJInternalFrame;
 import maven_robots.data.profiler.Profiler;
-import maven_robots.data.profiler.enums.FrameName;
-import maven_robots.data.profiler.strategies.JInternalFrameStrategy;
+import maven_robots.gui.mainFrame.ClosingListeners;
+import maven_robots.gui.optionPane.IOptionPane;
 
 public class InternalFrameProfilerTests {
 
     private static Profiler profiler;
+    private final IOptionPane yesMockOptionPane = new YesMockOptionPane();
     
     @BeforeClass
     public static void setup() {
         String path = getPath();
         profiler = new Profiler(path);
-        profiler.addStrategy(TestInternalFrame.class, new JInternalFrameStrategy());
         profiler.setProfileName("test");
     }
 
     @Test
     public void savingAndLoadPositionWorksCorrectly() {
-        TestInternalFrame testFrame = new TestInternalFrame(profiler, FrameName.TEST_FRAME, "test");
+        TestJInternalFrame testFrame = new TestJInternalFrame(profiler,
+            "test", true, true, true, true);
         int expectedX = 20;
         int expectedY = 30;
         int expectedWidth = 100;
@@ -34,8 +37,8 @@ public class InternalFrameProfilerTests {
         testFrame.setBounds(expectedX, expectedY, expectedWidth, expectedHeight);
         testFrame.saveFrameState();
 
-        TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
-            FrameName.TEST_FRAME, "newTest");
+        TestJInternalFrame loadedTestFrame = new TestJInternalFrame(profiler,
+            "testLoad", true, true, true, true);
         loadedTestFrame.loadFrameState();
 
         Assert.assertEquals(expectedX, loadedTestFrame.getX());
@@ -46,7 +49,8 @@ public class InternalFrameProfilerTests {
 
     @Test
     public void savingAndLoadIconofiedWorksCorrectly() {
-        TestInternalFrame testFrame = new TestInternalFrame(profiler, FrameName.TEST_FRAME, "test");
+        TestJInternalFrame testFrame = new TestJInternalFrame(profiler,
+            "test", true, true, true, true);
         int expectedX = 20;
         int expectedY = 30;
         int expectedWidth = 100;
@@ -60,20 +64,30 @@ public class InternalFrameProfilerTests {
         }
         testFrame.saveFrameState();
 
-        TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
-            FrameName.TEST_FRAME, "newTest");
+        TestJInternalFrame loadedTestFrame = new TestJInternalFrame(profiler,
+            "testLoad", true, true, true, true);
         loadedTestFrame.loadFrameState();
 
+        Assert.assertTrue(loadedTestFrame.isIcon());
+
+        try {
+            loadedTestFrame.setIcon(false);
+        } catch (PropertyVetoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
         Assert.assertEquals(expectedX, loadedTestFrame.getX());
         Assert.assertEquals(expectedY, loadedTestFrame.getY());
         Assert.assertEquals(expectedWidth, loadedTestFrame.getWidth());
         Assert.assertEquals(expectedHeight, loadedTestFrame.getHeight());
-        Assert.assertTrue(loadedTestFrame.isIcon());
     }
 
     @Test
     public void savingAndLoadClosedWorksCorrectly() {
-        TestInternalFrame testFrame = new TestInternalFrame(profiler, FrameName.TEST_FRAME, "test");
+        ClosingListeners.setOptionPane(yesMockOptionPane);
+        TestJInternalFrame testFrame = new TestJInternalFrame(profiler,
+            "test", true, true, true, true);
         try {
             testFrame.setClosed(true);
         } catch (PropertyVetoException e) {
@@ -82,8 +96,8 @@ public class InternalFrameProfilerTests {
         }
         testFrame.saveFrameState();
 
-        TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
-            FrameName.TEST_FRAME, "newTest");
+        TestJInternalFrame loadedTestFrame = new TestJInternalFrame(profiler,
+            "testLoaded", true, true, true, true);
         loadedTestFrame.loadFrameState();
         Assert.assertTrue(loadedTestFrame.isClosed());
     }

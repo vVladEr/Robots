@@ -83,7 +83,7 @@ public class BaseJInternalFrame extends JInternalFrame implements IProfileProces
             Parameters parameters = frameState.getParameters();
 
             if (isClosed) {
-                dispose();
+                setClosed(true);
                 return;
             }
 
