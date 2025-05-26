@@ -32,11 +32,11 @@ public class InternalFrameProfilerTests {
         int expectedWidth = 100;
         int expectedHeight = 100;
         testFrame.setBounds(expectedX, expectedY, expectedWidth, expectedHeight);
-        testFrame.saveProfile();
+        testFrame.saveFrameState();
 
         TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
             FrameName.TEST_FRAME, "newTest");
-        loadedTestFrame.loadProfile();
+        loadedTestFrame.loadFrameState();
 
         Assert.assertEquals(expectedX, loadedTestFrame.getX());
         Assert.assertEquals(expectedY, loadedTestFrame.getY());
@@ -58,11 +58,11 @@ public class InternalFrameProfilerTests {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        testFrame.saveProfile();
+        testFrame.saveFrameState();
 
         TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
             FrameName.TEST_FRAME, "newTest");
-        loadedTestFrame.loadProfile();
+        loadedTestFrame.loadFrameState();
 
         Assert.assertEquals(expectedX, loadedTestFrame.getX());
         Assert.assertEquals(expectedY, loadedTestFrame.getY());
@@ -80,11 +80,11 @@ public class InternalFrameProfilerTests {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        testFrame.saveProfile();
+        testFrame.saveFrameState();
 
         TestInternalFrame loadedTestFrame = new TestInternalFrame(profiler,
             FrameName.TEST_FRAME, "newTest");
-        loadedTestFrame.loadProfile();
+        loadedTestFrame.loadFrameState();
         Assert.assertTrue(loadedTestFrame.isClosed());
     }
 }

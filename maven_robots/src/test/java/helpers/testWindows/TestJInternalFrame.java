@@ -1,12 +1,15 @@
 package helpers.testWindows;
 
-import maven_robots.gui.baseClasses.BaseInternalJFrame;
 
-public class TestJInternalFrame extends BaseInternalJFrame {
+import maven_robots.data.profiler.IProfiler;
+import maven_robots.data.profiler.enums.FrameName;
+import maven_robots.gui.frames.baseFrames.BaseJInternalFrame;
 
-    public TestJInternalFrame(String titleBandleName, boolean resizable, boolean closable, boolean maximizable,
-            boolean iconable) {
-        super(titleBandleName, resizable, closable, maximizable, iconable);
+public class TestJInternalFrame extends BaseJInternalFrame {
+
+    public TestJInternalFrame(IProfiler profiler, String titleBundleName, boolean resizable, boolean closable, boolean maximizable,
+                              boolean iconable) {
+        super(profiler, FrameName.TestWindow.getFrameName(), titleBundleName, resizable, closable, maximizable, iconable);
         setVisible(true);
     }
 

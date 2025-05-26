@@ -36,7 +36,7 @@ public class LogWindow extends BaseJInternalFrame implements LogChangeListener, 
     ) {
         super(
             profiler,
-            FrameName.LOG_WINDOW,
+            FrameName.LOG_WINDOW.getFrameName(),
             LocalizationManager.getStringByName("log.title"),
             true,
             true,

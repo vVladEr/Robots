@@ -27,7 +27,7 @@ public class ConfirmationCloseTests {
     }
 
     @Test
-    public void frameShouldClose_WhenYes() throws PropertyVetoException {
+    public void frameShouldClose_WhenYes() {
         ClosingListeners.setOptionPane(yesMockOptionPane);
         String path = getPath();
         IProfiler profiler = new Profiler(path);
@@ -37,7 +37,7 @@ public class ConfirmationCloseTests {
     }
 
     @Test
-    public void frameShouldNotClose_WhenNo() throws PropertyVetoException {
+    public void frameShouldNotClose_WhenNo() {
         ClosingListeners.setOptionPane(noMockOptionPane);
         String path = getPath();
         IProfiler profiler = new Profiler(path);

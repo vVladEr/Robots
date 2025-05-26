@@ -18,7 +18,6 @@ public class FrameProfilerTests {
     public static void setup() {
         String path = getPath();
         profiler = new Profiler(path);
-        profiler.addStrategy(TestFrame.class, new JFrameStrategy());
         profiler.setProfileName("test");
     }
 
@@ -30,10 +29,10 @@ public class FrameProfilerTests {
         int expectedWidth = 100;
         int expectedHeight = 100;
         testFrame.setBounds(expectedX, expectedY, expectedWidth, expectedHeight);
-        testFrame.saveProfile();
+        testFrame.saveFrameState();
 
         TestFrame loadedTestFrame = new TestFrame(profiler, FrameName.TEST_FRAME);
-        loadedTestFrame.loadProfile();
+        loadedTestFrame.loadFrameState();
 
         Assert.assertEquals(expectedX, loadedTestFrame.getX());
         Assert.assertEquals(expectedY, loadedTestFrame.getY());

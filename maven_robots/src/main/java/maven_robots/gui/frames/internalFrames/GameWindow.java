@@ -17,7 +17,7 @@ public class GameWindow extends BaseJInternalFrame implements ILocalizable
     public GameWindow(IProfiler profiler, Parameters parameters) {
         super(
             profiler,
-            FrameName.GAME_WINDOW,
+            FrameName.GAME_WINDOW.getFrameName(),
             LocalizationManager.getStringByName("game.title"),
             true,
             true,

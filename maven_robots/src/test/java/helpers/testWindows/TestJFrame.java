@@ -10,7 +10,7 @@ import maven_robots.localization.ILocalizable;
 public class TestJFrame extends BaseJFrame implements ILocalizable {
 
     public TestJFrame(IProfiler profiler) {
-        super(profiler, FrameName.DefaultWindow);
+        super(profiler, FrameName.TestWindow.getFrameName());
         setVisible(true);
     }
     @Override

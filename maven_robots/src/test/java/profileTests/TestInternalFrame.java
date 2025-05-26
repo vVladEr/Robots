@@ -22,12 +22,12 @@ public class TestInternalFrame extends JInternalFrame  implements IProfileProces
     }
 
     @Override
-    public void loadProfile() {
+    public void loadFrameState() {
         profiler.loadComponentFromProfile(frameName.getFrameName(), this);
     }
 
     @Override
-    public void saveProfile() {
+    public void saveFrameState() {
         profiler.saveComponentToProfile(frameName.getFrameName(), this);
     }
 }

@@ -1,7 +1,7 @@
 package maven_robots.data.profiler.enums;
 
 public enum FrameName {
-    DefaultWindow("default"),
+    TestWindow("default"),
     GAME_WINDOW("gameWindow"),
     LOG_WINDOW("logWindow"),
     TEXT_AREA("textArea"),

@@ -30,6 +30,10 @@ public class Parameters {
     }
 
     public static Parameters parseParameters(String property) {
+        if (property == null) {
+            return new Parameters(0, 0, 0, 0);
+        }
+
         String[] propertyParts = property.split(";");
 
         int x = Integer.parseInt(propertyParts[0]);

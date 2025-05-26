@@ -1,8 +1,6 @@
 package maven_robots.gui.mainFrame;
 
 import java.awt.Component;
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedHashMap;
 
@@ -32,21 +30,19 @@ import maven_robots.localization.LocalizationManager;
 import maven_robots.log.Logger;
 import maven_robots.logic.fields.Field;
 
-public final class MainApplicationFrame extends BaseJFrame implements ILocalizable {
-    private final LinkedHashMap<FrameName, Component> components;
+public final class MainApplicationFrame extends BaseJFrame {
     private final String path;
 
     private final IProfiler profiler;
     private final IParser levelParser;
 
     public MainApplicationFrame(IProfiler profiler, String path) {
-        super(profiler, FrameName.MAIN_FRAME);
+        super(profiler, FrameName.MAIN_FRAME.getFrameName());
 
         this.path = path;
         this.profiler = profiler;
         this.levelParser = new LevelParser(path);
 
-        components = new LinkedHashMap<>();
         initComponents();
 
         Logger.debug(LocalizationManager.getStringByName("log.debug.title"));
@@ -56,35 +52,6 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
                 addWindow((JInternalFrame) comp);
             } else if (comp instanceof JMenuBar) {
                 setJMenuBar((JMenuBar) comp);
-            }
-        }
-    }
-
-    @Override
-    public void changeLanguage() {
-        ((LogWindow) components.get(FrameName.LOG_WINDOW)).changeLanguage();
-        ((GameWindow) components.get(FrameName.GAME_WINDOW)).changeLanguage();
-        ((MenuBarFrame) components.get(FrameName.MENU_BAR_FRAME)).changeLanguage();
-
-        this.invalidate();
-    }
-
-    private void loadProfiles() {
-        for (Component comp : components.values()) {
-            if (comp instanceof BaseJFrame) {
-                ((BaseJFrame) comp).loadProfile();
-            } else if (comp instanceof BaseJInternalFrame) {
-                ((BaseJInternalFrame) comp).loadProfile();
-            }
-        }
-    }
-
-    private void saveProfiles() {
-        for (Component comp : components.values()) {
-            if (comp instanceof BaseJFrame) {
-                ((BaseJFrame) comp).saveProfile();
-            } else if (comp instanceof BaseJInternalFrame) {
-                ((BaseJInternalFrame) comp).saveProfile();
             }
         }
     }
@@ -106,15 +73,13 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
                 this,
                 "Загрузка/инициализация профиля: " + profileName
             );
+
+            if (profiler.isProfileExists()) {
+                loadFrameState();
+            }
+
             pack();
             setVisible(true);
-
-            Profiler profiler = (Profiler) this.profiler;
-            if (profiler.isProfileExists()) {
-                loadProfiles();
-                profiler.loadLanguage();
-                changeLanguage();
-            }
         } else {
             System.exit(0);
         }
@@ -138,17 +103,6 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         Parameters initialMainFrameParameters = Parameters.parseParameters(
                 DefaultParameters.MainFrameDefaultParameters.getParameters()
         );
-
-        WindowAdapter windowClosingAdapter = new WindowAdapter() {
-            @Override
-            public void windowClosed(final WindowEvent e) {
-                saveProfiles();
-                ((Profiler) profiler).saveLanguage();
-                System.exit(0);
-            }
-        };
-
-        addWindowListener(windowClosingAdapter);
 
         setContentPane(new JDesktopPane());
 
@@ -214,10 +168,10 @@ public final class MainApplicationFrame extends BaseJFrame implements ILocalizab
         );
 
         components.put(FrameName.LOG_WINDOW, new LogWindow(
-                profiler,
-                (JTextArea) components.get(FrameName.TEXT_AREA),
-                Logger.getDefaultLogSource(),
-                initialLogWindowParameters
+            profiler,
+            (JTextArea) components.get(FrameName.TEXT_AREA),
+            Logger.getDefaultLogSource(),
+            initialLogWindowParameters
         ));
     }
 
