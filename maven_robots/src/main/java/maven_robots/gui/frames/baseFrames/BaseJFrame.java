@@ -24,6 +24,7 @@ public class BaseJFrame extends JFrame implements IProfileProcessor, ILocalizabl
     protected final LinkedHashMap<FrameName, Component> components;
     private boolean isApplyingState = false;
 
+
     public BaseJFrame(IProfiler profiler, String frameName) {
         this.profiler = profiler;
         frameState = new FrameState(frameName);
@@ -77,8 +78,9 @@ public class BaseJFrame extends JFrame implements IProfileProcessor, ILocalizabl
                             ((BaseJInternalFrame) comp).loadFrameState();
                         }
                     }
-                    profiler.loadLanguage();
-                    changeLanguage();
+                }
+                if (profiler.isProfileExists()) {
+                    loadFrameState();
                 }
             }
         });

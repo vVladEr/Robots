@@ -76,6 +76,8 @@ public final class MainApplicationFrame extends BaseJFrame {
 
             if (profiler.isProfileExists()) {
                 loadFrameState();
+                profiler.loadLanguage();
+                changeLanguage();
             }
 
             pack();
