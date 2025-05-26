@@ -35,4 +35,10 @@ public class MockProfiler implements IProfiler {
         return;
     }
 
+    @Override
+    public boolean isProfileExists() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+
 }

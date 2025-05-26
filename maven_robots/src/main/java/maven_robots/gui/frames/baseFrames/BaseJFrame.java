@@ -1,12 +1,10 @@
 package maven_robots.gui.frames.baseFrames;
 
 import java.awt.Component;
-import java.awt.Frame;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyVetoException;
 import java.util.LinkedHashMap;
 
 import javax.swing.JFrame;
@@ -17,7 +15,6 @@ import maven_robots.gui.frames.internalFrames.GameWindow;
 import maven_robots.gui.frames.internalFrames.LogWindow;
 import maven_robots.gui.mainFrame.ClosingListeners;
 import maven_robots.data.profiler.IProfiler;
-import maven_robots.gui.mainFrame.MainApplicationFrame;
 import maven_robots.gui.mainFrame.MenuBarFrame;
 import maven_robots.localization.ILocalizable;
 
@@ -126,17 +123,10 @@ public class BaseJFrame extends JFrame implements IProfileProcessor, ILocalizabl
     public void loadFrameState() {
         profiler.loadFrameState(frameState);
         isApplyingState = true;
-
         boolean isMaximized = frameState.getIsMaximized();
-        boolean isClosed = frameState.getIsClosed();
         boolean isIcon = frameState.getIsIcon();
 
         Parameters parameters = frameState.getParameters();
-
-        if (isClosed) {
-            dispose();
-            return;
-        }
 
         setBounds(
                 parameters.getX(),

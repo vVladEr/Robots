@@ -21,13 +21,14 @@ public class FrameProfilerTests {
     }
 
     @Test
-    public void savingAndLoadPositionWorksCorrectly() {
+    public void savingAndLoadPositionWorksCorrectly() throws InterruptedException {
         TestJFrame testFrame = new TestJFrame(profiler);
         int expectedX = 20;
         int expectedY = 30;
-        int expectedWidth = 100;
+        int expectedWidth = 200;
         int expectedHeight = 100;
         testFrame.setBounds(expectedX, expectedY, expectedWidth, expectedHeight);
+        Thread.sleep(100);
         testFrame.saveFrameState();
 
         TestJFrame loadedTestFrame = new TestJFrame(profiler);

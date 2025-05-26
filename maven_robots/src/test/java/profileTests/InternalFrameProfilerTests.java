@@ -53,7 +53,7 @@ public class InternalFrameProfilerTests {
             "test", true, true, true, true);
         int expectedX = 20;
         int expectedY = 30;
-        int expectedWidth = 100;
+        int expectedWidth = 200;
         int expectedHeight = 100;
         testFrame.setBounds(expectedX, expectedY, expectedWidth, expectedHeight);
         try {
